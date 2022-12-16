@@ -1,0 +1,75 @@
+<script lang="ts">
+	import egert from "$lib/models/crouchiv_egert_glb.glb";	
+	import {  
+		InteractiveObject, 
+		OrbitControls, 
+		T,
+		Object3DInstance,
+        useFrame, 
+		Three,
+	} from '@threlte/core'
+	import { spring } from 'svelte/motion'
+	import { degToRad } from 'three/src/math/MathUtils'
+	import { 
+        Environment,
+        GLTF, 
+        useGltfAnimations, 
+        useGltf,
+        HTML,
+     } from '@threlte/extras'
+    import { onMount } from 'svelte';
+
+
+    onMount(() =>{
+        
+    })
+
+    useFrame(() => {
+       
+    })
+    
+    const { gltf, actions, mixer } = useGltfAnimations(({ actions, mixer }) => {
+        // slowmo
+        if (mixer) mixer.timeScale = 0.5
+        if(actions.crouch){
+            actions.crouch?.play();
+            actions.crouch.clampWhenFinished = true;
+            actions.crouch.repetitions = 1; 
+        }        
+	})
+
+    function doCrouch(){
+        console.log("crouch", $actions.crouch)
+        console.log("mixeer", $mixer)
+        if($actions.crouch){    
+            if ($mixer) $mixer.timeScale = -1
+            $actions.crouch.enabled = true;        
+            $actions.crouch.play();
+            
+            //$actions.crouch.setLoop(Three.LoopPingPong, 5);
+            //if ($mixer) $mixer.timeScale = -1
+            //$actions.crouch.play();
+            //$actions.crouch.reset();
+            
+            //$actions.crouch.clampWhenFinished = true;
+            //$actions.crouch.repetitions = 0; 
+        }        
+    }
+
+</script>
+
+<!-- <HTML position={{ y: 1.25, z: 1 }} transform>
+    <button on:click={doCrouch}
+      class="bg-brand rounded-full px-3 text-white hover:opacity-90 active:opacity-70"
+    >
+      stand to crouch
+    </button>
+</HTML> -->
+
+<GLTF bind:gltf={$gltf} url={egert} 
+    useDraco="https://www.gstatic.com/draco/v1/decoders/"
+    castShadow
+    receiveShadow
+    rotation={{y: -(Math.PI) }}
+    />
+
