@@ -17,16 +17,16 @@
         HTML,
      } from '@threlte/extras'
     import { onMount } from 'svelte';
-    //import Screen from './Screen.svelte';	
+    import { useLoader } from '@threlte/core';
+    import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 
-	//const scale = spring(1)
 
     let stats1 = new Stats();
     let stats2 = new Stats();
     let stats3 = new Stats();
 
     onMount(() =>{
-        loadStats();
+        //loadStats();
     })
 
     useFrame(() => {

@@ -18,7 +18,14 @@
         HTML,
      } from '@threlte/extras'
     import { onMount } from 'svelte';
+    import { useLoader } from '@threlte/core'
+    import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 
+    // const loader = useLoader(OBJLoader, () => new OBJLoader())
+
+    // loader.load(egert, (obj) => {
+    //     console.log("egert laetud")
+    // })
 
     onMount(() =>{
         
@@ -66,10 +73,12 @@
     </button>
 </HTML> -->
 
-<GLTF bind:gltf={$gltf} url={egert} 
-    useDraco="https://www.gstatic.com/draco/v1/decoders/"
+<GLTF 
+    bind:gltf={$gltf} 
+    url={egert}
+    useDraco
     castShadow
     receiveShadow
-    rotation={{y: -(Math.PI) }}
-    />
+    rotation={{y: -(Math.PI)}}
+/>
 
