@@ -2,7 +2,7 @@
     import { onMount } from "svelte";
     import { Environment, Float, HTML, useGltf } from '@threlte/extras'
     import { T } from '@threlte/core'
-    import {VideoTexture} from 'three';
+    import {VideoTexture, BoxBufferGeometry} from 'three';
     import * as THREE from 'three'
 
     let videoEl;
@@ -12,7 +12,7 @@
         console.log("video", videoEl)
 
          // video texture:
-        const texture = new THREE.VideoTexture(videoEl);
+        const texture = new VideoTexture(videoEl);
         texture.magFilter = THREE.NearestFilter;
         texture.minFilter = THREE.NearestFilter;
         //texture.needsUpdate = true;
@@ -57,7 +57,7 @@
                 ox = i;
                 oy = j;
     
-                const geometry = new THREE.BoxBufferGeometry(xsize, ysize, 0.05, 1, 1, 1);
+                const geometry = new BoxBufferGeometry(xsize, ysize, 0.05, 1, 1, 1);
                 change_uvs(geometry, ux, uy, ox, oy);
           
                 const mesh = new THREE.Mesh(geometry, material);
@@ -75,29 +75,29 @@
         }  
           
         //teeb video tükkideks
-        function change_uvs(geometry, unitx, unity, offsetx, offsety) {
+        /*function change_uvs(geometry, unitx, unity, offsetx, offsety) {
             var uvs = geometry.attributes.uv.array;
                 for (var i = 0; i < uvs.length; i += 2) {
                     uvs[i] = (uvs[i] + offsetx) * unitx;
                     uvs[i + 1] = (uvs[i + 1] + offsety) * unity;
                 }              
-        }  
+        } */ 
 
         console.log("screen", groupMesh)
         groupMesh.scale.set(10, 10, 10)
         groupMesh.position.set(0, 0, 0)
 
-        this.scene.add(groupMesh);
+        //this.scene.add(groupMesh);
     
         //const tv = gui.addFolder("tv");
     })
 </script>
 
-<!-- <HTML transform>
+<HTML transform>
     <video id="video" loop crossOrigin="anonymous" playsinline muted style="display: block">
         <source src="../../public/sintel.ogv" type='video/ogg; codecs="theora, vorbis"'>
     </video>
-</HTML> -->
+</HTML>
 
 <T.Mesh>
     <T.PlaneGeometry />
