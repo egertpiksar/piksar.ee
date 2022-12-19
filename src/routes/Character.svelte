@@ -21,6 +21,8 @@
     import { useLoader } from '@threlte/core'
     import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 
+    export let position = undefined;
+
     // const loader = useLoader(OBJLoader, () => new OBJLoader())
 
     // loader.load(egert, (obj) => {
@@ -42,7 +44,8 @@
             actions.crouch?.play();
             actions.crouch.clampWhenFinished = true;
             actions.crouch.repetitions = 1; 
-        }        
+        }       
+        console.log("gltf", gltf) 
 	})
 
     function doCrouch(){

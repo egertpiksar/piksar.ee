@@ -20,7 +20,7 @@
     import { useLoader } from '@threlte/core';
     import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 
-
+    let dude;
     let stats1 = new Stats();
     let stats2 = new Stats();
     let stats3 = new Stats();
@@ -58,8 +58,19 @@
 
 </script>
 
-<T.PerspectiveCamera makeDefault position={[10, 10, 10]} fov={25}>
-    <OrbitControls enableDamping maxPolarAngle={degToRad(80)} enableZoom={true} target={{ y: 0.5 }} />
+<T.PerspectiveCamera makeDefault position={[10, 1, 10]} fov={25}>
+    <OrbitControls 
+        enableDamping 
+        maxPolarAngle={degToRad(90)} 
+        minPolarAngle={degToRad(90)}
+        minAzimuthAngle={degToRad(-50)}
+        maxAzimuthAngle={degToRad(50)}
+        maxDistance={20}        
+        autoRotate 
+        autoRotateSpeed={0.2} 
+        enableZoom={true} 
+        target={{ y: 2 }} 
+    />
 </T.PerspectiveCamera>
 
 <T.DirectionalLight castShadow position={[3, 10, 10]} />

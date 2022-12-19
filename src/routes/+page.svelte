@@ -8,8 +8,9 @@
 	import Scene from './Scene.svelte'
 	import { useProgress } from '@threlte/extras'
 	import { tweened } from 'svelte/motion'
-	import { fade } from 'svelte/transition'
+	import { fade, fly } from 'svelte/transition'
 
+	let isWrapperVisible = true;
 	let isLoaded = false;
 
 	const { progress } = useProgress()
@@ -19,37 +20,48 @@
     })	
 
 	$: if($progress){
-		console.log($progress, $tweenedProgress);
-
+		$tweenedProgress = parseFloat($progress.toFixed(2))
+	
 		if($progress === 1){
+			isLoaded = true;
 			setTimeout(() => {
-				//isLoaded = true;
-			}, 1500)
+				isWrapperVisible = false;
+			}, 2000)
 		}
 	}
 
-    $: tweenedProgress.set($progress)
-
+	function toFixedFloat(int: number){		
+		int = Math.round(int * 100)
+		return int;
+	}
 </script>
 
 <div id="main">
-	{#if !isLoaded}
-		<div class="wrapper" transition:fade|local={{duration: 200}}>	
-			<div style="font-size: 30px; margin: 40px;">
+	{#if isWrapperVisible}
+		<div class="wrapper" out:fade={{duration: 1000}}>	
+			<div style="font-size: 3rem; margin: 40px;" transition:fade="{{ duration: 2000 }}">
 				<div>EGERT PIKSAR</div>
 				<div>PORTFOOLIO © 2023</div>
 			</div>				
 
-			<div class="asd">
-				<p class="loading">Loading {$tweenedProgress * 100}%</p>
-			</div>
+			<div class="loadingWrapper">
+				{#if isLoaded}
+					<p class="loading">Let´s go!</p>
+				{:else}
+					<p class="loading">Loading ...</p>
+				{/if}
+				
+				<!-- <p class="loading" transition:fade={{duration: 200}}>
+					{toFixedFloat($tweenedProgress)}%
+				</p> -->
+
+				<!-- if loaded, LETS GOOO! -->
+				<div class="loadingBar" style="transform: scaleX({$tweenedProgress})"></div>
+			</div>		
 			
-
-			<!-- <div class="bar-wrapper">
-				<div class="bar" style="width: {$tweenedProgress * 100}%" />
-			</div> -->
-
-			<div class="loading-bar" style="transform: scaleX({$tweenedProgress})"></div>
+			<p style="position: absolute; bottom: 40px; right: 40px; font-size: 20rem" transition:fade={{duration: 200}}>
+				{toFixedFloat($tweenedProgress)}%
+			</p>
 		</div>
 	{/if}
 
@@ -68,10 +80,7 @@
     	width: 100%;
 	}
 
-	.loading-bar
-	{
-		position: absolute;
-		top: 50%;
+	.loadingBar {
 		width: 100%;
 		height: 2px;
 		background: #ffffff;
@@ -80,7 +89,10 @@
 		transition: transform 0.25s;
 	}
 
-	.asd{
+	.loadingWrapper {
+		position: absolute;
+		top: 50%;
+		width: 100%;
 		display: flex;
 		flex-direction: column;
 		gap: 0.25rem;
@@ -95,24 +107,13 @@
 		top: 0;
 		left: 0;
 		background-color: black;
-		
 		color: white;
 	}
 
 	.loading {
-		font-size: 0.875rem;
-		line-height: 1.25rem;
+		font-size: 2rem;
+		margin-top: -10px;
+		padding-bottom: 10px;
 	}
 
-	.bar-wrapper {
-		width: 33.333333%;
-		height: 10px;
-		border: 1px solid white;
-		position: relative;
-	}
-
-	.bar {
-		height: 100%;
-		background-color: white;
-	}
 </style>
