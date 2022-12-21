@@ -22,7 +22,7 @@
         HTML
      } from '@threlte/extras'
     import { onMount } from 'svelte';
-    import { useLoader } from '@threlte/core';
+    import { useLoader} from '@threlte/core';
     import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
     import { MeshBasicMaterial, 
         MeshStandardMaterial, 
@@ -34,61 +34,47 @@
         LinearMipmapLinearFilter,
         PCFSoftShadowMap,
 		Vector2, 
-        PlaneGeometry
+        PlaneGeometry,
+		RingGeometry
     } from 'three'
     import { Reflector } from "three/examples/jsm/objects/Reflector.js"
     import Screen2 from "./Screen2.svelte"
     import GUI from 'lil-gui';
+    import { Pass, Fog } from '@threlte/core'
+  	import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
+    import { Editable } from '@threlte/theatre'
+    import { DEG2RAD } from 'three/src/math/MathUtils'
+    import Effects from "./Effects.svelte";
 
     const gui = new GUI();
 
-    let dude;
-    let light1;
-    let light2;
-    let helper;    
-    let globalRenderer;
+    let dude: any;
+    let light1: any;
+    let light2: any;
+    let helper: any;    
+    let asphalt: any;
+    let pass: any;
+    let fog: any;
+    let squareLight: any;
 
     let stats1 = new Stats();
     let stats2 = new Stats();
     let stats3 = new Stats();
 
     onMount(() =>{
-        loadStats();
-
-        const rendererFolder = gui.addFolder("Renderer");
-        //rendererFolder.add(globalRenderer, "");
-
-        const outsideDirLight = gui.addFolder("OutsideLight");
-        outsideDirLight.add(light1, "castShadow");
-        outsideDirLight.add(light1, "intensity").min(0).max(1).step(0.1);
-
-        const PLfolder = gui.addFolder('PointLight');
-        PLfolder.add(light2.position, 'x').min(-10).max(10).step(0.25);
-        PLfolder.add(light2.position, 'y').min(-10).max(10).step(0.25);
-        PLfolder.add(light2.position, 'z').min(-10).max(10).step(0.25);
-        PLfolder.addColor(light2, "color")
-        PLfolder.add(light2, 'intensity').min(0).max(1).step(0.1);
-        PLfolder.add(light2, 'castShadow');
-
-        const floorFolder = gui.addFolder("Floor");
-        floorFolder.add(asphaltMaterial, "metalness").min(0).max(1).step(0.1);
-        floorFolder.add(asphaltMaterial, "roughness").min(0).max(1).step(0.01);      
-        floorFolder.addColor(asphaltMaterial, "color")
-
-        
+        loadStats();     
     })
 
     useFrame(({renderer, scene}) => {
         //console.log("renderer", renderer);
         //console.log("scene", scene)
-        globalRenderer = renderer
         renderer.shadowMap.type = PCFSoftShadowMap;
-        listenStats()
+        listenStats();
     })
 
     const { gltf } = useGltf(office4)
 
-    //$: console.log("gltf", $gltf)
+ 
 
     function loadStats(){
         stats1.showPanel(0); // Panel 0 = fps
@@ -144,27 +130,26 @@
     const asphaltMaterial = new MeshStandardMaterial({
         ...asphaltTextures,
         color: "#141414", 
-        //flatShading: true,
-        //displacementScale: 0.05,
         metalness: 1,
         opacity: 0.9,
         transparent: true,
 		roughness: 1,
-                                // kõrgus?
         normalScale: new Vector2(2,2)
     })
-
 
     const panelMaterial = new MeshStandardMaterial({
         //flatShading: true,
         //displacementScale: 0.05,
         metalness: 0.9,
 		roughness: 0.05,
-        color: "black",
-        
+        color: "black",        
     })
 
 </script>
+
+<!-- <Pass pass={new UnrealBloomPass(new Vector2( 512,512 ), 0, 0, 0)}></Pass> -->
+
+<Effects />
 
 <T.PerspectiveCamera makeDefault position={[10, 1, 10]} fov={25}>
     <!--  maxPolarAngle={degToRad(90)} 
@@ -200,6 +185,7 @@
     shadow.camera.far = {20}
     position={[2, 2.5, -1]} 
     intensity={0.1}> 
+        <Editable name="Lights / Fill" color intensity transform/>
         {#if light2}
             <T.PointLightHelper args={[light2, 0.5, "green"]} />
         {/if}
@@ -211,6 +197,39 @@
 
 <!-- <GLTF bind:gltf={office} castShadow receiveShadow interactive url={office4} /> -->
 
+
+
+<!-- <mesh scale={4} position={[3, -1.161, -1.5]} rotation={[-Math.PI / 2, 0, Math.PI / 2.5]}>
+    <ringGeometry args={[0.9, 1, 4, 1]} />
+    <meshStandardMaterial color="white" roughness={0.75} />
+  </mesh> -->
+
+<T.Mesh bind:ref={squareLight} scale={4} position={[0, 5.8, 0]} rotation={[-Math.PI / 2, 0, 0.8]}>
+    <Editable name="Ceiling / Lamp" 
+        position.y
+        position.x
+        position.z
+        receiveShadow
+        castShadow
+        rotation.x
+        rotation.y    
+        rotation.z
+        scale
+    />
+
+    <T.RingGeometry args={[0.9, 1, 4, 1]}>
+    
+    </T.RingGeometry>
+
+    <T.MeshStandardMaterial color={"white"} roughness={0.75} side={2}>
+        <Editable name="Lamp / Material" 
+           color
+           roughness
+           side
+        />
+    </T.MeshStandardMaterial>
+</T.Mesh>
+
 {#if $gltf}
   <Group>
     <!-- <T.Mesh 
@@ -220,28 +239,43 @@
         material={asphaltMaterial} 
         rotation={[-Math.PI, 0, 0]} 
     /> -->
-
+  <!--  material={asphaltMaterial}  -->
     <T.Mesh 
+        bind:ref={asphalt}
         position.y={0.01} 
+        position.x={-2.5}
+        position.z={2}
         receiveShadow 
+        castShadow
         geometry={$gltf.nodes['bottom'].geometry}
-        material={asphaltMaterial} 
-        rotation={[-Math.PI, 0, 0]} 
-    />
+        rotation.x={(-Math.PI)}
+        rotation.y={(-Math.PI / 2)}
+    >
 
-    <T.Mesh bind:ref={groundMirror} rotation.x={( - Math.PI / 2 )}>
-        <!-- <T.MeshStandardMaterial 
-            opacity={0.9}
-            transparent={true}
-            color="#a0a0a0" 
-            metalness={0.4} 
-            roughnessMap={asphaltTextures.roughnessMap} 
-            normalMap={asphaltTextures.normalMap} 
-            normalScale={[2, 2]}
+        <Editable name="Asphalt / Floor" 
+            position.y
+            position.x
+            position.z
+            receiveShadow
+            castShadow
+            rotation.x
+            rotation.y    
+        />
+
+        <T.MeshStandardMaterial fog={true} normalMap={asphaltTextures.normalMap} 
+            roughnessMap={asphaltTextures.roughnessMap} color={"#141414"} 
+            transparent={true} metalness={0.4} roughness={1} opacity={0.87}
+            normalScale.x={2} normalScale.y={2}
         >
-        
-        </T.MeshStandardMaterial> -->
+            <Editable name="Floor / Material" 
+                color roughness metalness flatShading opacity transparent
+                normalScale                 
+                fog
+            />
+        </T.MeshStandardMaterial>
     </T.Mesh>
+
+    <T.Mesh bind:ref={groundMirror} rotation.x={( - Math.PI / 2 )}></T.Mesh>
    
 
     <!-- const [floor, normal] = useTexture(['/SurfaceImperfections003_1K_var1.jpg', '/SurfaceImperfections003_1K_Normal.jpg'])
@@ -264,7 +298,11 @@
         geometry={$gltf.nodes['walls'].geometry}
         material={$gltf.nodes['walls'].material} 
         rotation={[-Math.PI, 0, 0]} 
-    />
+    >
+        <T.MeshStandardMaterial fog={true} normalMap={asphaltTextures.normalMap}>
+        
+        </T.MeshStandardMaterial>
+    </T.Mesh>
 
   </Group>
 {/if}
@@ -273,4 +311,4 @@
 
 <Screen2 />
 
-<T.Fog args={['#2A2A2A', 5, 30]}/>
+<Fog bind:fog={fog} color={'#2A2A2A'} near={5} far={30}/>

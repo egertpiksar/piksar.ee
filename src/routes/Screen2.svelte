@@ -1,18 +1,12 @@
 <script>
     import { onMount } from "svelte";
-    import { Environment, Float, HTML, useGltf } from '@threlte/extras'
+    import { HTML} from '@threlte/extras'
     import { T } from '@threlte/core'
-    import {VideoTexture, BoxBufferGeometry, sRGBEncoding, NearestFilter} from 'three';
+    import {sRGBEncoding, NearestFilter} from 'three';
     import * as THREE from 'three'
     import sintel from "$lib/sintel.ogv";	
-    import GUI from 'lil-gui';
 
     let videoEl;
-    let videoTexture;
-
-    //const gui = new GUI();
-
-    //gui.add(document, 'title');
 
     onMount(() => {
         videoEl = document.getElementById("video");   
@@ -51,8 +45,3 @@
         <source src={sintel} type='video/ogg; codecs="theora, vorbis"'>
     </video>
 </HTML>
-
-
-<style>
-
-</style>

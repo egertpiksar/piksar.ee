@@ -9,6 +9,7 @@
 	import { useProgress } from '@threlte/extras'
 	import { tweened } from 'svelte/motion'
 	import { fade, fly } from 'svelte/transition'
+	import { Theatre } from '@threlte/theatre'
 
 	let isWrapperVisible = true;
 	let isLoaded = false;
@@ -63,10 +64,12 @@
 				{toFixedFloat($tweenedProgress)}%
 			</p>
 		</div>
-	{/if}
+	{/if}	
 
 	<Canvas>
-		<Scene />
+		<Theatre>
+			<Scene />
+		</Theatre>		
 	</Canvas>
 </div>
 
