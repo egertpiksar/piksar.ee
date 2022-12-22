@@ -31,7 +31,7 @@
 		}
 	}
 
-	function toFixedFloat(int: number){		
+	function toFixedFloat(int: any){		
 		int = Math.round(int * 100)
 		return int;
 	}

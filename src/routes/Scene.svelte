@@ -184,7 +184,7 @@
     shadow.camera.near = {5}
     shadow.camera.far = {20}
     position={[2, 2.5, -1]} 
-    intensity={0.1}> 
+    intensity={1}> 
         <Editable name="Lights / Fill" color intensity transform/>
         {#if light2}
             <T.PointLightHelper args={[light2, 0.5, "green"]} />
