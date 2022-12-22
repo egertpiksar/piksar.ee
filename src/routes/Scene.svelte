@@ -8,42 +8,28 @@
 		OrbitControls, 
 		T,
         useFrame, 
-        Object3DInstance,
         Group,
         useTexture
 	} from '@threlte/core'
 	import { spring } from 'svelte/motion'
 	import { degToRad } from 'three/src/math/MathUtils'
 	import { 
-        Environment,
-        GLTF, 
-        useGltfAnimations, 
-        useGltf,
-        HTML
-     } from '@threlte/extras'
+        useGltf
+    } from '@threlte/extras'
     import { onMount } from 'svelte';
-    import { useLoader} from '@threlte/core';
-    import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-    import { MeshBasicMaterial, 
+    import { 
         MeshStandardMaterial, 
-        Color, 
-        NearestFilter, 
-        MirroredRepeatWrapping, 
         RepeatWrapping, 
-        LinearFilter,
         LinearMipmapLinearFilter,
         PCFSoftShadowMap,
 		Vector2, 
-        PlaneGeometry,
-		RingGeometry
+        PlaneGeometry
     } from 'three'
     import { Reflector } from "three/examples/jsm/objects/Reflector.js"
     import Screen2 from "./Screen2.svelte"
     import GUI from 'lil-gui';
-    import { Pass, Fog } from '@threlte/core'
-  	import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
+    import { Fog } from '@threlte/core'
     import { Editable } from '@threlte/theatre'
-    import { DEG2RAD } from 'three/src/math/MathUtils'
     import Effects from "./Effects.svelte";
 
     const gui = new GUI();
@@ -53,7 +39,6 @@
     let light2: any;
     let helper: any;    
     let asphalt: any;
-    let pass: any;
     let fog: any;
     let squareLight: any;
 
@@ -98,11 +83,10 @@
         stats2.end();
         stats3.end();
     }
- // alphaMap: alphaMap, roughnessMap: roughnessMap
+
     const asphaltTextures = useTexture({ normalMap: normalMap, roughnessMap: roughnessMap})
    
-    //$: console.log("as", asphaltTextures)
-     // sharp/teravam
+    // sharp/teravam
     asphaltTextures.normalMap.minFilter = LinearMipmapLinearFilter
     asphaltTextures.normalMap.magFilter = LinearMipmapLinearFilter; 
 
@@ -115,8 +99,6 @@
     asphaltTextures.roughnessMap.wrapS = RepeatWrapping;
     asphaltTextures.roughnessMap.wrapT = RepeatWrapping;
     asphaltTextures.roughnessMap.repeat.set(1, 1)
-
-    //$: console.log("as2", asphaltTextures)
 
     let geometry = new PlaneGeometry(16, 15);
 
@@ -138,8 +120,6 @@
     })
 
     const panelMaterial = new MeshStandardMaterial({
-        //flatShading: true,
-        //displacementScale: 0.05,
         metalness: 0.9,
 		roughness: 0.05,
         color: "black",        
@@ -147,7 +127,6 @@
 
 </script>
 
-<!-- <Pass pass={new UnrealBloomPass(new Vector2( 512,512 ), 0, 0, 0)}></Pass> -->
 
 <Effects />
 
@@ -191,20 +170,11 @@
         {/if}
 </T.PointLight>
 
-<!-- <T.AmbientLight intensity={0.5} />
-<T.SpotLight castShadow position={[0, 10, 0]} intensity={0.3} /> -->
+<!-- <T.AmbientLight intensity={0.5} /> -->
+<!-- <T.SpotLight castShadow position={[0, 2, 0]} intensity={0.3} /> -->
 
 
-<!-- <GLTF bind:gltf={office} castShadow receiveShadow interactive url={office4} /> -->
-
-
-
-<!-- <mesh scale={4} position={[3, -1.161, -1.5]} rotation={[-Math.PI / 2, 0, Math.PI / 2.5]}>
-    <ringGeometry args={[0.9, 1, 4, 1]} />
-    <meshStandardMaterial color="white" roughness={0.75} />
-  </mesh> -->
-
-<T.Mesh bind:ref={squareLight} scale={4} position={[0, 5.8, 0]} rotation={[-Math.PI / 2, 0, 0.8]}>
+<T.Mesh bind:ref={squareLight} scale={6.5} position={[0, 5.8, 2]} rotation={[-Math.PI / 2, 0, degToRad(45)]}>
     <Editable name="Ceiling / Lamp" 
         position.y
         position.x
@@ -232,14 +202,6 @@
 
 {#if $gltf}
   <Group>
-    <!-- <T.Mesh 
-        castShadow 
-        receiveShadow 
-        geometry={$gltf.nodes['bottom'].geometry}
-        material={asphaltMaterial} 
-        rotation={[-Math.PI, 0, 0]} 
-    /> -->
-  <!--  material={asphaltMaterial}  -->
     <T.Mesh 
         bind:ref={asphalt}
         position.y={0.01} 
@@ -276,13 +238,6 @@
     </T.Mesh>
 
     <T.Mesh bind:ref={groundMirror} rotation.x={( - Math.PI / 2 )}></T.Mesh>
-   
-
-    <!-- const [floor, normal] = useTexture(['/SurfaceImperfections003_1K_var1.jpg', '/SurfaceImperfections003_1K_Normal.jpg'])
-       
-    <Reflector blur={[400, 100]} resolution={512} args={[10, 10]} mirror={0.5} mixBlur={6} mixStrength={1.5} rotation={[-Math.PI / 2, 0, Math.PI / 2]}>
-        {(Material, props) => <Material color="#a0a0a0" metalness={0.4} roughnessMap={floor} normalMap={normal} normalScale={[2, 2]} {...props} />}
-    </Reflector> -->
 
     <T.Mesh 
         castShadow 
@@ -296,11 +251,17 @@
         castShadow 
         receiveShadow 
         geometry={$gltf.nodes['walls'].geometry}
-        material={$gltf.nodes['walls'].material} 
         rotation={[-Math.PI, 0, 0]} 
     >
-        <T.MeshStandardMaterial fog={true} normalMap={asphaltTextures.normalMap}>
-        
+        <T.MeshStandardMaterial fog={true} color={"#181818"} 
+            metalness={0} roughness={1}
+            normalScale.x={2} normalScale.y={2}
+        >
+            <Editable name="Walls / Material" 
+                color roughness metalness flatShading
+                normalScale                 
+                fog
+            />
         </T.MeshStandardMaterial>
     </T.Mesh>
 

@@ -55,28 +55,20 @@
         ior: { value: 1.45, min: 0, max: 2 }
     })*/
 
-    /*$: if(texture){
-        console.log("texture", texture)
-    }*/
-
-    const newPass = new UnrealBloomPass(
-        new Vector2(window.innerWidth, window.innerHeight),
-        //strenght
-        1,
-        // radius
-        1,
-        // thresh
-        0
-    )
-
 </script>
 
 {#if lutTexture}
     <Pass pass={new LUTPass({
-        lut: lutTexture.texture3D,
+        lut: lutTexture.texture,
         intensity: 1
     })} />
 {/if}
 
-<!-- <Pass pass={newPass} /> -->
+<!-- reso, strength, radius, treshold -->
+<Pass pass={new UnrealBloomPass(
+    new Vector2(256, 256),
+    0.5,
+    0.125,
+    0.2
+)} />
 
