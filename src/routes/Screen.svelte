@@ -93,11 +93,11 @@
     })
 </script>
 
-<HTML transform>
+<!-- <HTML transform>
     <video id="video" loop crossOrigin="anonymous" playsinline muted style="display: block">
         <source src="../../public/sintel.ogv" type='video/ogg; codecs="theora, vorbis"'>
     </video>
-</HTML>
+</HTML> -->
 
 <T.Mesh>
     <T.PlaneGeometry />

@@ -23,7 +23,8 @@
         LinearMipmapLinearFilter,
         PCFSoftShadowMap,
 		Vector2, 
-        PlaneGeometry
+        PlaneGeometry,
+        MathUtils
     } from 'three'
     import { Reflector } from "three/examples/jsm/objects/Reflector.js"
     import Screen2 from "./Screen2.svelte"
@@ -38,6 +39,7 @@
     let light1: any;
     let light2: any;
     let helper: any;    
+    let mainCamera: any;
     let asphalt: any;
     let fog: any;
     let squareLight: any;
@@ -46,8 +48,18 @@
     let stats2 = new Stats();
     let stats3 = new Stats();
 
+    const cursor = {
+        x: 0,
+        y: 0
+    }
+
     onMount(() =>{
         loadStats();     
+        window.addEventListener("mousemove", (e) => {
+            cursor.x = e.clientX;
+            cursor.y = e.clientY;
+            console.log("mouse", cursor.x, cursor.y)
+        })
     })
 
     useFrame(({renderer, scene}) => {
@@ -55,6 +67,12 @@
         //console.log("scene", scene)
         renderer.shadowMap.type = PCFSoftShadowMap;
         listenStats();
+
+        //mainCamera.position.y = MathUtils.lerp(mainCamera.rotation.y, (cursor.y * Math.PI) / 10, 0.01) 
+        mainCamera.position.x = MathUtils.lerp(mainCamera.rotation.x, (cursor.x * Math.PI) / 10, 0.01)
+
+        //mainCamera.position.x = cursor.x * 0.001
+        //mainCamera.position.y = cursor.y * 0.001
     })
 
     const { gltf } = useGltf(office4)
@@ -120,17 +138,17 @@
     })
 
     const panelMaterial = new MeshStandardMaterial({
-        metalness: 0.9,
-		roughness: 0.05,
+        metalness: 0.42,
+		roughness: 0.86,
         color: "black",        
     })
 
 </script>
 
 
-<Effects />
+<!-- <Effects /> -->
 
-<T.PerspectiveCamera makeDefault position={[10, 1, 10]} fov={25}>
+<T.PerspectiveCamera bind:ref={mainCamera} makeDefault position={[10, 1, 10]} fov={25}>
     <!--  maxPolarAngle={degToRad(90)} 
         minPolarAngle={degToRad(90)}
         minAzimuthAngle={degToRad(-50)}
@@ -187,8 +205,7 @@
         scale
     />
 
-    <T.RingGeometry args={[0.9, 1, 4, 1]}>
-    
+    <T.RingGeometry args={[0.9, 1, 4, 1]}>   
     </T.RingGeometry>
 
     <T.MeshStandardMaterial color={"white"} roughness={0.75} side={2}>
@@ -204,14 +221,13 @@
   <Group>
     <T.Mesh 
         bind:ref={asphalt}
-        position.y={0.01} 
-        position.x={-2.5}
-        position.z={2}
+        position.y={0} 
+        position.x={0}
+        position.z={0}
         receiveShadow 
-        castShadow
         geometry={$gltf.nodes['bottom'].geometry}
         rotation.x={(-Math.PI)}
-        rotation.y={(-Math.PI / 2)}
+        rotation.y={0}
     >
 
         <Editable name="Asphalt / Floor" 
@@ -224,10 +240,18 @@
             rotation.y    
         />
 
-        <T.MeshStandardMaterial fog={true} normalMap={asphaltTextures.normalMap} 
-            roughnessMap={asphaltTextures.roughnessMap} color={"#141414"} 
-            transparent={true} metalness={0.4} roughness={1} opacity={0.87}
-            normalScale.x={2} normalScale.y={2}
+        <!-- normalMap={asphaltTextures.normalMap} 
+            roughnessMap={asphaltTextures.roughnessMap} 
+                -->
+        <T.MeshStandardMaterial 
+            fog={true}             
+            color={"#00000"}
+            transparent={false} 
+            metalness={1} 
+            roughness={1} 
+            opacity={1}
+            normalScale.x={2} 
+            normalScale.y={2}
         >
             <Editable name="Floor / Material" 
                 color roughness metalness flatShading opacity transparent
@@ -237,7 +261,7 @@
         </T.MeshStandardMaterial>
     </T.Mesh>
 
-    <T.Mesh bind:ref={groundMirror} rotation.x={( - Math.PI / 2 )}></T.Mesh>
+    <!--<T.Mesh bind:ref={groundMirror} rotation.x={( - Math.PI / 2 )}></T.Mesh>-->
 
     <T.Mesh 
         castShadow 
@@ -264,11 +288,10 @@
             />
         </T.MeshStandardMaterial>
     </T.Mesh>
-
   </Group>
 {/if}
 
-<Character />
+<Character /> 
 
 <Screen2 />
 

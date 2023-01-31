@@ -56,12 +56,12 @@
 					{toFixedFloat($tweenedProgress)}%
 				</p> -->
 
-				<!-- if loaded, LETS GOOO! -->
 				<div class="loadingBar" style="transform: scaleX({$tweenedProgress})"></div>
 			</div>		
 			
-			<p style="position: absolute; bottom: 40px; right: 40px; font-size: 20rem" transition:fade={{duration: 200}}>
-				{toFixedFloat($tweenedProgress)}%
+			<p style="position: absolute; bottom: 40px; right: 40px; font-size: 20rem" 
+				transition:fade={{duration: 200}}>
+					{toFixedFloat($tweenedProgress)}%
 			</p>
 		</div>
 	{/if}	

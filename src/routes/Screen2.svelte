@@ -28,7 +28,7 @@
             side={THREE.FrontSide}
             flatShading={true}
         >
-            {#if videoEl}
+            <!--{#if videoEl}
                 <T.VideoTexture 
                     args={[videoEl]} 
                     magFilter={NearestFilter} 
@@ -36,7 +36,7 @@
                     attach="map" 
                     encoding={sRGBEncoding}
                 />
-            {/if}
+            {/if} -->
         </T.MeshStandardMaterial>
 </T.Mesh>
 
