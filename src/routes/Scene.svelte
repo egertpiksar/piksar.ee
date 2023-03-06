@@ -58,26 +58,25 @@
         window.addEventListener("mousemove", (e) => {
             cursor.x = e.clientX;
             cursor.y = e.clientY;
-            console.log("mouse", cursor.x, cursor.y)
+            //console.log("mouse", cursor.x, cursor.y)
         })
     })
 
     useFrame(({renderer, scene}) => {
         //console.log("renderer", renderer);
         //console.log("scene", scene)
-        renderer.shadowMap.type = PCFSoftShadowMap;
-        listenStats();
+        //renderer.shadowMap.type = PCFSoftShadowMap;
+        //listenStats();
 
+        // kaamera liikumine hiirega kaasa
         //mainCamera.position.y = MathUtils.lerp(mainCamera.rotation.y, (cursor.y * Math.PI) / 10, 0.01) 
-        mainCamera.position.x = MathUtils.lerp(mainCamera.rotation.x, (cursor.x * Math.PI) / 10, 0.01)
+        //mainCamera.position.x = MathUtils.lerp(mainCamera.rotation.x, (cursor.x * Math.PI) / 10, 0.01)
 
         //mainCamera.position.x = cursor.x * 0.001
         //mainCamera.position.y = cursor.y * 0.001
     })
 
     const { gltf } = useGltf(office4)
-
- 
 
     function loadStats(){
         stats1.showPanel(0); // Panel 0 = fps
@@ -156,7 +155,7 @@
         maxDistance={20}
     -->
     <OrbitControls 
-        enableDamping               
+        enableDamping 
         autoRotate 
         autoRotateSpeed={0.2} 
         enableZoom={true} 
@@ -245,7 +244,7 @@
                 -->
         <T.MeshStandardMaterial 
             fog={true}             
-            color={"#00000"}
+            color={"#181818"}
             transparent={false} 
             metalness={1} 
             roughness={1} 
