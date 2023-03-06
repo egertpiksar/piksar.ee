@@ -1,20 +1,15 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { HTML} from '@threlte/extras'
+    import { HTML, Text} from '@threlte/extras'
     import { T } from '@threlte/core'
     import {sRGBEncoding, NearestFilter, RectAreaLight} from 'three';
     import * as THREE from 'three'
     //import sintel from "$lib/sintel.ogv";	
 
-    let videoEl;
     let rectLight: any;
     let helper: any;
 
     onMount(() => {
-        //videoEl = document.getElementById("video");   
-        //console.log("video", videoEl)
-        
-        //video.play();
     })
 </script>
 
@@ -30,25 +25,10 @@
             side={THREE.FrontSide}
             flatShading={true}
         >
-            <!--{#if videoEl}
-                <T.VideoTexture 
-                    args={[videoEl]} 
-                    magFilter={NearestFilter} 
-                    minFilter={NearestFilter} 
-                    attach="map" 
-                    encoding={sRGBEncoding}
-                />
-            {/if} -->
         </T.MeshStandardMaterial>
 </T.Mesh>
 
-<!--<HTML>
-    <video id="video" loop crossOrigin="anonymous" playsinline style="display: none" muted>
-        <source src={sintel} type='video/ogg; codecs="theora, vorbis"'>
-    </video>
-</HTML>-->
-
-<HTML position={{ x: 0, y: 2.25, z:-3.96 }} transform occlude scale={0.5}>
+<!-- <HTML position={{ x: 0, y: 2.25, z:-3.96 }} transform occlude scale={0.5}>
     <div class="screen-wrapper">
         <p>Hello, I'm</p>      
         <p>Egert Piksar</p>    
@@ -66,8 +46,13 @@
             info@piksar.ee
         </div>
     </div>
-    <!-- <iframe title="" src={"http://www.piksar.ee"} width="100%" height="100%" frameborder="0" /> -->
-</HTML>
+</HTML> -->
+
+<Text text="info@piksar.ee" 
+    color={"#000"}
+    font={"Inter"}
+    fontSize={0.3}
+    position={{ x: 2.1, y: 1.1, z:-3.96 }} />
 
 <!-- DirectionalLight -->
 <T.RectAreaLight bind:ref={rectLight} 
