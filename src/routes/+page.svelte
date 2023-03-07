@@ -35,6 +35,7 @@
 		int = Math.round(int * 100)
 		return int;
 	}
+
 </script>
 
 <div id="main">
@@ -51,11 +52,6 @@
 				{:else}
 					<p class="loading">Loading ...</p>
 				{/if}
-				
-				<!-- <p class="loading" transition:fade={{duration: 200}}>
-					{toFixedFloat($tweenedProgress)}%
-				</p> -->
-
 				<div class="loadingBar" style="transform: scaleX({$tweenedProgress})"></div>
 			</div>		
 			
@@ -68,7 +64,7 @@
 
 	<Canvas>
 		<Theatre>
-			<Scene />
+			<Scene isPageLoaded={isLoaded}/>
 		</Theatre>		
 	</Canvas>
 </div>

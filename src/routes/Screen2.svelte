@@ -48,11 +48,26 @@
     </div>
 </HTML> -->
 
+<Text text="Egert Piksar" 
+    color={"#000"}
+    font={"/fonts/Unbounded-Regular.ttf"}
+    fontSize={0.3}
+    textAlign="left"
+    position={{x: -4.2, y: 3.8, z:-3.96}} />
+
+<Text text="creative developer" 
+    color={"#000"}
+    font={"/fonts/Unbounded-Regular.ttf"}
+    fontSize={0.15}
+    textAlign="left"
+    position={{x: -4.2, y: 3.47, z:-3.96}} />
+
 <Text text="info@piksar.ee" 
     color={"#000"}
-    font={"Inter"}
-    fontSize={0.3}
-    position={{ x: 2.1, y: 1.1, z:-3.96 }} />
+    font={"/fonts/Unbounded-Regular.ttf"}
+    fontSize={0.2}
+    textAlign="right"
+    position={{ x: 2.4, y: 1, z:-3.96 }} />
 
 <!-- DirectionalLight -->
 <T.RectAreaLight bind:ref={rectLight} 

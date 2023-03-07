@@ -22,6 +22,7 @@
     import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 
     export let position = undefined;
+    export let isPageLoaded: boolean;
 
     // const loader = useLoader(OBJLoader, () => new OBJLoader())
 
@@ -36,17 +37,32 @@
     useFrame(() => {
        
     })
-    
+
+    // TODO animatioone juurde
     const { gltf, actions, mixer } = useGltfAnimations(({ actions, mixer }) => {
-        // slowmo
-        if (mixer) mixer.timeScale = 0.5
-        if(actions.crouch){
-            actions.crouch?.play();
-            actions.crouch.clampWhenFinished = true;
-            actions.crouch.repetitions = 1; 
-        }       
         console.log("gltf", gltf) 
+        console.log("actions", actions) 
+        console.log("mixer", mixer) 
 	})
+
+    $: if(isPageLoaded){
+        firstStandUp();
+    }
+
+    // wrapperi out fade aeg maha
+    function firstStandUp(){
+        setTimeout(() => {
+            standUp();
+        }, 2000);
+    }
+
+    function standUp(){
+        if ($mixer) $mixer.timeScale = 0.5
+        $actions['crouch']?.play()
+        $actions['crouch'].clampWhenFinished = true;
+        $actions['crouch'].repetitions = 1; 
+    }
+    
 
     function doCrouch(){
         console.log("crouch", $actions.crouch)

@@ -33,6 +33,8 @@
     import { Editable } from '@threlte/theatre'
     import Effects from "./Effects.svelte";
 
+    export let isPageLoaded: boolean;
+
     const gui = new GUI();
 
     let dude: any;
@@ -141,6 +143,8 @@
 		roughness: 0.86,
         color: "black",        
     })
+
+    $: console.log("isLoaded", isPageLoaded)
 
 </script>
 
@@ -290,7 +294,7 @@
   </Group>
 {/if}
 
-<Character /> 
+<Character isPageLoaded={isPageLoaded}/> 
 
 <Screen2 />
 
