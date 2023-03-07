@@ -104,11 +104,11 @@
 
 <!-- DirectionalLight -->
 <T.RectAreaLight bind:ref={rectLight} 
-    position.x={0} position.y={1} position.z={-1.7}
+    position.x={0} position.y={2} position.z={-0.7}
     width={8.5}
     height={3}
-    intensity={5}
-    color={'#ff6900'}
+    intensity={45}
+    color={'#2b2b2b'}
     rotation={[0,0,0]}>
         <!-- {#if rectLight}
             <T.DirectionalLightHelper bind:ref={helper} args={[rectLight, 0.5, "red"]} />
