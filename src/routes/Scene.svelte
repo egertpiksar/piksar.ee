@@ -35,7 +35,7 @@
 
     export let isPageLoaded: boolean;
 
-    const gui = new GUI();
+    //const gui = new GUI();
 
     let dude: any;
     let light1: any;
@@ -212,11 +212,11 @@
     </T.RingGeometry>
 
     <T.MeshStandardMaterial color={"white"} roughness={0.75} side={2}>
-        <Editable name="Lamp / Material" 
+       <!--  <Editable name="Lamp / Material" 
            color
            roughness
            side
-        />
+        /> -->
     </T.MeshStandardMaterial>
 </T.Mesh>
 
@@ -233,7 +233,7 @@
         rotation.y={0}
     >
 
-        <Editable name="Asphalt / Floor" 
+        <!-- <Editable name="Asphalt / Floor" 
             position.y
             position.x
             position.z
@@ -241,7 +241,7 @@
             castShadow
             rotation.x
             rotation.y    
-        />
+        /> -->
 
         <!-- normalMap={asphaltTextures.normalMap} 
             roughnessMap={asphaltTextures.roughnessMap} 
@@ -256,11 +256,11 @@
             normalScale.x={2} 
             normalScale.y={2}
         >
-            <Editable name="Floor / Material" 
+            <!-- <Editable name="Floor / Material" 
                 color roughness metalness flatShading opacity transparent
                 normalScale                 
                 fog
-            />
+            /> -->
         </T.MeshStandardMaterial>
     </T.Mesh>
 
@@ -284,11 +284,11 @@
             metalness={0} roughness={1}
             normalScale.x={2} normalScale.y={2}
         >
-            <Editable name="Walls / Material" 
+           <!--  <Editable name="Walls / Material" 
                 color roughness metalness flatShading
                 normalScale                 
                 fog
-            />
+            /> -->
         </T.MeshStandardMaterial>
     </T.Mesh>
   </Group>

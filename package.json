@@ -48,6 +48,7 @@
 		"leva": "^0.9.34",
 		"lil-gui": "^0.17.0",
 		"postprocessing": "^6.29.1",
+		"splitting": "^1.0.6",
 		"stats.js": "^0.17.0"
 	}
 }

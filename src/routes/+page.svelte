@@ -65,7 +65,7 @@
 	<Canvas>
 		<Theatre>
 			<Scene isPageLoaded={isLoaded}/>
-		</Theatre>		
+		</Theatre>	
 	</Canvas>
 </div>
 

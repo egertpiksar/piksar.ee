@@ -21,7 +21,6 @@
     import { useLoader } from '@threlte/core'
     import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 
-    export let position = undefined;
     export let isPageLoaded: boolean;
 
     // const loader = useLoader(OBJLoader, () => new OBJLoader())
@@ -57,8 +56,8 @@
     }
 
     function standUp(){
-        if ($mixer) $mixer.timeScale = 0.5
-        $actions['crouch']?.play()
+        if ($mixer) $mixer.timeScale = 0.5;
+        $actions['crouch']?.play();
         $actions['crouch'].clampWhenFinished = true;
         $actions['crouch'].repetitions = 1; 
     }

@@ -1,15 +1,30 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { HTML, Text} from '@threlte/extras'
-    import { T } from '@threlte/core'
-    import {sRGBEncoding, NearestFilter, RectAreaLight} from 'three';
-    import * as THREE from 'three'
+    import { HTML, Text} from '@threlte/extras';
+    import { T } from '@threlte/core';
+    import * as THREE from 'three';
+    import { preloadFonts } from './utils';
+    import { TypeShuffle } from './typeShuffle';
     //import sintel from "$lib/sintel.ogv";	
+    import { Editable } from '@threlte/theatre'
 
     let rectLight: any;
     let helper: any;
 
     onMount(() => {
+        preloadFonts('biu0hfr').then(() => {
+            const textElement = document.querySelector('.content');
+            
+            const ts = new TypeShuffle(textElement);
+            ts.trigger('fx1');
+
+            [...document.querySelectorAll('.effects > button')].forEach(button => {
+                button.addEventListener('click', () => {
+                    ts.trigger(`fx${button.dataset.fx}`);
+                });
+            });
+
+        });
     })
 </script>
 
@@ -28,27 +43,45 @@
         </T.MeshStandardMaterial>
 </T.Mesh>
 
-<!-- <HTML position={{ x: 0, y: 2.25, z:-3.96 }} transform occlude scale={0.5}>
-    <div class="screen-wrapper">
-        <p>Hello, I'm</p>      
-        <p>Egert Piksar</p>    
+<HTML position={{ x: 0, y: 2.25, z:-3.96 }} occlude transform scale={0.3}>
+    <dl class="content">
+        <dt>Name</dt>
+        <dd>Egert Piksar</dd>
 
-        <div style="margin-top: 10px;">
-            I'm creative developer based in Tallinn. I love minimalism and create stunning websites. Feel free to contact me for any projects you might have in mind.
-        </div>
+        <dt>Profession</dt>
+        <dd>Creative Developer</dd>
 
-        <div class="portfolio">
-            23 websites, 5 e-shops, 9 logo
-        </div>
+        <dt>Bio</dt>
+        <dd>5 years job experience and +3 years freelance experience. 
+            Passion for creativity in the digital space. 
+            Constantly seeking new challenges, growth opportunities. 
+            Bringing imaginative ideas to life. 
+            Skilled in modern web development frameworks such as Svelte, 3d visualizations with Blender and
+             implementation width ThreeJS, photo editing, video processing and illustration with Adobe softwares. 
+            Strong understanding of UI/UX design principles and ability to create visually appealing and usable websites.
+        </dd>
 
-        <div class="contact">
-            Let's talk!
-            info@piksar.ee
-        </div>
+        <dt>Education</dt>
+        <dd>Bachelor of science in Engineering</dd>
+        
+        <dt>Projects</dt>
+        <dd>23 websites, 5 e-shops</dd>
+
+        <dt>Confs</dt>
+        <dd>awwwards Digital Thinkers Conf 2020 && 2023, JSWorld 2022</dd>
+    </dl>
+
+    <div class="effects">
+        <button data-fx="1">Effect 1</button>
+        <button data-fx="2">Effect 2</button>
+        <button data-fx="3">Effect 3</button>
+        <button data-fx="4">Effect 4</button>
+        <button data-fx="5">Effect 5</button>
+        <button data-fx="6">Effect 6</button>
     </div>
-</HTML> -->
+</HTML>
 
-<Text text="Egert Piksar" 
+<!-- <Text text="Egert Piksar" 
     color={"#000"}
     font={"/fonts/Unbounded-Regular.ttf"}
     fontSize={0.3}
@@ -60,14 +93,14 @@
     font={"/fonts/Unbounded-Regular.ttf"}
     fontSize={0.15}
     textAlign="left"
-    position={{x: -4.2, y: 3.47, z:-3.96}} />
+    position={{x: -4.2, y: 3.47, z:-3.96}} /> -->
 
 <Text text="info@piksar.ee" 
     color={"#000"}
     font={"/fonts/Unbounded-Regular.ttf"}
-    fontSize={0.2}
+    fontSize={0.15}
     textAlign="right"
-    position={{ x: 2.4, y: 1, z:-3.96 }} />
+    position={{ x: 2.8, y: 1, z:-3.96 }} />
 
 <!-- DirectionalLight -->
 <T.RectAreaLight bind:ref={rectLight} 
@@ -80,54 +113,12 @@
         <!-- {#if rectLight}
             <T.DirectionalLightHelper bind:ref={helper} args={[rectLight, 0.5, "red"]} />
         {/if} -->
+        <Editable name="ScreenLight" color intensity transform/>
 </T.RectAreaLight>
 
 
 <style>
-    .screen-wrapper{
-        height: 125px;
-        width: 345px;
-        overflow: auto;
-    }
-
-    p {
-        color: white;    
-    }
-
-    div{
-        color: white;
-    }
-
-    .portfolio{
-        margin-top: 20px;
-    }
-
-    .contact{
-        margin-top: 20px;
-    }
-
-    /* width */
-    ::-webkit-scrollbar {
-        width: 5px;
-        border-radius: 7px;
-    }
-
-    /* Track */
-    ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 10px;
-        opacity: 0.5;
-    }
-
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 10px;
-    }
-
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
+ 
+ 
 </style>
 

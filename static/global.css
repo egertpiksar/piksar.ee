@@ -21,3 +21,110 @@ body {
     line-height: 1;
 }
 
+
+
+
+
+.ascii {
+	color: var(--color-link);
+	opacity: 0.5;
+	position: fixed;
+	right: 0;
+	top: -1rem;
+	pointer-events: none;
+}
+
+.content {
+	display: grid;
+	gap: 1rem;
+	max-width: 830px;
+	padding: 7vh 2rem 0;
+	font-family: "ballinger-mono";
+	text-transform: uppercase;
+}
+
+dt {
+	font-weight: bold;
+}
+
+dd {
+	margin: 0;
+}
+
+.effects {
+	margin-top: auto;
+	padding: 2rem;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+}
+
+.effects button {
+	border: 0;
+	color: inherit;
+	white-space: nowrap;
+	background: none;
+	text-transform: inherit;
+	font: inherit;
+	cursor: pointer;
+	color: white;
+	font-size: 0.75rem;
+	text-transform: lowercase;
+}
+
+.effects button::before {
+	content: "[";
+	margin-right: 0.5rem;
+	display: inline-block;
+}
+
+.effects button::after {
+	content: "]";
+	margin-left: 0.5rem;
+	display: inline-block;
+}
+
+.effects button:hover {
+	color: black;
+}
+
+.splitting .words .word {
+	white-space: nowrap;
+}
+
+@media screen and (min-width: 53em) {
+	.frame {
+		display: grid;
+		grid-template-columns: auto auto 1fr;
+		grid-template-rows: auto;
+		grid-template-areas: 'title prev sponsor';
+		justify-content: start;
+	}
+	.content {
+		grid-template-columns: 15ch 1fr;
+	}
+}
+
+/* width */
+::-webkit-scrollbar {
+	width: 5px;
+	border-radius: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+	border-radius: 10px;
+	opacity: 0.5;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #888;
+	border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
