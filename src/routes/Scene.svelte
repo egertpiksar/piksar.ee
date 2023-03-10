@@ -78,7 +78,9 @@
         //mainCamera.position.y = cursor.y * 0.001
     })
 
-    const { gltf } = useGltf(office4)
+    const { gltf } = useGltf(office4, {
+        useDraco: true
+    })
 
     function loadStats(){
         stats1.showPanel(0); // Panel 0 = fps
@@ -222,7 +224,7 @@
 
 {#if $gltf}
   <Group>
-    <T.Mesh 
+    <T.Mesh
         bind:ref={asphalt}
         position.y={0} 
         position.x={0}
@@ -294,8 +296,8 @@
   </Group>
 {/if}
 
-<Character isPageLoaded={isPageLoaded}/> 
-
 <Screen2 />
+
+<Character isPageLoaded={isPageLoaded} camera={mainCamera} /> 
 
 <Fog bind:fog={fog} color={'#2A2A2A'} near={5} far={30}/>

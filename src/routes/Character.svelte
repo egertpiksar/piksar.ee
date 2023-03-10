@@ -22,6 +22,7 @@
     import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 
     export let isPageLoaded: boolean;
+    export let camera:any;
 
     // const loader = useLoader(OBJLoader, () => new OBJLoader())
 
@@ -56,7 +57,7 @@
     }
 
     function standUp(){
-        if ($mixer) $mixer.timeScale = 0.5;
+        if ($mixer) $mixer.timeScale = 0.75;
         $actions['crouch']?.play();
         $actions['crouch'].clampWhenFinished = true;
         $actions['crouch'].repetitions = 1; 
@@ -81,6 +82,10 @@
         }        
     }
 
+    function moveCameraToCenter(e){
+        console.log(camera)
+    }
+
 </script>
 
 <!-- <HTML position={{ y: 1.25, z: 1 }} transform>
@@ -98,5 +103,8 @@
     castShadow
     receiveShadow
     rotation={{y: -(Math.PI)}}
+    viewportAware
+    interactive
+    on:pointerenter={(e) => moveCameraToCenter(e)}
 />
 
