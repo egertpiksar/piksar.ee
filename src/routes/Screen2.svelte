@@ -1,18 +1,23 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { HTML, Text} from '@threlte/extras';
-    import { T, InteractiveObject } from '@threlte/core';
+    import { T, InteractiveObject, ViewportAwareObject} from '@threlte/core';
     import * as THREE from 'three';
     import { preloadFonts } from './utils';
     import { TypeShuffle } from './typeShuffle';
     //import sintel from "$lib/sintel.ogv";	
     import { Editable } from '@threlte/theatre'
 
+    //export let cameraPosition;
+    export let offsetX;
+    export let offsetY;
+    export let offsetZ;
+
     let rectLight: any;
     let helper: any;
 
     onMount(() => {
-        preloadFonts('biu0hfr').then(() => {
+        /*preloadFonts('biu0hfr').then(() => {
             const textElement = document.querySelector('.content');
             
             const ts = new TypeShuffle(textElement);
@@ -24,18 +29,36 @@
                 });
             });
 
-        });
+        });*/
     })
 
-    function moveCamera(){
-        console.log("move camera")
+    function zoomCameraIn(e){
+        console.log("move camera in", offsetX, offsetY, offsetZ)
+        offsetX = 0;
     }
+
+    function zoomCameraOut(e){
+        console.log("move camera out", offsetX, offsetY, offsetZ)
+        //offsetX = 10;
+    }
+
+  
 </script>
 
 
-<T.Mesh position.x={0} position.y={2.25} position.z={-3.97} 
-    interactive 
-    on:click={(e) => console.log("screenclick", e)} >
+<T.Mesh let:ref position.x={0} position.y={2.25} position.z={-3.97} >
+        <InteractiveObject
+            object={ref}
+            interactive
+            on:pointerenter={zoomCameraIn}
+            on:pointerleave={zoomCameraOut}
+        />
+
+        <ViewportAwareObject
+            object={ref}
+            viewportAware
+            
+        />
         <T.PlaneGeometry args={[8.5, 3.1, 1, 1]} />
         <!-- TODO mingi led screeni map lisada -->
         <T.MeshStandardMaterial 
@@ -47,7 +70,7 @@
             flatShading={true}
         />
 
-        <HTML position={{ x: 0, y: 0, z: 0.01 }} transform scale={0.3}>
+       <!--  <HTML position={{ x: 0, y: 0.25, z: 0.01 }} transform scale={0.3}>            
             <dl class="content">
                 <dt>Name</dt>
                 <dd>Egert Piksar</dd>
@@ -69,7 +92,7 @@
                 <dd>Bachelor of science in Engineering</dd>
                 
                 <dt>Projects</dt>
-                <dd>23 websites, 5 e-shops</dd>
+                <dd>23 customer websites and 5 e-shops</dd>
         
                 <dt>Confs</dt>
                 <dd>awwwards Digital Thinkers Conf 2020 && 2023, JSWorld 2022</dd>
@@ -83,31 +106,135 @@
                 <button data-fx="5">Effect 5</button>
                 <button data-fx="6">Effect 6</button>
             </div>
-        </HTML>
+        </HTML> -->
 </T.Mesh>
 
 
-
-<!-- <Text text="Egert Piksar" 
+<Text text="
+    NAME" 
     color={"#000"}
-    font={"/fonts/Unbounded-Regular.ttf"}
-    fontSize={0.3}
+    font={"https://use.typekit.net/af/c677d6/00000000000000007735c6a1/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3"}
+    fontSize={0.1}
     textAlign="left"
-    position={{x: -4.2, y: 3.8, z:-3.96}} />
+    position={{x: -3, y: 3.3, z:-3.96}} />
 
-<Text text="creative developer" 
+<Text text="
+    EGERT PIKSAR" 
     color={"#000"}
-    font={"/fonts/Unbounded-Regular.ttf"}
-    fontSize={0.15}
+    font={"https://use.typekit.net/af/612d42/00000000000000007735c696/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3"}
+    fontSize={0.1}
     textAlign="left"
-    position={{x: -4.2, y: 3.47, z:-3.96}} /> -->
+    position={{x: -2.3, y: 3.3, z:-3.96}} />
 
-<Text text="info@piksar.ee" 
+
+
+
+
+
+
+<Text text="
+    BIO" 
+    color={"#000"}
+    font={"https://use.typekit.net/af/c677d6/00000000000000007735c6a1/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3"}
+    fontSize={0.1}
+    textAlign="left"
+    position={{x: -3, y: 3.1, z:-3.96}} />
+
+<Text text="
+    5 YEARS JOB EXPERIENCE AND +3 YEARS FREELANCE EXPERIENCE. PASSION FOR CREATIVITY
+    IN THE DIGITAL SPACE. CONSTANTLY SEEKING NEW CHALLENGES, GROWTH OPPORTUNITIES. 
+    BRINGING IMAGINATIVE IDEAS TO LIFE. SKILLED IN MODERN WEB DEVELOPMENT FRAMEWORKS
+    SUCH AS SVELTE, 3D VISUALIZATIONS WITH BLENDER AND IMPLEMENTATION WITH THREEJS, 
+    PHOTO EDITING, VIDEO PROCESSING AND ILLUSTRATIONS WITH ADOBE SOFTWARES. STRONG 
+    UNDERSTANDING OF UI/UX DESIGN PRINCIPLES AND ABILITY TO CREATE VISUALLY APPEALING
+    AND USABLE WEBSITES." 
+    color={"#000"}
+    font={"https://use.typekit.net/af/612d42/00000000000000007735c696/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3"}
+    fontSize={0.1}
+    textAlign="left"
+    position={{x: -2.3, y: 3.1, z:-3.96}} />
+
+
+
+
+
+<Text text="
+    EDUCATION" 
+    color={"#000"}
+    font={"https://use.typekit.net/af/c677d6/00000000000000007735c6a1/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3"}
+    fontSize={0.1}
+    textAlign="left"
+    position={{x: -3, y: 2.1, z:-3.96}} />
+
+<Text text="
+    BACHELOR OF SCIENCE IN ENGINEERING" 
+    color={"#000"}
+    font={"https://use.typekit.net/af/612d42/00000000000000007735c696/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3"}
+    fontSize={0.1}
+    textAlign="left"
+    position={{x: -2.3, y: 2.1, z:-3.96}} />
+
+
+
+
+
+
+<Text text="
+    PROJECTS" 
+    color={"#000"}
+    font={"https://use.typekit.net/af/c677d6/00000000000000007735c6a1/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3"}
+    fontSize={0.1}
+    textAlign="left"
+    position={{x: -3, y: 1.9, z:-3.96}} />
+
+<Text text="
+    23 CUSTOMER WEBSITES AND 5 E-SHOPS" 
+    color={"#000"}
+    font={"https://use.typekit.net/af/612d42/00000000000000007735c696/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3"}
+    fontSize={0.1}
+    textAlign="left"
+    position={{x: -2.3, y: 1.9, z:-3.96}} />
+
+
+
+
+
+<Text text="
+    CONFS" 
+    color={"#000"}
+    font={"https://use.typekit.net/af/c677d6/00000000000000007735c6a1/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3"}
+    fontSize={0.1}
+    textAlign="left"
+    position={{x: -3, y: 1.7, z:-3.96}} />
+
+
+<Text text="
+    AWWWARDS DIGITAL THINKERS CONF 2020 && 2023, JSWORLD 2022" 
+    color={"#000"}
+    font={"https://use.typekit.net/af/612d42/00000000000000007735c696/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3"}
+    fontSize={0.1}
+    textAlign="left"
+    position={{x: -2.3, y: 1.7, z:-3.96}} />
+
+
+
+
+
+<!-- <Text text="info@piksar.ee" 
     color={"#000"}
     font={"/fonts/Unbounded-Regular.ttf"}
     fontSize={0.15}
     textAlign="right"
-    position={{ x: 2.8, y: 1, z:-3.96 }} />
+    position={{ x: 2.8, y: 1, z:-3.96 }} /> -->
+
+    
+    
+<Text text="info@piksar.ee" 
+    color={"#000"}
+    font={"https://use.typekit.net/af/c677d6/00000000000000007735c6a1/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3"}
+    fontSize={0.1}
+    textAlign="right"
+    position={{ x: 3.25, y: 0.9, z:-3.96 }} />
 
 <!-- DirectionalLight -->
 <T.RectAreaLight bind:ref={rectLight} 

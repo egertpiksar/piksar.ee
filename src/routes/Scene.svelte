@@ -9,7 +9,8 @@
 		T,
         useFrame, 
         Group,
-        useTexture
+        useTexture,
+        useThrelte 
 	} from '@threlte/core'
 	import { spring } from 'svelte/motion'
 	import { degToRad } from 'three/src/math/MathUtils'
@@ -23,6 +24,7 @@
         LinearMipmapLinearFilter,
         PCFSoftShadowMap,
 		Vector2, 
+        Vector3,
         PlaneGeometry,
         MathUtils
     } from 'three'
@@ -32,6 +34,7 @@
     import { Fog } from '@threlte/core'
     import { Editable } from '@threlte/theatre'
     import Effects from "./Effects.svelte";
+    import { writable } from 'svelte/store';
 
     export let isPageLoaded: boolean;
 
@@ -50,32 +53,48 @@
     let stats2 = new Stats();
     let stats3 = new Stats();
 
-    const cursor = {
-        x: 0,
-        y: 0
-    }
+    let cameraPosition = [10,1,10]; 
+
+    const { pointer } = useThrelte();
+
+    //const cameraOffsetY = writable(1) //spring($pointer.y * 10)
+	//$: cameraOffsetY.set(1)
+    //$: cameraOffsetY.set(spring($pointer.y))
+
+	//const cameraOffsetZ = writable(10);
+	//$: cameraOffsetZ.set(10)	
+
+
+    const offsetX = spring(10, {
+        stiffness: 0.003,
+        damping: 0.5
+    })
+
+    $: offsetX.set($pointer.x * 10)
+
+	//$: offsetX.set($pointer.x * 1)
+	const offsetY = spring(1, {
+        stiffness: 0.003,
+        damping: 0.5
+    })
+
+    $: offsetY.set($pointer.y * 10)
+
+    const offsetZ = spring(10, {
+        stiffness: 0.003,
+        damping: 0.5
+    })
+	//$: offsetY.set($pointer.y * 1)
 
     onMount(() =>{
         loadStats();     
-        window.addEventListener("mousemove", (e) => {
-            cursor.x = e.clientX;
-            cursor.y = e.clientY;
-            //console.log("mouse", cursor.x, cursor.y)
-        })
     })
 
     useFrame(({renderer, scene}) => {
         //console.log("renderer", renderer);
         //console.log("scene", scene)
         //renderer.shadowMap.type = PCFSoftShadowMap;
-        //listenStats();
-
-        // kaamera liikumine hiirega kaasa
-        //mainCamera.position.y = MathUtils.lerp(mainCamera.rotation.y, (cursor.y * Math.PI) / 10, 0.01) 
-        //mainCamera.position.x = MathUtils.lerp(mainCamera.rotation.x, (cursor.x * Math.PI) / 10, 0.01)
-
-        //mainCamera.position.x = cursor.x * 0.001
-        //mainCamera.position.y = cursor.y * 0.001
+        listenStats();
     })
 
     const { gltf } = useGltf(office4, {
@@ -153,18 +172,23 @@
 
 <!-- <Effects /> -->
 
-<T.PerspectiveCamera bind:ref={mainCamera} makeDefault position={[10, 1, 10]} fov={25}>
+<T.PerspectiveCamera bind:ref={mainCamera} makeDefault position={[$offsetX, $offsetY, $offsetZ]} fov={25}>
     <!--  maxPolarAngle={degToRad(90)} 
         minPolarAngle={degToRad(90)}
         minAzimuthAngle={degToRad(-50)}
         maxAzimuthAngle={degToRad(50)}
         maxDistance={20}
+        enableDamping
     -->
     <OrbitControls 
-        enableDamping 
+        minAzimuthAngle={degToRad(-50)}
+        maxAzimuthAngle={degToRad(50)} 
         autoRotate 
         autoRotateSpeed={0.2} 
-        enableZoom={true} 
+        enableZoom={false}
+        maxPolarAngle={degToRad(90)} 
+        minPolarAngle={degToRad(90)}       
+        maxDistance={20} 
         target={{ y: 2 }} 
     />
 </T.PerspectiveCamera>
@@ -194,7 +218,7 @@
 </T.PointLight>
 
 <!-- <T.AmbientLight intensity={0.5} /> -->
-<!-- <T.SpotLight castShadow position={[0, 2, 0]} intensity={0.3} /> -->
+<T.SpotLight castShadow position={[0, 1, 0]} intensity={0.3} />
 
 
 <T.Mesh bind:ref={squareLight} scale={6.5} position={[0, 5.8, 2]} rotation={[-Math.PI / 2, 0, degToRad(45)]}>
@@ -296,7 +320,7 @@
   </Group>
 {/if}
 
-<Screen2 />
+<Screen2 bind:cameraPosition={cameraPosition} bind:offsetX={$offsetX} bind:offsetY={$offsetY} bind:offsetZ={$offsetZ}/>
 
 <Character isPageLoaded={isPageLoaded} camera={mainCamera} /> 
 

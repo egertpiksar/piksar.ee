@@ -66,9 +66,9 @@
 
 <!-- reso, strength, radius, treshold -->
 <Pass pass={new UnrealBloomPass(
-    new Vector2(256, 256),
-    0.5,
+    new Vector2(1024, 1024),
+    0.1,
     0.125,
-    0.2
+    0.1
 )} />
 
