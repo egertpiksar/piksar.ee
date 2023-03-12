@@ -6,7 +6,7 @@ const config = {
 	ssr: {
 		noExternal: ['three', 'troika-three-text']
 	},
-	assetsInclude: ['**/*.glb', '**/*.gltf', '**/*.ogv', '**/*.cube'],
+	assetsInclude: ['**/*.glb', '**/*.gltf', '**/*.ogv', '**/*.cube', "**/*.tsx"],
 };
 
 export default config;

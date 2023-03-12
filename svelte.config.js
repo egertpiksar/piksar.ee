@@ -1,6 +1,6 @@
 import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/kit/vite';
-import preprocess from 'svelte-preprocess'
+//import preprocess from 'svelte-preprocess'
 import seqPreprocessor from 'svelte-sequential-preprocessor'
 import { preprocessThrelte } from '@threlte/preprocess'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
@@ -14,14 +14,14 @@ const config = {
 	//preprocess: vitePreprocess(),
 
 	
-	preprocess: seqPreprocessor([preprocess(), preprocessThrelte({
+	preprocess: seqPreprocessor([vitePreprocess(), preprocessThrelte({
 		extensions: {
 	 		// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 	 		'three/examples/jsm/controls/OrbitControls': [OrbitControls],
 	 		// import { TransformControls } from 'three/examples/jsm/controls/TransformControls'
 	 		'three/examples/jsm/controls/TransformControls': [TransformControls],
 
-	// 		// import { CustomGrid } from '$lib/CustomGrid'
+			//import { CustomGrid } from '$lib/CustomGrid'
 	 		//'$lib/CustomGrid': [CustomGrid]
 	 	}
 	})]),

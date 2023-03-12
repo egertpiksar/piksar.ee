@@ -33,12 +33,12 @@
     })
 
     function zoomCameraIn(e){
-        console.log("move camera in", offsetX, offsetY, offsetZ)
-        offsetX = 0;
+        /* console.log("move camera in", offsetX, offsetY, offsetZ)
+        offsetX = 0; */
     }
 
     function zoomCameraOut(e){
-        console.log("move camera out", offsetX, offsetY, offsetZ)
+       /*  console.log("move camera out", offsetX, offsetY, offsetZ) */
         //offsetX = 10;
     }
 
@@ -167,7 +167,7 @@
     position={{x: -3, y: 2.1, z:-3.96}} />
 
 <Text text="
-    BACHELOR OF SCIENCE IN ENGINEERING" 
+    BACHELOR OF SCIENCE IN ENGINEERING (BSc)" 
     color={"#000"}
     font={"https://use.typekit.net/af/612d42/00000000000000007735c696/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3"}
     fontSize={0.1}

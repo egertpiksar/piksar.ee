@@ -96,6 +96,10 @@
     </button>
 </HTML> -->
 
+<!-- <HTML position={{ x: 0, y: 1, z: -1.01 }} occlude transform scale={0.3}>
+    <div style="color: white">testtesttesttesttesttesttesttesttesttesttest</div>
+</HTML>  -->
+
 <GLTF 
     bind:gltf={$gltf} 
     url={egert}
