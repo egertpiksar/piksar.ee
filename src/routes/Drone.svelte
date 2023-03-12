@@ -31,7 +31,11 @@
 
     export let mainCamera: any;
 
-    const { pointer } = useThrelte();
+    const { gltf } = useGltf(drone, {
+        useDraco: true
+    })
+
+    const { pointer, camera } = useThrelte();
     const { raycaster } = useThrelteRoot();
 
     const offsetX = spring(0, {
@@ -51,38 +55,43 @@
     //$: console.log("x", $pointer.x)
     //$: console.log("y", $pointer.y)
 
-    let plane = new Plane(new Vector3($pointer.x * 10,$pointer.y * 10, 0), -2);
-    let pointOfIntersection: any; // = new Vector3(0,0, 0);
+
+
+    //let plane = new Plane(new Vector3(0, 0, 1), -2);
+    let pointOfIntersection = new Vector3(0,0, 0);
+
+    // var plane = new Plane(new Vector3(0, 0, 1), -2);
+    // raycaster.ray.intersectPlane(plane, pointOfIntersection);
 
     //$: mousePos = new Vector3($pointer.x * 100, $pointer.y * 100, -2)
 
-    $: if($pointer){
-        pointOfIntersection = new Vector3($pointer.x * 10,$pointer.y * 10, 0);
+    $: {
+        // vaatab kaamerasse
+        raycaster.setFromCamera($pointer, $camera);
+        pointOfIntersection = raycaster.ray.origin;
+
+        
+
         console.log("asd", pointOfIntersection)
-        if(mainCamera !== undefined){
-            //raycaster.setFromCamera($pointer.x, $pointer.y, mainCamera);
-            //raycaster.ray.intersectPlane(plane, pointOfIntersection)
-        }
-    }
-
-    useFrame(({renderer, scene}) => {
-        //console.log("renderer", renderer);
-        //console.log("scene", scene)
-    })
-
-    const { gltf } = useGltf(drone, {
-        useDraco: true
-    })
+        // this is the starting point of the ray at the camera plane;
+        // alternatively you can define your own intersection plane as it is in the linked code:
+        // var plane = new Plane(new Vector3(0, 0, 1), -2);
+        // raycaster.ray.intersectPlane(plane, pointOfIntersection);
+        if($gltf){
+            console.log("$gltf", $gltf)
+        }       
+    }   
 
 </script>
 
+<!-- position={{x: $offsetX, y: $offsetY, z: -2}} -->
 
 {#if $gltf}
     <Object3DInstance 
         object={$gltf.scene} 
         castShadow 
         receiveShadow 
-        position={{x: $offsetX, y: $offsetY, z: -2}}
+        position={{x: 0, y: 2, z: -2}}
         lookAt={pointOfIntersection}
         scale={0.2}
     />

@@ -191,7 +191,7 @@
     <OrbitControls 
        
         autoRotate={false} 
-        enableDamping
+        
         autoRotateSpeed={0.2} 
         enableZoom={true}
        
