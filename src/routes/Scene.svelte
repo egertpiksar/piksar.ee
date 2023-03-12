@@ -190,7 +190,7 @@
     -->
     <OrbitControls 
        
-        autoRotate={false} 
+        autoRotate={true} 
         
         autoRotateSpeed={0.2} 
         enableZoom={true}
@@ -361,7 +361,7 @@
  -->
 <!-- <GLTF url={computersGlb} /> -->
 
-<Drone bind:mainCamera={mainCamera} />
+<Drone />
 
 <Screen2 bind:offsetX={$offsetX} bind:offsetY={$offsetY} bind:offsetZ={$offsetZ}/>
 
