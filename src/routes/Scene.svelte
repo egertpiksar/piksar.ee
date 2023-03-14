@@ -190,7 +190,7 @@
     -->
     <OrbitControls 
        
-        autoRotate={true} 
+        autoRotate={false} 
         
         autoRotateSpeed={0.2} 
         enableZoom={true}

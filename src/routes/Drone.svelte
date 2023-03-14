@@ -32,22 +32,22 @@
 
     $: offsetX.set($pointer.x * 6)
 
-	const offsetY = spring(0, {
+	const offsetY = spring(0.5, {
         stiffness: 0.01,
         damping: 0.5
     })
 
     $: {
-        if($pointer.y > 0.1){
-            offsetY.set($pointer.y * 5)
+        if($pointer.y > 0 && $pointer.y < 0.5){
+            offsetY.set($pointer.y * 10)
         }
-    }
-
-    $: {
-        pointOfIntersection = new Vector3($pointer.x * 10, $pointer.y * 10, 0);
+        pointOfIntersection = new Vector3($pointer.x * 6, $pointer.y * 10, 0);
         // FOR FUTURE see vaatab kaamerasse
         // raycaster.setFromCamera($pointer, $camera);
         // pointOfIntersection = raycaster.ray.origin; 
+
+        //console.log("x;", $offsetX, "y;", $offsetY)
+        //console.log("pointer x", $pointer.x, "pointer y", $pointer.y)
     }   
 
 </script>
