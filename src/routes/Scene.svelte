@@ -128,10 +128,9 @@
         enableDamping
     -->
     <OrbitControls        
-        autoRotate={false}         
+        autoRotate={true}         
         autoRotateSpeed={0.2} 
-        enableZoom={true}       
-       
+        enableZoom={true}      
         target={{ y: 2 }} 
     />
 </T.PerspectiveCamera>
