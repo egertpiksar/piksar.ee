@@ -40,7 +40,7 @@
 
     // TODO animatioone juurde
     const { gltf, actions, mixer } = useGltfAnimations(({ actions, mixer }) => {
-        console.log("gltf", gltf) 
+        console.log("gltf", $gltf) 
         console.log("actions", actions) 
         console.log("mixer", mixer) 
 	})

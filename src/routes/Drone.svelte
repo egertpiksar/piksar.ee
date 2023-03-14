@@ -1,4 +1,5 @@
 <script lang="ts">
+    import {onMount} from "svelte"
     import drone from "$lib/models/drone.glb";	
 	import { 
         useThrelte,
@@ -54,7 +55,7 @@
 
 {#if $gltf}
     <Object3DInstance 
-        object={$gltf.scene.children[0]} 
+        object={$gltf.nodes.whiteDrone} 
         castShadow 
         receiveShadow 
         position={{x: $offsetX, y: $offsetY, z: -2}}

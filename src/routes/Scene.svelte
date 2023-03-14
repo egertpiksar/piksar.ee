@@ -1,10 +1,6 @@
 <script lang="ts">
     import Character from './Character.svelte';
     import Stats from 'stats.js';
-	import office4 from "$lib/models/Room/office4.glb";	
-    import computersGlb from "$lib/models/computers_1-transformed.glb";	
-    import normalMap from "$lib/models/Room/floorNormal.jpg";	
-    import roughnessMap from "$lib/models/Room/floorRoughness.jpg";		
 	import { 
 		OrbitControls, 
 		T,
@@ -20,26 +16,15 @@
         GLTF 
     } from '@threlte/extras'
     import { onMount } from 'svelte';
-    import { 
-        MeshStandardMaterial, 
-        RepeatWrapping, 
-        LinearMipmapLinearFilter,
-        PCFSoftShadowMap,
-		Vector2, 
-        Vector3,
-        PlaneGeometry,
-        MathUtils,
-		Mesh
-    } from 'three'
-    import { Reflector } from "three/examples/jsm/objects/Reflector.js"
     import Screen2 from "./Screen2.svelte"
     import GUI from 'lil-gui';
     import { Fog } from '@threlte/core'
     import { Editable } from '@threlte/theatre'
     import Effects from "./Effects.svelte";
-    import { writable } from 'svelte/store';
     import Computers from "./Computers.svelte";    
     import Drone from "./Drone.svelte";
+    import Room from "./Room.svelte";
+    import scifiRoom from "$lib/models/scifi_scene.gltf";	
 
     export let isPageLoaded: boolean;
 
@@ -50,7 +35,6 @@
     let light2: any;
     let helper: any;    
     let mainCamera: any;
-    let asphalt: any;
     let fog: any;
     let squareLight: any;
 
@@ -104,11 +88,6 @@
         listenStats();
     })
 
-    const { gltf } = useGltf(office4, {
-        useDraco: true
-    })
-
-
     function loadStats(){
         stats1.showPanel(0); // Panel 0 = fps
         stats1.domElement.style.cssText = 'position:absolute;top:0px;left:0px;';
@@ -132,46 +111,6 @@
         stats3.end();
     }
 
-    const asphaltTextures = useTexture({ normalMap: normalMap, roughnessMap: roughnessMap})
-   
-    // sharp/teravam
-    asphaltTextures.normalMap.minFilter = LinearMipmapLinearFilter
-    asphaltTextures.normalMap.magFilter = LinearMipmapLinearFilter; 
-
-    asphaltTextures.normalMap.generateMipmaps = false;
-    asphaltTextures.normalMap.wrapS = RepeatWrapping;
-    asphaltTextures.normalMap.wrapT = RepeatWrapping;
-    asphaltTextures.normalMap.repeat.set(1, 1)
-   
-    asphaltTextures.roughnessMap.generateMipmaps = false;
-    asphaltTextures.roughnessMap.wrapS = RepeatWrapping;
-    asphaltTextures.roughnessMap.wrapT = RepeatWrapping;
-    asphaltTextures.roughnessMap.repeat.set(1, 1)
-
-    let geometry = new PlaneGeometry(16, 15);
-
-	let groundMirror = new Reflector(geometry, {
-		clipBias: 0.003,
-		textureWidth: window.innerWidth * window.devicePixelRatio,
-		textureHeight: window.innerHeight * window.devicePixelRatio,
-		color: 0xa0a0a0,
-	});	
-
-    const asphaltMaterial = new MeshStandardMaterial({
-        ...asphaltTextures,
-        color: "#141414", 
-        metalness: 1,
-        opacity: 0.9,
-        transparent: true,
-		roughness: 1,
-        normalScale: new Vector2(2,2)
-    })
-
-    const panelMaterial = new MeshStandardMaterial({
-        metalness: 0.42,
-		roughness: 0.86,
-        color: "black",        
-    })
 
     $: console.log("isLoaded", isPageLoaded)
 
@@ -188,14 +127,11 @@
         maxDistance={20}
         enableDamping
     -->
-    <OrbitControls 
-       
-        autoRotate={false} 
-        
+    <OrbitControls        
+        autoRotate={false}         
         autoRotateSpeed={0.2} 
-        enableZoom={true}
+        enableZoom={true}       
        
-        maxDistance={20} 
         target={{ y: 2 }} 
     />
 </T.PerspectiveCamera>
@@ -253,113 +189,17 @@
     </T.MeshStandardMaterial>
 </T.Mesh>
 
-{#if $gltf}
-  <Group>
-    <T.Mesh
-        bind:ref={asphalt}
-        position.y={0} 
-        position.x={0}
-        position.z={0}
-        receiveShadow 
-        geometry={$gltf.nodes['bottom'].geometry}
-        rotation.x={(-Math.PI)}
-        rotation.y={0}
-    >
+<Room />
 
-        <!-- <Editable name="Asphalt / Floor" 
-            position.y
-            position.x
-            position.z
-            receiveShadow
-            castShadow
-            rotation.x
-            rotation.y    
-        /> -->
-
-        <!-- normalMap={asphaltTextures.normalMap} 
-            roughnessMap={asphaltTextures.roughnessMap} 
-                -->
-       <!--  <MeshReflectorMaterial /> -->
-        <!-- <T is={MeshReflectorMaterial}
-            blur={[300, 30]}
-            resolution={2048}
-            mixBlur={1}
-            mixStrength={80}
-            roughness={1}
-            depthScale={1.2}
-            minDepthThreshold={0.4}
-            maxDepthThreshold={1.4}
-            color="#202020"
-            metalness={0.8}
-          /> -->
-        <T.MeshStandardMaterial 
-            fog={true}             
-            color={"#181818"}
-            transparent={false} 
-            metalness={1} 
-            roughness={1} 
-            opacity={1}
-            normalScale.x={2} 
-            normalScale.y={2}
-        >
-            <!-- <Editable name="Floor / Material" 
-                color roughness metalness flatShading opacity transparent
-                normalScale                 
-                fog
-            /> -->
-        </T.MeshStandardMaterial>
-    </T.Mesh>
-
-    <!--<T.Mesh bind:ref={groundMirror} rotation.x={( - Math.PI / 2 )}></T.Mesh>-->
-
-    <T.Mesh 
-        castShadow 
-        receiveShadow 
-        geometry={$gltf.nodes['panel'].geometry}
-        material={panelMaterial} 
-        rotation={[-Math.PI, 0, 0]} 
-    />
-
-    <T.Mesh 
-        castShadow 
-        receiveShadow 
-        geometry={$gltf.nodes['walls'].geometry}
-        rotation={[-Math.PI, 0, 0]} 
-    >
-        <T.MeshStandardMaterial fog={true} color={"#181818"} 
-            metalness={0} roughness={1}
-            normalScale.x={2} normalScale.y={2}
-        >
-           <!--  <Editable name="Walls / Material" 
-                color roughness metalness flatShading
-                normalScale                 
-                fog
-            /> -->
-        </T.MeshStandardMaterial>
-    </T.Mesh>
-  </Group>
-{/if}
+<!-- <GLTF     
+    url={scifiRoom}
+    useDraco
+    castShadow
+    receiveShadow
+    rotation={{y: -(Math.PI)}}
+/> -->
 
 <!-- <Computers /> -->
-
-<!-- {#if $computers}
-  <Group>
-    <T.Mesh 
-        castShadow 
-        receiveShadow 
-        geometry={$computers.nodes['walls'].geometry}
-        rotation={[-Math.PI, 0, 0]} 
-    >
-        <T.MeshStandardMaterial fog={true} color={"#181818"} 
-            metalness={0} roughness={1}
-            normalScale.x={2} normalScale.y={2}
-        >
-        </T.MeshStandardMaterial>
-    </T.Mesh>
-  </Group>
-{/if}
- -->
-<!-- <GLTF url={computersGlb} /> -->
 
 <Drone />
 
