@@ -25,6 +25,7 @@
     import Drone from "./Drone.svelte";
     import Room from "./Room.svelte";
     import scifiRoom from "$lib/models/scifi_scene.gltf";	
+    import Trophy from "./Trophy.svelte";
 
     export let isPageLoaded: boolean;
 
@@ -205,5 +206,7 @@
 <Screen2 bind:offsetX={$offsetX} bind:offsetY={$offsetY} bind:offsetZ={$offsetZ}/>
 
 <Character isPageLoaded={isPageLoaded} camera={mainCamera} /> 
+
+<Trophy />
 
 <Fog bind:fog={fog} color={'#2A2A2A'} near={5} far={30}/>
