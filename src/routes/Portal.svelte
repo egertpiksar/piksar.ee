@@ -29,32 +29,32 @@
 </script>
 
 {#if $gltf && tex}
-    <T.Mesh
-        scale={1}
-        geometry={$gltf.nodes.baked.geometry}>
+    <Group scale={2}>
+        <T.Mesh
+            geometry={$gltf.nodes.baked.geometry}>
+                <T.MeshBasicMaterial map={tex} />
+        </T.Mesh>
 
-        <T.MeshBasicMaterial map={tex} />
-    </T.Mesh>
+        <T.Mesh
+            geometry={$gltf.nodes.poleLightA.geometry}
+            position={[$gltf.nodes.poleLightA.position.x, $gltf.nodes.poleLightA.position.y, $gltf.nodes.poleLightA.position.z]}>
+                <T.MeshBasicMaterial color={"#ffffe5"} />
 
-    <T.Mesh
-        geometry={$gltf.nodes.poleLightA.geometry}
-        position={[$gltf.nodes.poleLightA.position.x, $gltf.nodes.poleLightA.position.y, $gltf.nodes.poleLightA.position.z]}>
-            <T.MeshBasicMaterial color={"#ffffe5"} />
+        </T.Mesh>
 
-    </T.Mesh>
+        <T.Mesh
+            geometry={$gltf.nodes.poleLightB.geometry}
+            position={[$gltf.nodes.poleLightB.position.x, $gltf.nodes.poleLightB.position.y, $gltf.nodes.poleLightB.position.z]}>
+                <T.MeshBasicMaterial color={"#ffffe5"} />
+        </T.Mesh>
 
-    <T.Mesh
-        geometry={$gltf.nodes.poleLightB.geometry}
-        position={[$gltf.nodes.poleLightB.position.x, $gltf.nodes.poleLightB.position.y, $gltf.nodes.poleLightB.position.z]}>
-            <T.MeshBasicMaterial color={"#ffffe5"} />
-    </T.Mesh>
-
-    <T.Mesh
-        geometry={$gltf.nodes.portalLight.geometry}
-        position={[$gltf.nodes.portalLight.position.x, $gltf.nodes.portalLight.position.y, $gltf.nodes.portalLight.position.z]}
-        rotation={[$gltf.nodes.portalLight.rotation.x, $gltf.nodes.portalLight.rotation.y, $gltf.nodes.portalLight.rotation.z]}
-        >
-            <T.MeshBasicMaterial color={"#ffffe5"} />
-</T.Mesh>
+        <T.Mesh
+            geometry={$gltf.nodes.portalLight.geometry}
+            position={[$gltf.nodes.portalLight.position.x, $gltf.nodes.portalLight.position.y, $gltf.nodes.portalLight.position.z]}
+            rotation={[$gltf.nodes.portalLight.rotation.x, $gltf.nodes.portalLight.rotation.y, $gltf.nodes.portalLight.rotation.z]}
+            >
+                <T.MeshBasicMaterial color={"#ffffe5"} />
+        </T.Mesh>
+    </Group>
 {/if}
 
