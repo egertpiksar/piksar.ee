@@ -5,16 +5,9 @@
 		OrbitControls, 
 		T,
         useFrame, 
-        Group,
-        useTexture,
         useThrelte 
 	} from '@threlte/core'
 	import { spring } from 'svelte/motion'
-	import { degToRad } from 'three/src/math/MathUtils'
-	import { 
-        useGltf,
-        GLTF 
-    } from '@threlte/extras'
     import { onMount } from 'svelte';
     import Screen2 from "./Screen2.svelte"
     import GUI from 'lil-gui';
@@ -23,8 +16,7 @@
     import Effects from "./Effects.svelte";
     import Computers from "./Computers.svelte";    
     import Drone from "./Drone.svelte";
-    import Room from "./Room.svelte";
-    import scifiRoom from "$lib/models/scifi_scene.gltf";	
+    import Room from "./Room.svelte";	
     import Trophy from "./Trophy.svelte";
     import Portal from "./Portal.svelte";
     import Warehouse from "./Warehouse.svelte";
@@ -42,8 +34,6 @@
     let squareLight: any;
 
     let stats1 = new Stats();
-    let stats2 = new Stats();
-    let stats3 = new Stats();
 
     let cameraPosition = [10,1,10]; 
 
@@ -85,9 +75,6 @@
     })
 
     useFrame(() => {
-        //console.log("renderer", renderer);
-        //console.log("scene", scene)
-        //renderer.shadowMap.type = PCFSoftShadowMap;
         listenStats();
     })
 
@@ -101,7 +88,6 @@
         stats1.begin();
         stats1.end();
     }
-
 
     $: console.log("isLoaded", isPageLoaded)
 
@@ -159,19 +145,11 @@
 
 <Warehouse />
 
-<!-- <GLTF     
-    url={scifiRoom}
-    useDraco
-    castShadow
-    receiveShadow
-    rotation={{y: -(Math.PI)}}
-/> -->
-
 <!-- <Computers /> -->
 
 <Drone />
 
-<!-- <Screen2 bind:offsetX={$offsetX} bind:offsetY={$offsetY} bind:offsetZ={$offsetZ}/> -->
+<Screen2 bind:offsetX={$offsetX} bind:offsetY={$offsetY} bind:offsetZ={$offsetZ}/>
 
 <Character isPageLoaded={isPageLoaded} camera={mainCamera} /> 
 
