@@ -83,7 +83,7 @@
     }
 
     function moveCameraToCenter(e){
-        console.log(camera)
+        //console.log(camera)
     }
 
 </script>

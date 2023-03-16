@@ -26,6 +26,7 @@
     import Room from "./Room.svelte";
     import scifiRoom from "$lib/models/scifi_scene.gltf";	
     import Trophy from "./Trophy.svelte";
+    import Portal from "./Portal.svelte";
 
     export let isPageLoaded: boolean;
 
@@ -78,11 +79,11 @@
     })
 	//$: offsetY.set($pointer.y * 1)
 
-    onMount(() =>{
+    onMount(() => {
         loadStats();     
     })
 
-    useFrame(({renderer, scene}) => {
+    useFrame(() => {
         //console.log("renderer", renderer);
         //console.log("scene", scene)
         //renderer.shadowMap.type = PCFSoftShadowMap;
@@ -93,23 +94,11 @@
         stats1.showPanel(0); // Panel 0 = fps
         stats1.domElement.style.cssText = 'position:absolute;top:0px;left:0px;';
         document.body.appendChild(stats1.domElement);
-
-        stats2.showPanel(1); // Panel 1 = ms
-        stats2.domElement.style.cssText = 'position:absolute;top:0px;left:80px;';
-        document.body.appendChild(stats2.domElement);
-
-        stats3.showPanel(2); // Panel 1 = ms
-        stats3.domElement.style.cssText = 'position:absolute;top:0px;left:160px;';
-        document.body.appendChild(stats3.domElement);
     }
 
     function listenStats(){
         stats1.begin();
-        stats2.begin();
-        stats3.begin();
         stats1.end();
-        stats2.end();
-        stats3.end();
     }
 
 
@@ -163,34 +152,9 @@
 <!-- <T.AmbientLight intensity={0.5} /> -->
 <T.SpotLight castShadow position={[0, 1, 0]} intensity={0.3} />
 
+<!-- <Room /> -->
 
-<T.Mesh bind:ref={squareLight} scale={6.5} position={[0, 5.8, 2]} rotation={[-Math.PI / 2, 0, degToRad(45)]}>
-    <Editable name="Ceiling / Lamp" 
-        position.y
-        position.x
-        position.z
-        receiveShadow
-        castShadow
-        rotation.x
-        rotation.y    
-        rotation.z
-        scale
-    />
-
-    <T.RingGeometry args={[0.9, 1, 4, 1]}>   
-    </T.RingGeometry>
-
-    <T.MeshStandardMaterial color={"white"} roughness={0.75} side={2}>
-       <!--  <Editable name="Lamp / Material" 
-           color
-           roughness
-           side
-        /> -->
-    </T.MeshStandardMaterial>
-</T.Mesh>
-
-<Room />
-
+<Portal />
 <!-- <GLTF     
     url={scifiRoom}
     useDraco
@@ -209,4 +173,4 @@
 
 <Trophy />
 
-<Fog bind:fog={fog} color={'#2A2A2A'} near={5} far={30}/>
+<!-- <Fog bind:fog={fog} color={'#2A2A2A'} near={5} far={30}/> -->

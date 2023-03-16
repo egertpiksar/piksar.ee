@@ -10,6 +10,7 @@
 	import { tweened } from 'svelte/motion'
 	import { fade, fly } from 'svelte/transition'
 	import { Theatre } from '@threlte/theatre'
+	import { NoToneMapping } from 'three';
 
 	let isWrapperVisible = true;
 	let isLoaded = false;
@@ -61,8 +62,9 @@
 			</p>
 		</div>
 	{/if}	
-
-	<Canvas>
+	
+	<!-- flat = THREE.NoToneMapping-->
+	<Canvas flat>
 		<Theatre>
 			<Scene isPageLoaded={isLoaded}/>
 		</Theatre>	
@@ -77,6 +79,7 @@
 		outline: none;
 		height: 100%;
     	width: 100%;
+		background-color: black;
 	}
 
 	.loadingBar {
