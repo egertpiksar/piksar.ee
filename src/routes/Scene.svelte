@@ -27,6 +27,7 @@
     import scifiRoom from "$lib/models/scifi_scene.gltf";	
     import Trophy from "./Trophy.svelte";
     import Portal from "./Portal.svelte";
+    import Warehouse from "./Warehouse.svelte";
 
     export let isPageLoaded: boolean;
 
@@ -154,7 +155,10 @@
 
 <!-- <Room /> -->
 
-<Portal />
+<!-- <Portal /> -->
+
+<Warehouse />
+
 <!-- <GLTF     
     url={scifiRoom}
     useDraco
@@ -167,7 +171,7 @@
 
 <Drone />
 
-<Screen2 bind:offsetX={$offsetX} bind:offsetY={$offsetY} bind:offsetZ={$offsetZ}/>
+<!-- <Screen2 bind:offsetX={$offsetX} bind:offsetY={$offsetY} bind:offsetZ={$offsetZ}/> -->
 
 <Character isPageLoaded={isPageLoaded} camera={mainCamera} /> 
 
