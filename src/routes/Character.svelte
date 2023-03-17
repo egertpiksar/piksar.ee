@@ -106,6 +106,7 @@
     useDraco
     castShadow
     receiveShadow
+    position={{x: 0, y: 0, z:-10}}
     rotation={{y: -(Math.PI)}}
     viewportAware
     interactive

@@ -104,16 +104,6 @@
         rotation.y={0}
     >
 
-        <!-- <Editable name="Asphalt / Floor" 
-            position.y
-            position.x
-            position.z
-            receiveShadow
-            castShadow
-            rotation.x
-            rotation.y    
-        /> -->
-
         <!-- normalMap={asphaltTextures.normalMap} 
             roughnessMap={asphaltTextures.roughnessMap} 
                 -->

@@ -73,22 +73,20 @@
 </script>
 
 {#if $gltf && textures}
-    <Group lookAt={pointOfIntersection} position={{x: $offsetX, y: $offsetY, z:-2}}>
+    <Group lookAt={pointOfIntersection} position={{x: $offsetX, y: $offsetY, z: -12}}>
         <T.Mesh
-            scale={0.003}
+            scale={0.002}
             geometry={$gltf.nodes.Box001.geometry}
             rotation.x={Math.PI / 2}
-            rotation.z={-Math.PI / 2}
-            >
+            rotation.z={-Math.PI / 2}>
                 <T.MeshBasicMaterial map={textures} />
         </T.Mesh>
 
         <T.Mesh
-            scale={0.003}
+            scale={0.002}
             geometry={$gltf.nodes.Object002.geometry}
             rotation.x={Math.PI / 2}
-            rotation.z={-Math.PI / 2}
-            >
+            rotation.z={-Math.PI / 2}>
                 <T.MeshBasicMaterial map={textures} />
         </T.Mesh>
     </Group>   

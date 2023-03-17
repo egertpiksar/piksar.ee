@@ -65,9 +65,9 @@
 	
 	<!-- flat = THREE.NoToneMapping-->
 	<Canvas flat>
-		<Theatre>
+		<!-- <Theatre> -->
 			<Scene isPageLoaded={isLoaded}/>
-		</Theatre>	
+		<!-- </Theatre> -->	
 	</Canvas>
 </div>
 

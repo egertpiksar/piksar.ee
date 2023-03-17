@@ -13,8 +13,8 @@
         T
 	} from '@threlte/core';
     import { DEG2RAD } from 'three/src/math/MathUtils';
-    import warehouse from "$lib/models/warehouse/scene.glb";	
-    import warehousejpg from "$lib/models/warehouse/warehouse.jpg";
+    import warehouse from "$lib/models/warehouse/kuuelambigawarehouse.glb";	
+    import warehousejpg from "$lib/models/warehouse/kuuelambigawarehouse.jpg";
     
     const { gltf } = useGltf(warehouse, {
         useDraco: true

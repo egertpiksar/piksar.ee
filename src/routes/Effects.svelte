@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { Editable } from '@threlte/theatre'
     import { Pass, T, useTexture, useLoader  } from '@threlte/core'
     import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass.js'
     import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';

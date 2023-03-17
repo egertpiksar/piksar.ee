@@ -23,7 +23,7 @@
 
 
 {#if $gltf}
-    <Group position={{x: 4, y: 0, z: -3}} rotation={{y: DEG2RAD * -25}}>
+    <Group position={{x: 5, y: 0, z: -13}} rotation={{y: DEG2RAD * -25}}>
         <Object3DInstance 
             object={$gltf.scene} 
             castShadow 
