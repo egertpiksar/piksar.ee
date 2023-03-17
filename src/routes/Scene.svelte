@@ -57,8 +57,7 @@
             console.log("mainCamera", mainCamera)
            folder.add(mainCamera.position , 'x', -20, 20 ).step(1)  
            folder.add(mainCamera.position , 'y', -20, 20 ).step(1) 
-           folder.add(mainCamera.position , 'z', -20, 20 ).step(1)  
-           folder.add(mainCamera, "autoRotate")        
+           folder.add(mainCamera.position , 'z', -20, 20 ).step(1)       
         }
 
         if(light1){

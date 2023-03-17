@@ -30,7 +30,6 @@
     const { pointer, camera } = useThrelte();
     const { raycaster } = useThrelteRoot();
 
-
     const { gltf } = useGltf(drone, {
         useDraco: true
     })
@@ -41,22 +40,28 @@
     let pointOfIntersection = new Vector3();
    
     const offsetX = spring(0, {
-        stiffness: 0.01,
-        damping: 0.5
-    }) 
-
-    $: offsetX.set($pointer.x * 6)
-
-    const offsetY = spring(0.5, {
-        stiffness: 0.01,
+        stiffness: 0.005,
         damping: 0.5
     })
+
+    $: if($pointer.x){
+        offsetX.set($pointer.x * 6)
+    }
+
+    const offsetY = spring(0.5, {
+        stiffness: 0.003,
+        damping: 0.5
+    })    
     
-    let cubePosition = new Vector3($offsetX, $offsetY, 0);   
+    // kui liigutada drooni Z, siis seda ka timmida
+    let cubePosition = new Vector3(0, 0, -12);   
 
     $: {
+        console.log("pointer", $pointer, cubePosition)
+
         if($pointer.y > 0 && $pointer.y < 0.5){
             offsetY.set($pointer.y * 10)
+            //$droneOffset.y = $pointer.y * 10;
         }
 
         raycaster.setFromCamera($pointer, $camera);
@@ -73,8 +78,9 @@
 </script>
 
 {#if $gltf && textures}
-    <Group lookAt={pointOfIntersection} position={{x: $offsetX, y: $offsetY, z: -12}}>
+    <Group lookAt={pointOfIntersection} position={{x: $offsetX, y: $offsetY, z: -13.5}}>
         <T.Mesh
+            receiveShadow
             scale={0.002}
             geometry={$gltf.nodes.Box001.geometry}
             rotation.x={Math.PI / 2}
