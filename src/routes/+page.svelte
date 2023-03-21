@@ -44,7 +44,7 @@
 		<div class="wrapper" out:fade={{duration: 1000}}>	
 			<div style="font-size: 3rem; margin: 40px;" transition:fade="{{ duration: 2000 }}">
 				<div>EGERT PIKSAR</div>
-				<div>PORTFOOLIO © 2023</div>
+				<div>PLAYGROUND © 2023</div>
 			</div>				
 
 			<div class="loadingWrapper">

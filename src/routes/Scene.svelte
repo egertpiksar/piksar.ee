@@ -20,7 +20,7 @@
     import Trophy from "./Trophy.svelte";
     import Portal from "./Portal.svelte";
     import Warehouse from "./Warehouse.svelte";
-    import { DEG2RAD } from 'three/src/math/MathUtils'
+    import { degToRad } from 'three/src/math/MathUtils'
 
     export let isPageLoaded: boolean;
 
@@ -28,12 +28,11 @@
 
     let dude: any;
     let light1: any;
+    let light2: any;
     let helper: any;    
     let mainCamera: any;
     let fog: any;
-    let squareLight: any;
-
-    
+    let squareLight: any;   
 
     let stats1 = new Stats();
 
@@ -71,6 +70,19 @@
             dirlight.add(light1.rotation, "z", -3.14, 3.14).step(0.1);
             dirlight.add(light1, "intensity")
             dirlight.addColor(light1, "color")
+        }  
+
+        if(light2){
+            const dirlight = gui.addFolder("dirlight2");
+            dirlight.add(light2.position, "x", -20, 20).step(1);
+            dirlight.add(light2.position, "y", -10, 10).step(1);
+            dirlight.add(light2.position, "z", -20, 20).step(1);
+
+            dirlight.add(light2.rotation, "x", -3.14, 3.14).step(0.1);
+            dirlight.add(light2.rotation, "y", -3.14, 3.14).step(0.1);
+            dirlight.add(light2.rotation, "z", -3.14, 3.14).step(0.1);
+            dirlight.add(light2, "intensity")
+            dirlight.addColor(light2, "color")
         }  
 
         if(fog){
@@ -118,6 +130,10 @@
         autoRotate={true}         
         autoRotateSpeed={0.2} 
         enableZoom={true}      
+        maxPolarAngle={degToRad(90)} 
+        minPolarAngle={degToRad(90)}
+        minAzimuthAngle={degToRad(-50)}
+        maxAzimuthAngle={degToRad(50)}
         target={{x: 0, y: 2, z: -14 }} 
     />
 </T.PerspectiveCamera>
@@ -132,6 +148,19 @@
     shadow.mapSize.height = {1024}>
         {#if light1}
             <T.DirectionalLightHelper bind:ref={helper} args={[light1, 0.5, "red"]} />
+        {/if}
+</T.DirectionalLight>
+
+<T.DirectionalLight bind:ref={light2} 
+    castShadow 
+    intensity={1} 
+    position={[-2, -2, 0]}
+    rotation={[Math.PI / 2, Math.PI / 2, Math.PI / 2]}
+    color={"#6e93c4"}
+    shadow.mapSize.width = {1024} 
+    shadow.mapSize.height = {1024}>
+        {#if light1}
+            <T.DirectionalLightHelper bind:ref={helper} args={[light2, 0.5, "red"]} />
         {/if}
 </T.DirectionalLight>
 
