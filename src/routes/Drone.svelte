@@ -57,7 +57,7 @@
     let cubePosition = new Vector3(0, 0, -12);   
 
     $: {
-        console.log("pointer", $pointer, cubePosition)
+        //console.log("pointer", $pointer, cubePosition)
 
         if($pointer.y > 0 && $pointer.y < 0.5){
             offsetY.set($pointer.y * 10)
@@ -81,6 +81,7 @@
     <Group lookAt={pointOfIntersection} position={{x: $offsetX, y: $offsetY, z: -13.5}}>
         <T.Mesh
             receiveShadow
+            castShadow
             scale={0.002}
             geometry={$gltf.nodes.Box001.geometry}
             rotation.x={Math.PI / 2}
@@ -89,6 +90,7 @@
         </T.Mesh>
 
         <T.Mesh
+            receiveShadow
             scale={0.002}
             geometry={$gltf.nodes.Object002.geometry}
             rotation.x={Math.PI / 2}
