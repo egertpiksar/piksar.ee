@@ -40,17 +40,17 @@
 
     const { pointer } = useThrelte();
 
-    const cameraOffset = spring({x:5, y: 1, z: 0}, {
+    const cameraOffset = spring({x: 3.7, y: 1, z: 0}, {
         stiffness: 0.003,
         damping: 0.5
     })
 
-    const cameraTarget = spring({x: 0, y: 2, z: -8 }, {
+    const cameraTarget = spring({x: 1, y: 1.9, z: -8 }, {
         stiffness: 0.005,
         damping: 0.5
     })
 
-    $: if($pointer.x || $pointer.y){
+    $: if(mainCamera && ($pointer.x || $pointer.y)){
         cameraTarget.set({
             x: $pointer.x * 1.1, 
             y: $pointer.y * 0.1 + 2,
@@ -63,11 +63,13 @@
             z: 0
         })
 
-    }
-
-    $: console.log("cameraTarfet", $cameraTarget)
+        console.log("cameraTarget", $cameraTarget)
+        console.log("cameraOffset", $cameraOffset)
+    } 
 
     onMount(() => {
+        console.log("cameraOffset", $cameraOffset)
+        console.log("cameraTarget", $cameraTarget)
         loadStats();     
 
         const folder = gui.addFolder('camera');
@@ -136,7 +138,7 @@
 
 <T.PerspectiveCamera bind:ref={mainCamera} makeDefault 
     position={[$cameraOffset.x, $cameraOffset.y, $cameraOffset.z]} 
-    rotation={[0, Math.PI, 0]}
+    rotation={[0, 0, 0]}
     fov={40}>
     <!--  maxPolarAngle={degToRad(90)} 
         minPolarAngle={degToRad(90)}
@@ -146,9 +148,10 @@
         enableDamping
     -->
     <OrbitControls        
-        enableZoom={true}     
+        enableZoom={false}    
+        enableDamping={false} 
         target={{x: $cameraTarget.x, y: $cameraTarget.y, z: $cameraTarget.z }} 
-    />
+    /> 
 </T.PerspectiveCamera>
 
 <T.DirectionalLight bind:ref={light1} 
@@ -156,7 +159,7 @@
     intensity={1} 
     position={[2, -2, 0]}
     rotation={[Math.PI / 2, Math.PI / 2, Math.PI / 2]}
-    color={"#6e93c4"}
+    color={"#2d3b4e"}
     shadow.mapSize.width = {1024} 
     shadow.mapSize.height = {1024}>
         {#if light1}
@@ -169,7 +172,7 @@
     intensity={1} 
     position={[-2, -2, 0]}
     rotation={[Math.PI / 2, Math.PI / 2, Math.PI / 2]}
-    color={"#6e93c4"}
+    color={"#2d3b4e"}
     shadow.mapSize.width = {1024} 
     shadow.mapSize.height = {1024}>
         {#if light1}
