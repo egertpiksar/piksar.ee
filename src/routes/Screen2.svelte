@@ -9,9 +9,8 @@
     import { Editable } from '@threlte/theatre'
 
     //export let cameraPosition;
-    export let offsetX;
-    export let offsetY;
-    export let offsetZ;
+    export let cameraOffset;
+
 
     let rectLight: any;
     let helper: any;
@@ -33,20 +32,20 @@
     })
 
     function zoomCameraIn(e){
-        /* console.log("move camera in", offsetX, offsetY, offsetZ)
-        offsetX = 0; */
+        /* console.log("move camera in", cameraOffset)
+        cameraOffset.x = 0; */
     }
 
     function zoomCameraOut(e){
-       /*  console.log("move camera out", offsetX, offsetY, offsetZ) */
-        //offsetX = 10;
+       /*  console.log("move camera out", cameraOffset)
+        cameraOffset.x = 7; */
     }
 
   
 </script>
 
-<Group position={{x:0, y:-0.25, z:-14}}>
-    <T.Mesh let:ref position.x={0} position.y={2.25} position.z={0} >
+<Group position={{x:0, y:-0.25, z:-9.4}}>
+    <T.Mesh let:ref position.x={-0.125} position.y={2.215} position.z={0} >
             <InteractiveObject
                 object={ref}
                 interactive
@@ -59,12 +58,12 @@
                 viewportAware
                 
             />
-            <T.PlaneGeometry args={[8.5, 3.1, 1, 1]} />
+            <T.PlaneGeometry args={[8.25, 3.1, 1, 1]} />
             <!-- TODO mingi led screeni map lisada -->
             <T.MeshStandardMaterial 
                 toneMapped={false}
                 wireframe={false}
-                metalness={0.5}
+                metalness={1}
                 roughness={0}
                 side={THREE.FrontSide}
                 flatShading={true}
@@ -109,7 +108,6 @@
             </HTML> -->
     </T.Mesh>
 
-
     <Text text="
         NAME" 
         color={"#fff"}
@@ -125,7 +123,6 @@
         fontSize={0.1}
         textAlign="left"
         position={{x: -2.3, y: 3.3, z:0.01}} />
-
 
     <Text text="
         BIO" 
@@ -149,7 +146,6 @@
         textAlign="left"
         position={{x: -2.3, y: 3.1, z:0.01}} />
 
-
     <Text text="
         EDUCATION" 
         color={"#fff"}
@@ -165,11 +161,6 @@
         fontSize={0.1}
         textAlign="left"
         position={{x: -2.3, y: 2.1, z:0.01}} />
-
-
-
-
-
 
     <Text text="
         PROJECTS" 
@@ -187,10 +178,6 @@
         textAlign="left"
         position={{x: -2.3, y: 1.9, z:0.01}} />
 
-
-
-
-
     <Text text="
         CONFS" 
         color={"#fff"}
@@ -201,22 +188,19 @@
 
 
     <Text text="
-        AWWWARDS DIGITAL THINKERS CONF 2020 && 2023, JSWORLD 2022" 
+        AWWWARDS DIGITAL THINKERS CONF 2020 AMSTERDAM & 2023 TORONTO, JSWORLD 2022 AMSTERDAM" 
         color={"#fff"}
         font={"https://use.typekit.net/af/612d42/00000000000000007735c696/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3"}
         fontSize={0.1}
         textAlign="left"
-        position={{x: -2.3, y: 1.7, z:0.01}} />
-
-
-        
+        position={{x: -2.3, y: 1.7, z:0.01}} />        
         
     <Text text="info@piksar.ee" 
         color={"#fff"}
         font={"https://use.typekit.net/af/c677d6/00000000000000007735c6a1/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3"}
         fontSize={0.1}
         textAlign="right"
-        position={{ x: 3.25, y: 0.9, z:0.01 }} />
+        position={{ x: 3, y: 0.9, z:0.01 }} />
 </Group>
 
 

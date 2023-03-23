@@ -40,13 +40,32 @@
 
     const { pointer } = useThrelte();
 
-    const cameraOffset = spring({x:7, y: 1, z: -9}, {
+    const cameraOffset = spring({x:5, y: 1, z: 0}, {
         stiffness: 0.003,
         damping: 0.5
     })
 
-    //$: offsetX.set($pointer.x * 10)
-    //$: offsetY.set($pointer.y * 10)
+    const cameraTarget = spring({x: 0, y: 2, z: -8 }, {
+        stiffness: 0.005,
+        damping: 0.5
+    })
+
+    $: if($pointer.x || $pointer.y){
+        cameraTarget.set({
+            x: $pointer.x * 1.1, 
+            y: $pointer.y * 0.1 + 2,
+            z: -8
+        });
+
+        cameraOffset.set({
+            x: 5 - ($pointer.x * 1.5),
+            y: 1,
+            z: 0
+        })
+
+    }
+
+    $: console.log("cameraTarfet", $cameraTarget)
 
     onMount(() => {
         loadStats();     
@@ -127,14 +146,8 @@
         enableDamping
     -->
     <OrbitControls        
-        autoRotate={true}         
-        autoRotateSpeed={0.2} 
-        enableZoom={true}      
-        maxPolarAngle={degToRad(90)} 
-        minPolarAngle={degToRad(90)}
-        minAzimuthAngle={degToRad(-50)}
-        maxAzimuthAngle={degToRad(50)}
-        target={{x: 0, y: 2, z: -14 }} 
+        enableZoom={true}     
+        target={{x: $cameraTarget.x, y: $cameraTarget.y, z: $cameraTarget.z }} 
     />
 </T.PerspectiveCamera>
 
@@ -190,10 +203,10 @@
 
 <Drone />
 
-<Screen2 bind:offsetX={$cameraOffset.x} bind:offsetY={$cameraOffset.y} bind:offsetZ={$cameraOffset.z}/>
+<Screen2 bind:cameraOffset={$cameraOffset}/>
 
 <Character isPageLoaded={isPageLoaded} camera={mainCamera} />
 
 <Trophy />
 
-<Fog bind:fog={fog} color={'#070709'} near={6} far={19}/>
+<Fog bind:fog={fog} color={'#070709'} near={10} far={19}/>

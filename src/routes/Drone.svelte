@@ -54,7 +54,7 @@
     })    
     
     // kui liigutada drooni Z, siis seda ka timmida
-    let cubePosition = new Vector3(0, 0, -12);   
+    let cubePosition = new Vector3(0, 0, -7);   
 
     $: {
         //console.log("pointer", $pointer, cubePosition)
@@ -78,7 +78,7 @@
 </script>
 
 {#if $gltf && textures}
-    <Group lookAt={pointOfIntersection} position={{x: $offsetX, y: $offsetY, z: -13.5}}>
+    <Group lookAt={pointOfIntersection} position={{x: $offsetX, y: $offsetY, z: -7.5}}>
         <T.Mesh
             receiveShadow
             castShadow
