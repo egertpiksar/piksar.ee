@@ -53,7 +53,7 @@
     function firstStandUp(){
         setTimeout(() => {
             standUp();
-        }, 2000);
+        }, 3000);
     }
 
     function standUp(){

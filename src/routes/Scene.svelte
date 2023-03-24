@@ -70,9 +70,19 @@
     onMount(() => {
         console.log("cameraOffset", $cameraOffset)
         console.log("cameraTarget", $cameraTarget)
-        loadStats();     
+        loadStats();   
+        loadGUI(); 
+    })
+
+    useFrame(() => {
+        listenStats();
+    })
+
+    function loadGUI(){
+        gui.add( document, 'title' );
 
         const folder = gui.addFolder('camera');
+        
         if(mainCamera){
             console.log("mainCamera", mainCamera)
            folder.add(mainCamera.position , 'x', -20, 20 ).step(1)  
@@ -112,11 +122,7 @@
             fogF.add(fog, "far", -50, 50).step(1);
             fogF.addColor(fog, "color")
         }     
-    })
-
-    useFrame(() => {
-        listenStats();
-    })
+    }
 
     function loadStats(){
         stats1.showPanel(0); // Panel 0 = fps
@@ -138,7 +144,6 @@
 
 <T.PerspectiveCamera bind:ref={mainCamera} makeDefault 
     position={[$cameraOffset.x, $cameraOffset.y, $cameraOffset.z]} 
-    rotation={[0, 0, 0]}
     fov={40}>
     <!--  maxPolarAngle={degToRad(90)} 
         minPolarAngle={degToRad(90)}
@@ -148,8 +153,9 @@
         enableDamping
     -->
     <OrbitControls        
-        enableZoom={false}    
-        enableDamping={false} 
+        enableDamping={false}
+        enablePan={false}
+        enableRotate={false}
         target={{x: $cameraTarget.x, y: $cameraTarget.y, z: $cameraTarget.z }} 
     /> 
 </T.PerspectiveCamera>

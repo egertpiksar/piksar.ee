@@ -61,6 +61,21 @@
 					{toFixedFloat($tweenedProgress)}%
 			</p>
 		</div>
+	{:else}
+		<div class="layout">	
+			<div class="name" in:fade={{delay: 1500, duration: 1000}}>
+				<div>
+					<div>EGERT PIKSAR</div>
+					<div>PLAYGROUND © 2023</div>
+				</div>				
+			</div>				
+
+			<div class="contact" in:fade={{delay: 2000, duration: 1000}}>
+				<div>
+					info@piksar.ee
+				</div>				
+			</div>
+		</div>
 	{/if}	
 	
 	<!-- flat = THREE.NoToneMapping-->
@@ -79,7 +94,6 @@
 		outline: none;
 		height: 100%;
     	width: 100%;
-		background-color: black;
 	}
 
 	.loadingBar {
@@ -112,10 +126,44 @@
 		color: white;
 	}
 
+	.layout{
+		position: absolute;
+		display: grid;
+		grid-template-columns: auto;
+		grid-template-rows: 100px 1fr 100px;
+		grid-template-areas: 
+			"name . . ."
+			". . . ."
+			". . . contact";
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		color: white;
+		pointer-events: none;
+	}
+
+	.name{
+		grid-area: name;
+		font-size: 2rem;
+		display: flex;
+		justify-content: flex-start;
+    	align-items: flex-start;
+		margin: 40px 0 0 40px;
+	}
+
+	.contact{
+		grid-area: contact;
+		font-size: 1.5rem;
+		display: flex;
+		justify-content: flex-end;
+    	align-items: flex-end;
+		margin: 0 40px 40px 0;
+	}
+
 	.loading {
 		font-size: 2rem;
 		margin-top: -10px;
 		padding-bottom: 10px;
 	}
-
 </style>
