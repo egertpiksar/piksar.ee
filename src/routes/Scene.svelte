@@ -1,26 +1,28 @@
 <script lang="ts">
     import Character from './Character.svelte';
     import Stats from 'stats.js';
-	import { 
-		OrbitControls, 
+	import {  
 		T,
         useFrame, 
         useThrelte
-	} from '@threlte/core'
-	import { spring } from 'svelte/motion'
+	} from '@threlte/core';
+    import {
+        useInteractivity,
+        OrbitControls,
+        interactivity 
+    } from "@threlte/extras";
+	import { spring } from 'svelte/motion';
     import { onMount } from 'svelte';
-    import Screen2 from "./Screen2.svelte"
+    import Screen2 from "./Screen2.svelte";
     import GUI from 'lil-gui';
-    import { Fog } from '@threlte/core'
+    //import { Fog } from '@threlte/core'
     //import { Editable } from '@threlte/theatre'
-    import Effects from "./Effects.svelte";
-    import Computers from "./Computers.svelte";    
-    import Drone from "./Drone.svelte";
-    import Room from "./Room.svelte";	
+    import Effects from "./Effects.svelte";  
+    import Drone from "./Drone.svelte";	
     import Trophy from "./Trophy.svelte";
     import Portal from "./Portal.svelte";
     import Warehouse from "./Warehouse.svelte";
-    import { degToRad } from 'three/src/math/MathUtils'
+    import { degToRad } from 'three/src/math/MathUtils';
 
     export let isPageLoaded: boolean;
 
@@ -36,9 +38,13 @@
 
     let stats1 = new Stats();
 
-    // TODO pointerOverCanvas kui nt tabi vahetada, siis kõik animatsioonid pausile
+    interactivity();
 
-    const { pointer } = useThrelte();
+    const { pointer, pointerOverTarget } = useInteractivity()
+
+    $: console.log($pointer, $pointerOverTarget)    
+
+    // TODO pointerOverCanvas kui nt tabi vahetada, siis kõik animatsioonid pausile
 
     const cameraOffset = spring({x: 3.7, y: 1, z: 0}, {
         stiffness: 0.003,
@@ -50,7 +56,7 @@
         damping: 0.5
     })
 
-    $: if(mainCamera && ($pointer.x || $pointer.y)){
+    $: if(mainCamera && ($pointer && ($pointer.x || $pointer.y))){
         cameraTarget.set({
             x: $pointer.x * 1.1, 
             y: $pointer.y * 0.1 + 2,
@@ -63,8 +69,8 @@
             z: 0
         })
 
-        console.log("cameraTarget", $cameraTarget)
-        console.log("cameraOffset", $cameraOffset)
+        //console.log("cameraTarget", $cameraTarget)
+        //console.log("cameraOffset", $cameraOffset)
     } 
 
     onMount(() => {
@@ -153,10 +159,10 @@
         enableDamping
     -->
     <OrbitControls        
-        enableDamping={false}
+        enableDamping={true}
         enablePan={false}
-        enableRotate={false}
-        target={{x: $cameraTarget.x, y: $cameraTarget.y, z: $cameraTarget.z }} 
+        enableRotate={true}
+        target={[$cameraTarget.x, $cameraTarget.y, $cameraTarget.z]} 
     /> 
 </T.PerspectiveCamera>
 
@@ -202,13 +208,9 @@
 <!-- <T.AmbientLight intensity={0.5} /> -->
 <!-- <T.SpotLight castShadow position={[0, 1, 0]} intensity={0.3} /> -->
 
-<!-- <Room /> -->
-
 <!-- <Portal /> -->
 
 <Warehouse />
-
-<!-- <Computers /> -->
 
 <Drone />
 
@@ -216,6 +218,6 @@
 
 <Character isPageLoaded={isPageLoaded} camera={mainCamera} />
 
-<Trophy />
+<!-- <Trophy /> -->
 
-<Fog bind:fog={fog} color={'#070709'} near={10} far={19}/>
+<T.Fog bind:fog={fog} color={'#070709'} near={10} far={19}/>

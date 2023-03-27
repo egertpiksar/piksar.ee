@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { Pass, T, useTexture, useLoader  } from '@threlte/core'
+    /* import { T, useLoader, extend  } from '@threlte/core';
+    import { useTexture } from "@threlte/extras";
     import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass.js'
     import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
     import { Vector2 } from 'three';
@@ -7,17 +8,21 @@
     import { useControls } from 'leva'
     import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
     import { LUTCubeLoader } from 'three/examples/jsm/loaders/LUTCubeLoader.js'
-    import { LUTPass } from 'three/examples/jsm/postprocessing/LUTPass.js'
-    import * as cube from "$lib/F-6800-STD.cube";
-	import { onMount } from 'svelte';
+    import { LUTPass } from 'three/examples/jsm/postprocessing/LUTPass.js' */
+   // import * as cube from "$lib/F-6800-STD.cube";
+	/* import { onMount } from 'svelte'; */
+
+   /*  extend({
+        Pass
+    }) */
 
     // LUT
-    const lutloader = useLoader(LUTCubeLoader, () => new LUTCubeLoader())
+    /* const lutloader = useLoader(LUTCubeLoader, () => new LUTCubeLoader())
     let lutTexture: any;
     lutloader.load("/src/lib/F-6800-STD.cube", (obj)  => {
         console.log("LUT CUBE", obj)
         lutTexture = obj;
-    })
+    }) */
 
     // BLOOM?
    
@@ -56,18 +61,18 @@
 
 </script>
 
-{#if lutTexture}
+<!-- {#if lutTexture}
     <Pass pass={new LUTPass({
         lut: lutTexture.texture,
         intensity: 1
     })} />
 {/if}
 
-<!-- reso, strength, radius, treshold -->
+
 <Pass pass={new UnrealBloomPass(
     new Vector2(1024, 1024),
     0.1,
     0.125,
     0.1
-)} />
+)} /> -->
 

@@ -9,11 +9,7 @@
     import drone_r from "$lib/models/Drone/drone_r.png";
 	import { 
         useThrelte,
-        Object3DInstance,
-		useThrelteRoot,
-        T,
-        useTexture,
-        Group 
+        T, 
 	} from '@threlte/core'
 	import { spring } from 'svelte/motion'
     import { 
@@ -24,18 +20,24 @@
     } from 'three'
 	import { 
         useGltf,
-        GLTF 
+        useTexture,
+        GLTF,
+        useInteractivity
     } from '@threlte/extras';
 
-    const { pointer, camera } = useThrelte();
-    const { raycaster } = useThrelteRoot();
+    const { pointer, raycaster } = useInteractivity();
+    const { camera } = useThrelte();
+   // const { raycaster } = useThrelteRoot();
 
-    const { gltf } = useGltf(drone, {
+    const gltf = useGltf(drone, {
         useDraco: true
     })
 
     const textures = useTexture(drone_d);
-    textures.flipY = false
+
+    $: if($textures){
+        $textures.flipY = false;
+    }
 
     let pointOfIntersection = new Vector3();
    
@@ -44,7 +46,7 @@
         damping: 0.5
     })
 
-    $: if($pointer.x){
+    $: if($pointer && $pointer.x){
         offsetX.set($pointer.x * 6)
     }
 
@@ -56,7 +58,7 @@
     // kui liigutada drooni Z, siis seda ka timmida
     let cubePosition = new Vector3(0, 0, -7);   
 
-    $: {
+    $: if($pointer && raycaster){
         //console.log("pointer", $pointer, cubePosition)
 
         if($pointer.y > 0 && $pointer.y < 0.5){
@@ -77,8 +79,8 @@
 
 </script>
 
-{#if $gltf && textures}
-    <Group lookAt={pointOfIntersection} position={{x: $offsetX, y: $offsetY, z: -7.5}}>
+{#if $gltf && $textures}
+    <T.Group lookAt={pointOfIntersection} position={[$offsetX, $offsetY, -7.5]}>
         <T.Mesh
             receiveShadow
             castShadow
@@ -86,7 +88,7 @@
             geometry={$gltf.nodes.Box001.geometry}
             rotation.x={Math.PI / 2}
             rotation.z={-Math.PI / 2}>
-                <T.MeshBasicMaterial map={textures} />
+                <T.MeshBasicMaterial map={$textures} />
         </T.Mesh>
 
         <T.Mesh
@@ -95,7 +97,7 @@
             geometry={$gltf.nodes.Object002.geometry}
             rotation.x={Math.PI / 2}
             rotation.z={-Math.PI / 2}>
-                <T.MeshBasicMaterial map={textures} />
+                <T.MeshBasicMaterial map={$textures} />
         </T.Mesh>
-    </Group>   
+    </T.Group>   
 {/if}

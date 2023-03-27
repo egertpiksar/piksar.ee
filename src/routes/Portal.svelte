@@ -1,38 +1,38 @@
 <script lang="ts">
     import { 
         useGltf,
+        useTexture,
         GLTF,
         Text
     } from '@threlte/extras';
     import { 
-        useThrelte,
-        Object3DInstance,
-		useThrelteRoot,
-        Group,
-        useTexture,
         T
 	} from '@threlte/core';
     import { DEG2RAD } from 'three/src/math/MathUtils';
-    import portal from "$lib/models/Portal/portal.glb";	
+    //import portal from "$lib/models/Portal/portal.glb";	
     import baked from "$lib/models/Portal/baked.jpg";
     
-    const { gltf } = useGltf(portal, {
+    const gltf = useGltf("$lib/models/Portal/portal.glb", {
         useDraco: true
     })
 
     const tex = useTexture(baked);
-    tex.flipY = false;
+    //tex.flipY = false;
+
+    $: if($tex){
+        $tex.flipY = false;
+    }
 
     $: console.log("portal", $gltf)
     $: console.log("tex", tex)
 
 </script>
 
-{#if $gltf && tex}
-    <Group scale={2}>
+{#if $gltf && $tex}
+    <T.Group scale={2}>
         <T.Mesh
             geometry={$gltf.nodes.baked.geometry}>
-                <T.MeshBasicMaterial map={tex} />
+                <T.MeshBasicMaterial map={$tex} />
         </T.Mesh>
 
         <T.Mesh
@@ -55,6 +55,6 @@
             >
                 <T.MeshBasicMaterial color={"#ffffe5"} />
         </T.Mesh>
-    </Group>
+    </T.Group>
 {/if}
 

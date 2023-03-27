@@ -1,10 +1,9 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { HTML, Text} from '@threlte/extras';
-    import { T, InteractiveObject, ViewportAwareObject, Group} from '@threlte/core';
+    //import { T, InteractiveObject, ViewportAwareObject} from '@threlte/core';
+    import { T } from '@threlte/core';
     import * as THREE from 'three';
-    import { preloadFonts } from './utils';
-    import { TypeShuffle } from './typeShuffle';
     //import sintel from "$lib/sintel.ogv";	
     import { Editable } from '@threlte/theatre'
 
@@ -16,37 +15,25 @@
     let helper: any;
 
     onMount(() => {
-        /*preloadFonts('biu0hfr').then(() => {
-            const textElement = document.querySelector('.content');
-            
-            const ts = new TypeShuffle(textElement);
-            ts.trigger('fx1');
-
-            [...document.querySelectorAll('.effects > button')].forEach(button => {
-                button.addEventListener('click', () => {
-                    ts.trigger(`fx${button.dataset.fx}`);
-                });
-            });
-
-        });*/
+       
     })
 
-    function zoomCameraIn(e){
-        /* console.log("move camera in", cameraOffset)
-        cameraOffset.x = 0; */
-    }
+    /*function zoomCameraIn(e){
+         console.log("move camera in", cameraOffset)
+        cameraOffset[ 0;
+    } */
 
-    function zoomCameraOut(e){
-       /*  console.log("move camera out", cameraOffset)
-        cameraOffset.x = 7; */
-    }
+    /* function zoomCameraOut(e){
+        console.log("move camera out", cameraOffset)
+        cameraOffset[ 7; 
+    }*/
 
   
 </script>
 
-<Group position={{x:0, y:-0.25, z:-9.4}}>
+<T.Group position.x={0} position.y={-0.25} position.z={-9.4}>
     <T.Mesh let:ref position.x={-0.125} position.y={2.215} position.z={0} >
-            <InteractiveObject
+            <!-- <InteractiveObject
                 object={ref}
                 interactive
                 on:pointerenter={zoomCameraIn}
@@ -57,7 +44,7 @@
                 object={ref}
                 viewportAware
                 
-            />
+            /> -->
             <T.PlaneGeometry args={[8.25, 3.1, 1, 1]} />
             <!-- TODO mingi led screeni map lisada -->
             <T.MeshStandardMaterial 
@@ -69,7 +56,7 @@
                 flatShading={true}
             />
 
-        <!--  <HTML position={{ x: 0, y: 0.25, z: 0.01 }} transform scale={0.3}>            
+        <!--  <HTML position={{[0, y: 0.25, z: 0.01 }} transform scale={0.3}>            
                 <dl class="content">
                     <dt>Name</dt>
                     <dd>Egert Piksar</dd>
@@ -114,7 +101,10 @@
         font={"https://use.typekit.net/af/c677d6/00000000000000007735c6a1/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3"}
         fontSize={0.1}
         textAlign="left"
-        position={{x: -3, y: 3.3, z:0.01}} />
+        position.x={-3}
+        position.y={3.3}
+        position.z={0.01}
+        />
 
     <Text text="
         EGERT PIKSAR" 
@@ -122,7 +112,7 @@
         font={"https://use.typekit.net/af/612d42/00000000000000007735c696/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3"}
         fontSize={0.1}
         textAlign="left"
-        position={{x: -2.3, y: 3.3, z:0.01}} />
+        position={[-2.3, 3.3, 0.01]} />
 
     <Text text="
         BIO" 
@@ -130,7 +120,7 @@
         font={"https://use.typekit.net/af/c677d6/00000000000000007735c6a1/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3"}
         fontSize={0.1}
         textAlign="left"
-        position={{x: -3, y: 3.1, z:0.01}} />
+        position={[-3, 3.1, 0.01]} />
 
     <Text text="
         CREATIVE DEVELOPER. 5 YEARS JOB EXPERIENCE AND +3 YEARS FREELANCE EXPERIENCE. 
@@ -144,7 +134,7 @@
         font={"https://use.typekit.net/af/612d42/00000000000000007735c696/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3"}
         fontSize={0.1}
         textAlign="left"
-        position={{x: -2.3, y: 3.1, z:0.01}} />
+        position={[-2.3, 3.1, 0.01]} />
 
     <Text text="
         EDUCATION" 
@@ -152,7 +142,7 @@
         font={"https://use.typekit.net/af/c677d6/00000000000000007735c6a1/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3"}
         fontSize={0.1}
         textAlign="left"
-        position={{x: -3, y: 2.1, z:0.01}} />
+        position={[-3, 2.1, 0.01]} />
 
     <Text text="
         BACHELOR OF SCIENCE IN ENGINEERING (BSc)" 
@@ -160,7 +150,7 @@
         font={"https://use.typekit.net/af/612d42/00000000000000007735c696/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3"}
         fontSize={0.1}
         textAlign="left"
-        position={{x: -2.3, y: 2.1, z:0.01}} />
+        position={[-2.3, 2.1, 0.01]} />
 
     <Text text="
         PROJECTS" 
@@ -168,7 +158,7 @@
         font={"https://use.typekit.net/af/c677d6/00000000000000007735c6a1/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3"}
         fontSize={0.1}
         textAlign="left"
-        position={{x: -3, y: 1.9, z:0.01}} />
+        position={[-3, 1.9, 0.01]} />
 
     <Text text="
         23 CUSTOMER WEBSITES AND 5 E-SHOPS" 
@@ -176,7 +166,7 @@
         font={"https://use.typekit.net/af/612d42/00000000000000007735c696/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3"}
         fontSize={0.1}
         textAlign="left"
-        position={{x: -2.3, y: 1.9, z:0.01}} />
+        position={[-2.3, 1.9, 0.01]} />
 
     <Text text="
         CONFS" 
@@ -184,8 +174,7 @@
         font={"https://use.typekit.net/af/c677d6/00000000000000007735c6a1/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3"}
         fontSize={0.1}
         textAlign="left"
-        position={{x: -3, y: 1.7, z:0.01}} />
-
+        position={[-3, 1.7, 0.01]} />
 
     <Text text="
         AWWWARDS DIGITAL THINKERS CONF 2020 AMSTERDAM & 2023 TORONTO, JSWORLD 2022 AMSTERDAM" 
@@ -193,14 +182,7 @@
         font={"https://use.typekit.net/af/612d42/00000000000000007735c696/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3"}
         fontSize={0.1}
         textAlign="left"
-        position={{x: -2.3, y: 1.7, z:0.01}} />        
-        
-    <!-- <Text text="info@piksar.ee" 
-        color={"#fff"}
-        font={"https://use.typekit.net/af/c677d6/00000000000000007735c6a1/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3"}
-        fontSize={0.1}
-        textAlign="right"
-        position={{ x: 3, y: 0.9, z:0.01 }} /> -->
-</Group>
+        position={[-2.3, 1.7, 0.01]} />        
+</T.Group>
 
 
