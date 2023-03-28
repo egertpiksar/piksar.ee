@@ -182,10 +182,10 @@
 
 <T.DirectionalLight bind:ref={light1} 
     castShadow 
-    intensity={1} 
+    intensity={7} 
     position={[2, -2, 0]}
     rotation={[Math.PI / 2, Math.PI / 2, Math.PI / 2]}
-    color={"#2d3b4e"}
+    color={"#161b22"}
     shadow.mapSize.width = {1024} 
     shadow.mapSize.height = {1024}>
         {#if light1}
@@ -195,10 +195,10 @@
 
 <T.DirectionalLight bind:ref={light2} 
     castShadow 
-    intensity={1} 
+    intensity={7} 
     position={[-2, -2, 0]}
     rotation={[Math.PI / 2, Math.PI / 2, Math.PI / 2]}
-    color={"#2d3b4e"}
+    color={"#161b22"}
     shadow.mapSize.width = {1024} 
     shadow.mapSize.height = {1024}>
         {#if light1}
@@ -220,7 +220,7 @@
 
 <T.Fog
     bind:ref={fog}
-    color={'#070709'} near={10} far={19} 
+    color={'#000000'} near={10} far={19} 
     on:create={({ ref }) => {
         scene.fog = ref
     }} 
