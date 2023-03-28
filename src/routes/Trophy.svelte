@@ -1,18 +1,16 @@
 <script lang="ts">
-    //import trophy from "$lib/models/trophy2.glb";
+    import trophy from "$lib/models/trophy2.glb";
     import { 
         useGltf,
-        GLTF,
         Text
     } from '@threlte/extras';
     import { 
         T,
-        useThrelte,
         Object3DInstance,
 	} from '@threlte/core';
     import { DEG2RAD } from 'three/src/math/MathUtils'
 
-    const gltf = useGltf("$lib/models/trophy2.glb", {
+    const gltf = useGltf(trophy, {
         useDraco: true
     })
 

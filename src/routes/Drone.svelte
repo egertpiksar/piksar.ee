@@ -12,22 +12,24 @@
         T, 
 	} from '@threlte/core'
 	import { spring } from 'svelte/motion'
-    import { 
-		Vector2, 
+    import {  
         Vector3,
         Plane,
-        MeshBasicMaterial
     } from 'three'
 	import { 
         useGltf,
         useTexture,
         GLTF,
+        interactivity,
         useInteractivity
     } from '@threlte/extras';
+    import { injectLookAtPlugin } from './plugins/lookAtPlugin'
 
-    const { pointer, raycaster } = useInteractivity();
+    interactivity();
+    injectLookAtPlugin();
+
+    const { pointer, raycaster, pointerOverTarget } = useInteractivity();
     const { camera } = useThrelte();
-   // const { raycaster } = useThrelteRoot();
 
     const gltf = useGltf(drone, {
         useDraco: true
@@ -58,8 +60,7 @@
     // kui liigutada drooni Z, siis seda ka timmida
     let cubePosition = new Vector3(0, 0, -7);   
 
-    $: if($pointer && raycaster){
-        //console.log("pointer", $pointer, cubePosition)
+    $: if($pointer && raycaster && $pointerOverTarget){
 
         if($pointer.y > 0 && $pointer.y < 0.5){
             offsetY.set($pointer.y * 10)

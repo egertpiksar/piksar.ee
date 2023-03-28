@@ -10,7 +10,6 @@
 	import { tweened } from 'svelte/motion'
 	import { fade, fly } from 'svelte/transition'
 	import { Theatre } from '@threlte/theatre'
-	import { NoToneMapping } from 'three';
 
 	let isWrapperVisible = true;
 	let isLoaded = false;
@@ -79,7 +78,7 @@
 	{/if}	
 	
 	<!-- flat = THREE.NoToneMapping-->
-	<Canvas flat>
+	<Canvas>
 		<!-- <Theatre> -->
 			<Scene isPageLoaded={isLoaded}/>
 		<!-- </Theatre> -->	

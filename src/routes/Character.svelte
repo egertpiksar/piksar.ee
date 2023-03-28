@@ -1,32 +1,24 @@
 <script lang="ts">
 	import egert from "$lib/models/crouchiv_egert_glb.glb";	
 	import {  
-		T,
-        useFrame, 
+		T, 
 	} from '@threlte/core'
-	import { spring } from 'svelte/motion'
-	import { degToRad } from 'three/src/math/MathUtils'
 	import { 
-        Environment,
         GLTF, 
         useGltfAnimations, 
-        useGltf,
-        HTML,
      } from '@threlte/extras'
-    import { onMount } from 'svelte';
-
 
     export let isPageLoaded: boolean;
-    export let camera:any;
+    export let camera: any;
 
     // TODO animatioone juurde
-    /*const { gltf, actions, mixer } = useGltfAnimations(({ actions, mixer }) => {
-        console.log("gltf", $gltf) 
-        console.log("actions", actions) 
-        console.log("mixer", mixer) 
-	})*/
+    const { gltf, actions, mixer } = useGltfAnimations(({ actions, mixer }) => {
+        //console.log("gltf", $gltf) 
+        //console.log("actions", actions) 
+        //console.log("mixer", mixer) 
+	})
 
-    $: if(isPageLoaded){
+    $: if(isPageLoaded && mixer){
         firstStandUp();
     }
 
@@ -38,10 +30,13 @@
     }
 
     function standUp(){
-       /* if ($mixer) $mixer.timeScale = 0.75;
+        //console.log("mixer", mixer);
+        //console.log("actions", $actions)
+
+        mixer.timeScale = 0.75;
         $actions['crouch']?.play();
         $actions['crouch'].clampWhenFinished = true;
-        $actions['crouch'].repetitions = 1; */
+        $actions['crouch'].repetitions = 1;
     }
     
 
@@ -67,6 +62,8 @@
         //console.log(camera)
     }
 
+    $: console.log("character", $gltf)
+
 </script>
 
 <!-- <HTML position={{ y: 1.25, z: 1 }} transform>
@@ -81,9 +78,9 @@
     <div style="color: white">testtesttesttesttesttesttesttesttesttesttest</div>
 </HTML>  -->
 
-<!-- bind:gltf={$gltf}  -->
 <GLTF 
     url={egert}
+    bind:gltf={$gltf}
     useDraco
     castShadow
     receiveShadow

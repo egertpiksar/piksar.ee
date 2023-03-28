@@ -40,11 +40,14 @@
 
     interactivity();
 
-    const { pointer, pointerOverTarget } = useInteractivity()
+    const { toneMapping } = useThrelte();
+	const { renderer, camera } = useThrelte()
+	console.log(renderer, $camera)
 
-    $: console.log($pointer, $pointerOverTarget)    
+	$: console.log("tonemapping", $toneMapping)
 
     // TODO pointerOverCanvas kui nt tabi vahetada, siis kõik animatsioonid pausile
+    const { pointer, pointerOverTarget } = useInteractivity() 
 
     const cameraOffset = spring({x: 3.7, y: 1, z: 0}, {
         stiffness: 0.003,
@@ -56,7 +59,7 @@
         damping: 0.5
     })
 
-    $: if(mainCamera && ($pointer && ($pointer.x || $pointer.y))){
+    $: if(mainCamera && ($pointer && ($pointer.x || $pointer.y) && $pointerOverTarget)){
         cameraTarget.set({
             x: $pointer.x * 1.1, 
             y: $pointer.y * 0.1 + 2,
@@ -73,6 +76,8 @@
         //console.log("cameraOffset", $cameraOffset)
     } 
 
+    let obj  = {tonemap: 0};
+
     onMount(() => {
         console.log("cameraOffset", $cameraOffset)
         console.log("cameraTarget", $cameraTarget)
@@ -82,18 +87,23 @@
 
     useFrame(() => {
         listenStats();
-    })
+    })   
 
     function loadGUI(){
         gui.add( document, 'title' );
 
         const folder = gui.addFolder('camera');
+
+        const toneMapping = gui.addFolder("toneMapping");
+        toneMapping.add(obj , 'tonemap', {noToneMapping: 0, linear:1, reinhard:2, cineon:3, filmic:4, custom:5}).onChange(selectedValue => {
+            $toneMapping = selectedValue;
+        });
         
         if(mainCamera){
             console.log("mainCamera", mainCamera)
-           folder.add(mainCamera.position , 'x', -20, 20 ).step(1)  
-           folder.add(mainCamera.position , 'y', -20, 20 ).step(1) 
-           folder.add(mainCamera.position , 'z', -20, 20 ).step(1)       
+            folder.add(mainCamera.position , 'x', -20, 20 ).step(1)  
+            folder.add(mainCamera.position , 'y', -20, 20 ).step(1) 
+            folder.add(mainCamera.position , 'z', -20, 20 ).step(1)       
         }
 
         if(light1){
@@ -150,6 +160,9 @@
 
 <T.PerspectiveCamera bind:ref={mainCamera} makeDefault 
     position={[$cameraOffset.x, $cameraOffset.y, $cameraOffset.z]} 
+    on:create={({ ref }) => {
+        ref.lookAt($cameraTarget)
+    }}
     fov={40}>
     <!--  maxPolarAngle={degToRad(90)} 
         minPolarAngle={degToRad(90)}
@@ -161,7 +174,8 @@
     <OrbitControls        
         enableDamping={true}
         enablePan={false}
-        enableRotate={true}
+        enableRotate={false}
+        enableZoom={false}
         target={[$cameraTarget.x, $cameraTarget.y, $cameraTarget.z]} 
     /> 
 </T.PerspectiveCamera>
@@ -192,22 +206,6 @@
         {/if}
 </T.DirectionalLight>
 
-<!-- <T.PointLight bind:ref={light2}
-    shadow.mapSize.width = {1024} 
-    shadow.mapSize.height = {1024} 
-    shadow.camera.near = {5}
-    shadow.camera.far = {20}
-    position={[2, 2.5, -1]} 
-    intensity={1}> 
-        <Editable name="Lights / Fill" color intensity transform/>
-        {#if light2}
-            <T.PointLightHelper args={[light2, 0.5, "green"]} />
-        {/if}
-</T.PointLight> -->
-
-<!-- <T.AmbientLight intensity={0.5} /> -->
-<!-- <T.SpotLight castShadow position={[0, 1, 0]} intensity={0.3} /> -->
-
 <!-- <Portal /> -->
 
 <Warehouse />
@@ -218,6 +216,6 @@
 
 <Character isPageLoaded={isPageLoaded} camera={mainCamera} />
 
-<!-- <Trophy /> -->
+<Trophy />
 
-<T.Fog bind:fog={fog} color={'#070709'} near={10} far={19}/>
+<T.Fog bind:fog={fog} color={'#070709'} near={10} far={19} />
