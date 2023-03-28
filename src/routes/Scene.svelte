@@ -40,8 +40,8 @@
 
     interactivity();
 
-    const { toneMapping } = useThrelte();
-	const { renderer, camera } = useThrelte()
+    const { toneMapping, scene, renderer, camera } = useThrelte();
+    
 	console.log(renderer, $camera)
 
 	$: console.log("tonemapping", $toneMapping)
@@ -218,4 +218,10 @@
 
 <Trophy />
 
-<T.Fog bind:fog={fog} color={'#070709'} near={10} far={19} />
+<T.Fog
+    bind:ref={fog}
+    color={'#070709'} near={10} far={19} 
+    on:create={({ ref }) => {
+        scene.fog = ref
+    }} 
+/>

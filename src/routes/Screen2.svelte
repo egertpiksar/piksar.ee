@@ -145,7 +145,7 @@
         position={[-3, 2.1, 0.01]} />
 
     <Text text="
-        BACHELOR OF SCIENCE IN ENGINEERING (BSc)" 
+        BACHELOR DEGREE IN COMPUTER SCIENCE (BSc)" 
         color={"#fff"}
         font={"https://use.typekit.net/af/612d42/00000000000000007735c696/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3"}
         fontSize={0.1}
