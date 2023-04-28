@@ -1,51 +1,41 @@
 <script lang="ts">
-    import { 
-        useGltf,
-        GLTF,
-        Text,
-        useTexture
-    } from '@threlte/extras';
-    import { T } from '@threlte/core';
-    import { DEG2RAD } from 'three/src/math/MathUtils';
-    import warehouse from "$lib/models/warehouse/warehouse_screeniga2.glb";		
-    import warehousejpg from "$lib/models/warehouse/screenigavol4.jpg";
-    
-    const gltf = useGltf(warehouse, {
-        useDraco: true
-    })
+	import { useGltf, GLTF, Text, useTexture } from '@threlte/extras';
+	import { T } from '@threlte/core';
+	import { DEG2RAD } from 'three/src/math/MathUtils';
+	import warehouse from '$lib/models/warehouse/warehouse_blend.glb';
+	import warehousejpg from '$lib/models/warehouse/flooriga.jpg';
 
-    const texture = useTexture(warehousejpg);
-    //$texture.flipY = false;
+	const gltf = useGltf(warehouse, {
+		useDraco: true
+	});
 
-    $: console.log("warehosue", $gltf)
+	const texture = useTexture(warehousejpg);
+	//$texture.flipY = false;
 
-    $: if($texture){
-        $texture.flipY = false;
-    }
+	$: console.log('warehosue', $gltf);
 
-    $: console.log("texture", $texture)
+	$: if ($texture) {
+		$texture.flipY = false;
+	}
 
+	$: console.log('texture', $texture);
 </script>
-
 
 <!-- <GLTF castShadow receiveShadow useDraco url={warehouse} position={{ y: 0 }} scale={3} materials={$gltf.materials}/> -->
 
 {#if $gltf && $texture}
-    <T.Group scale={4}>
-        <T.Mesh           
-            rotation.y={Math.PI / 2}
-            geometry={$gltf.nodes.house.geometry}>
-                <T.MeshBasicMaterial map={$texture} />
-        </T.Mesh>
+	<T.Group scale={4}>
+		<T.Mesh rotation.y={Math.PI / 2} geometry={$gltf.nodes.house.geometry}>
+			<T.MeshBasicMaterial map={$texture} />
+		</T.Mesh>
 
-        <T.Mesh
-            scale={1}
-            rotation.y={Math.PI / 2}
-            geometry={$gltf.nodes.screen.geometry}            
-            position={[0, 0, 0]}>
-                <T.MeshBasicMaterial map={$texture} />
-        </T.Mesh>
-       
-    </T.Group>
+		<T.Mesh
+			scale={1}
+			rotation.y={Math.PI / 2}
+			geometry={$gltf.nodes.screen.geometry}
+			position={[0, 0, 0]}
+		>
+			<T.MeshBasicMaterial map={$texture} />
+		</T.Mesh>
+	</T.Group>
 {/if}
-

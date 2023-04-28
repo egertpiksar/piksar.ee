@@ -49,7 +49,7 @@
 	let cubePosition = new Vector3(0, 0, -7);
 
 	$: if ($pointer && raycaster && $pointerOverTarget) {
-		console.log($pointer.y);
+		//console.log($pointer.y);
 		if ($pointer.y > 0 && $pointer.y < 0.4) {
 			//console.log('TULI');
 			offsetY.set($pointer.y * 10);
