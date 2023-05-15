@@ -70,15 +70,17 @@
 			z: 0
 		});
 
-		console.log('cameraTarget', $cameraTarget);
-		console.log('cameraOffset', $cameraOffset);
+		//console.log('cameraTarget', $cameraTarget);
+		//console.log('cameraOffset', $cameraOffset);
 	}
+
+	$: console.log('$pointeroverTarget', $pointerOverTarget);
 
 	let obj = { tonemap: 0 };
 
 	onMount(() => {
-		console.log('cameraOffset', $cameraOffset);
-		console.log('cameraTarget', $cameraTarget);
+		//console.log('cameraOffset', $cameraOffset);
+		//console.log('cameraTarget', $cameraTarget);
 		loadStats();
 		loadGUI();
 	});

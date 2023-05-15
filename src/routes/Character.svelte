@@ -1,93 +1,95 @@
 <script lang="ts">
-	import egert from "$lib/models/crouchiv_egert_glb.glb";	
-	import {  
-		T, 
-	} from '@threlte/core'
-	import { 
-        GLTF, 
-        useGltfAnimations, 
-     } from '@threlte/extras'
+	import egert from '$lib/models/crouchiv_egert_glb.glb';
+	import { T } from '@threlte/core';
+	import { GLTF, useGltfAnimations, HTML } from '@threlte/extras';
 
-    export let isPageLoaded: boolean;
-    export let camera: any;
+	export let isPageLoaded: boolean;
+	export let camera: any;
 
-    // TODO animatioone juurde
-    const { gltf, actions, mixer } = useGltfAnimations(({ actions, mixer }) => {
-        //console.log("gltf", $gltf) 
-        //console.log("actions", actions) 
-        //console.log("mixer", mixer) 
-	})
+	// TODO animatioone juurde
+	const { gltf, actions, mixer } = useGltfAnimations<'crouch'>();
 
-    $: if(isPageLoaded && mixer){
-        firstStandUp();
-    }
+	$: if (isPageLoaded) {
+		//doCrouch();
+		//firstStandUp();
+	}
 
-    // wrapperi out fade aeg maha
-    function firstStandUp(){
-        setTimeout(() => {
-            standUp();
-        }, 3000);
-    }
+	$: if ($gltf) {
+		console.log('TULI');
+		doCrouch();
+	}
 
-    function standUp(){
-        //console.log("mixer", mixer);
-        //console.log("actions", $actions)
+	// wrapperi out fade aeg maha
+	function firstStandUp() {
+		setTimeout(() => {
+			standUp();
+		}, 5000);
+	}
 
-        mixer.timeScale = 0.75;
-        $actions['crouch']?.play();
-        $actions['crouch'].clampWhenFinished = true;
-        $actions['crouch'].repetitions = 1;
-    }
-    
+	function standUp() {
+		console.log('stand up');
+		//console.log("mixer", mixer);
+		//console.log("actions", $actions)
+		$actions.crouch.enabled = true;
+		$actions.crouch.clampWhenFinished = false;
+		$actions.crouch.repetitions = 10;
+		$actions.paused = false;
 
-    function doCrouch(){
-       /*  console.log("crouch", $actions.crouch)
-        console.log("mixeer", $mixer)
-        if($actions.crouch){    
-            if ($mixer) $mixer.timeScale = -1
-            $actions.crouch.enabled = true;        
-            $actions.crouch.play(); */
-            
-            //$actions.crouch.setLoop(Three.LoopPingPong, 5);
-            //if ($mixer) $mixer.timeScale = -1
-            //$actions.crouch.play();
-            //$actions.crouch.reset();
-            
-            //$actions.crouch.clampWhenFinished = true;
-            //$actions.crouch.repetitions = 0; 
-        //}        
-    }
+		mixer.timeScale = 0.75;
+		$actions.crouch?.play();
+		$actions.crouch.clampWhenFinished = true;
+		$actions.crouch.repetitions = 1;
+	}
 
-    function moveCameraToCenter(e){
-        //console.log(camera)
-    }
+	function doCrouch() {
+		console.log('crouch');
+		//console.log('mixeer', $mixer);
+		if ($actions.crouch) {
+			if (mixer) mixer.timeScale = -1;
+			$actions['crouch']?.play();
 
-    $: console.log("character", $gltf)
+			//$actions.crouch.setLoop(Three.LoopPingPong, 5);
+			//if ($mixer) $mixer.timeScale = -1
+			//$actions.crouch.play();
+			//$actions.crouch.reset();
 
+			$actions.crouch.clampWhenFinished = true;
+			$actions.crouch.repetitions = 1;
+		}
+	}
+
+	function moveCameraToCenter(e) {}
+
+	$: console.log('character', $gltf);
 </script>
 
-<!-- <HTML position={{ y: 1.25, z: 1 }} transform>
-    <button on:click={doCrouch}
-      class="bg-brand rounded-full px-3 text-white hover:opacity-90 active:opacity-70"
-    >
-      stand to crouch
-    </button>
-</HTML> -->
+<HTML position.y={0.25} position.z={-5} transform>
+	<button
+		on:click={() => doCrouch()}
+		class="bg-brand rounded-full px-3 text-white hover:opacity-90 active:opacity-70"
+	>
+		crouch
+	</button>
+</HTML>
 
-<!-- <HTML position={{ x: 0, y: 1, z: -1.01 }} occlude transform scale={0.3}>
-    <div style="color: white">testtesttesttesttesttesttesttesttesttesttest</div>
-</HTML>  -->
+<HTML position.y={0} position.z={-5} transform>
+	<button
+		on:click={() => standUp()}
+		class="bg-brand rounded-full px-3 text-white hover:opacity-90 active:opacity-70"
+	>
+		stand
+	</button>
+</HTML>
 
-<GLTF 
-    url={egert}
-    bind:gltf={$gltf}
-    useDraco
-    castShadow
-    receiveShadow
-    position={[0, 0,-5.5]}
-    rotation.y={-(Math.PI)}
-    viewportAware
-    interactive
-    on:pointerenter={(e) => moveCameraToCenter(e)}
+<GLTF
+	url={egert}
+	bind:gltf={$gltf}
+	useDraco
+	castShadow
+	receiveShadow
+	position={[0, 0, -5.5]}
+	rotation.y={-Math.PI}
+	viewportAware
+	interactive
+	on:pointerenter={(e) => moveCameraToCenter(e)}
 />
-
