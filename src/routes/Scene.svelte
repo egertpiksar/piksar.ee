@@ -2,12 +2,16 @@
 	import Character from './Character.svelte';
 	import Stats from 'stats.js';
 	import { T, useFrame, useThrelte } from '@threlte/core';
-	import { useInteractivity, OrbitControls, interactivity } from '@threlte/extras';
+	import {
+		useInteractivity,
+		OrbitControls,
+		interactivity,
+		TransformControls
+	} from '@threlte/extras';
 	import { spring } from 'svelte/motion';
 	import { onMount } from 'svelte';
 	import Screen2 from './Screen2.svelte';
 	import GUI from 'lil-gui';
-	//import { Fog } from '@threlte/core'
 	//import { Editable } from '@threlte/theatre'
 	import Effects from './Effects.svelte';
 	import Drone from './Drone.svelte';
@@ -15,6 +19,9 @@
 	import Portal from './Portal.svelte';
 	import Warehouse from './Warehouse.svelte';
 	import { degToRad } from 'three/src/math/MathUtils';
+	import { Editable } from '@threlte/theatre';
+	import { BoxGeometry, MeshStandardMaterial, Vector3 } from 'three';
+	import Laptop from './Laptop.svelte';
 
 	export let isPageLoaded: boolean;
 
@@ -23,7 +30,8 @@
 	let dude: any;
 	let light1: any;
 	let light2: any;
-	let helper: any;
+	let helper1: any;
+	let helper2: any;
 	let mainCamera: any;
 	let fog: any;
 	let squareLight: any;
@@ -74,7 +82,7 @@
 		//console.log('cameraOffset', $cameraOffset);
 	}
 
-	$: console.log('$pointeroverTarget', $pointerOverTarget);
+	//$: console.log('$pointeroverTarget', $pointerOverTarget);
 
 	let obj = { tonemap: 0 };
 
@@ -82,7 +90,7 @@
 		//console.log('cameraOffset', $cameraOffset);
 		//console.log('cameraTarget', $cameraTarget);
 		loadStats();
-		loadGUI();
+		//loadGUI();
 	});
 
 	useFrame(() => {
@@ -124,6 +132,12 @@
 			dirlight.add(light1.rotation, 'x', -3.14, 3.14).step(0.1);
 			dirlight.add(light1.rotation, 'y', -3.14, 3.14).step(0.1);
 			dirlight.add(light1.rotation, 'z', -3.14, 3.14).step(0.1);
+
+			dirlight.add(light1, 'distance');
+			dirlight.add(light1, 'angle');
+			dirlight.add(light1, 'penumbra');
+			dirlight.add(light1, 'decay');
+			dirlight.add(light1, 'focus');
 			dirlight.add(light1, 'intensity');
 			dirlight.addColor(light1, 'color');
 		}
@@ -174,13 +188,6 @@
 	}}
 	fov={40}
 >
-	<!--  maxPolarAngle={degToRad(90)} 
-        minPolarAngle={degToRad(90)}
-        minAzimuthAngle={degToRad(-50)}
-        maxAzimuthAngle={degToRad(50)}
-        maxDistance={20}
-        enableDamping
-    -->
 	<OrbitControls
 		enableDamping={true}
 		enablePan={false}
@@ -192,32 +199,18 @@
 </T.PerspectiveCamera>
 
 <T.DirectionalLight
-	bind:ref={light1}
-	castShadow
-	intensity={1}
-	position={[2, -2, 0]}
-	rotation={[Math.PI / 2, Math.PI / 2, Math.PI / 2]}
-	color={'#2d3b4e'}
-	shadow.mapSize.width={1024}
-	shadow.mapSize.height={1024}
->
-	{#if light1}
-		<T.DirectionalLightHelper bind:ref={helper} args={[light1, 0.5, 'red']} />
-	{/if}
-</T.DirectionalLight>
-
-<T.DirectionalLight
 	bind:ref={light2}
 	castShadow
-	intensity={1}
-	position={[-2, -2, 0]}
-	rotation={[Math.PI / 2, Math.PI / 2, Math.PI / 2]}
-	color={'#2d3b4e'}
+	intensity={0.4}
+	position={[4, 7, 1]}
+	color={'#d0c7c7'}
 	shadow.mapSize.width={1024}
 	shadow.mapSize.height={1024}
 >
-	{#if light1}
-		<T.DirectionalLightHelper bind:ref={helper} args={[light2, 0.5, 'red']} />
+	<Editable name="DirectionalLight" color transform intensity />
+
+	{#if light2}
+		<T.DirectionalLightHelper bind:ref={helper2} args={[light2, 0.5, 'red']} />
 	{/if}
 </T.DirectionalLight>
 
@@ -227,18 +220,30 @@
 
 <Drone />
 
-<Screen2 bind:cameraOffset={$cameraOffset} />
+<T.Mesh receiveShadow castShadow position.y={0.5}>
+	<Editable name="Box / Mesh" transform controls />
+	<T.BoxGeometry args={[1, 1, 1]} />
+	<T.MeshStandardMaterial color="#18220a">
+		<Editable name="Box / Material" color roughness metalness />
+	</T.MeshStandardMaterial>
+</T.Mesh>
+
+<!-- <Screen2 bind:cameraOffset={$cameraOffset} /> -->
 
 <Character {isPageLoaded} camera={mainCamera} />
 
-<Trophy />
+<Laptop />
+
+<!-- <Trophy /> -->
 
 <T.Fog
 	bind:ref={fog}
 	color={'#000000'}
-	near={10}
-	far={19}
+	near={2}
+	far={18}
 	on:create={({ ref }) => {
 		scene.fog = ref;
 	}}
-/>
+>
+	<Editable name="Fog" color near far />
+</T.Fog>

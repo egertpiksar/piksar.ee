@@ -63,7 +63,7 @@
 	$: console.log('character', $gltf);
 </script>
 
-<HTML position.y={0.25} position.z={-5} transform>
+<!-- <HTML position.y={0.25} position.z={-5} transform>
 	<button
 		on:click={() => doCrouch()}
 		class="bg-brand rounded-full px-3 text-white hover:opacity-90 active:opacity-70"
@@ -80,7 +80,7 @@
 		stand
 	</button>
 </HTML>
-
+ -->
 <GLTF
 	url={egert}
 	bind:gltf={$gltf}
