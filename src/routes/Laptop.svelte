@@ -1,8 +1,7 @@
 <script>
-	import { useGltf, GLTF, Text, useTexture, useGltfAnimations } from '@threlte/extras';
-	import { T, Object3DInstance } from '@threlte/core';
-	import { DEG2RAD, degToRad } from 'three/src/math/MathUtils';
-	import warehousejpg from '$lib/models/warehouse/textures/lambert4_diffuse.jpeg';
+	import { GLTF } from '@threlte/extras';
+	import { T } from '@threlte/core';
+	import { degToRad } from 'three/src/math/MathUtils';
 	import laptop from '$lib/models/Laptop/low_poly_laptop.glb';
 	import { Editable } from '@threlte/theatre';
 </script>

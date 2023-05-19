@@ -5,7 +5,7 @@
 	//import warehouse from '$lib/models/warehouse/warehouse_blend.glb';
 	//import warehousejpg from '$lib/models/warehouse/flooriga.jpg';
 	import warehousejpg from '$lib/models/warehouse/textures/lambert4_diffuse.jpeg';
-	import scene from '$lib/models/camping_buscraft_ambience.glb';
+	import scene from '$lib/models/Campsite/camping_buscraft_ambience.glb';
 	import { Editable } from '@threlte/theatre';
 
 	const { gltf, actions, mixer } = useGltfAnimations<'Take 001'>();
@@ -43,6 +43,14 @@
 >
 	<Editable name="Mets" transform />
 </GLTF>
+
+<T.Mesh receiveShadow castShadow position.y={0.5}>
+	<Editable name="Box / Mesh" transform controls />
+	<T.BoxGeometry args={[1, 1, 1]} />
+	<T.MeshStandardMaterial color="#18220a">
+		<Editable name="Box / Material" color roughness metalness />
+	</T.MeshStandardMaterial>
+</T.Mesh>
 <!-- {/if} -->
 
 <!-- {#if $gltf && $texture}

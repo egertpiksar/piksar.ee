@@ -17,7 +17,7 @@
 	import Drone from './Drone.svelte';
 	import Trophy from './Trophy.svelte';
 	import Portal from './Portal.svelte';
-	import Warehouse from './Warehouse.svelte';
+	import Campsite from './Campsite.svelte';
 	import { degToRad } from 'three/src/math/MathUtils';
 	import { Editable } from '@threlte/theatre';
 	import { BoxGeometry, MeshStandardMaterial, Vector3 } from 'three';
@@ -216,17 +216,9 @@
 
 <!-- <Portal /> -->
 
-<Warehouse />
+<Campsite />
 
 <Drone />
-
-<T.Mesh receiveShadow castShadow position.y={0.5}>
-	<Editable name="Box / Mesh" transform controls />
-	<T.BoxGeometry args={[1, 1, 1]} />
-	<T.MeshStandardMaterial color="#18220a">
-		<Editable name="Box / Material" color roughness metalness />
-	</T.MeshStandardMaterial>
-</T.Mesh>
 
 <!-- <Screen2 bind:cameraOffset={$cameraOffset} /> -->
 
@@ -234,7 +226,7 @@
 
 <Laptop />
 
-<!-- <Trophy /> -->
+<Trophy />
 
 <T.Fog
 	bind:ref={fog}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import egert from '$lib/models/crouchiv_egert_glb.glb';
+	import egert from '$lib/models/Character/char.glb';
 	import { T } from '@threlte/core';
 	import { GLTF, useGltfAnimations, HTML } from '@threlte/extras';
 
