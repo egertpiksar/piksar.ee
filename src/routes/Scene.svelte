@@ -179,7 +179,8 @@
 
 <!-- <Effects /> -->
 
-<T.PerspectiveCamera
+<!-- 
+	<T.PerspectiveCamera
 	bind:ref={mainCamera}
 	makeDefault
 	position={[$cameraOffset.x, $cameraOffset.y, $cameraOffset.z]}
@@ -195,6 +196,16 @@
 		enableZoom={false}
 		maxDistance={20}
 		target={[$cameraTarget.x, $cameraTarget.y, $cameraTarget.z]}
+	/>
+</T.PerspectiveCamera>-->
+
+<T.PerspectiveCamera bind:ref={mainCamera} makeDefault position={[0, 1, 0]} fov={40}>
+	<OrbitControls
+		enableDamping={true}
+		enablePan={true}
+		enableRotate={true}
+		enableZoom={true}
+		maxDistance={20}
 	/>
 </T.PerspectiveCamera>
 

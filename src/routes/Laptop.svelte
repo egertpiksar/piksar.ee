@@ -11,9 +11,9 @@
 	castShadow
 	useDraco
 	url={laptop}
-	rotation.y={degToRad(325)}
-	position={[0, 0, -8]}
-	scale={0.03}
+	rotation.y={degToRad(270)}
+	position={[-0.04, 0.7, -4]}
+	scale={0.02}
 >
 	<Editable name="laptop" transform />
 </GLTF>

@@ -3,6 +3,7 @@
 	import { useGltf, Text } from '@threlte/extras';
 	import { T, Object3DInstance } from '@threlte/core';
 	import { DEG2RAD } from 'three/src/math/MathUtils';
+	import { Editable } from '@threlte/theatre';
 
 	const gltf = useGltf(trophy, {
 		useDraco: true
@@ -23,5 +24,6 @@
 			textAlign="center"
 			position={[-0.1, 0.13, 0.155]}
 		/>
+		<Editable name="Trophy" transform />
 	</T.Group>
 {/if}

@@ -34,12 +34,12 @@
 	bind:gltf={$gltf}
 	receiveShadow
 	castShadow
-	viewportAware
+	viewportAware={false}
 	useDraco
 	url={scene}
 	rotation.y={degToRad(325)}
 	position={[0, 0, -8]}
-	scale={0.75}
+	scale={0.9}
 >
 	<Editable name="Mets" transform />
 </GLTF>
