@@ -2,7 +2,7 @@
 	import trophy from '$lib/models/Trophy/trophy.glb';
 	import { useGltf, Text } from '@threlte/extras';
 	import { T, Object3DInstance } from '@threlte/core';
-	import { DEG2RAD } from 'three/src/math/MathUtils';
+	import { degToRad } from 'three/src/math/MathUtils';
 	import { Editable } from '@threlte/theatre';
 
 	const gltf = useGltf(trophy, {
@@ -13,7 +13,7 @@
 </script>
 
 {#if $gltf}
-	<T.Group position={[-5, 0, -9]} rotation.y={DEG2RAD * 35}>
+	<T.Group position={[-0.4, 0.68, -4.45]} rotation.y={degToRad(50)} scale={0.4}>
 		<Object3DInstance object={$gltf.scene} castShadow receiveShadow scale={0.2} />
 
 		<Text

@@ -6,6 +6,7 @@
 	//import warehousejpg from '$lib/models/warehouse/flooriga.jpg';
 	import warehousejpg from '$lib/models/warehouse/textures/lambert4_diffuse.jpeg';
 	import scene from '$lib/models/Campsite/camping_buscraft_ambience.glb';
+	import table from '$lib/models/Campsite/table.glb';
 	import { Editable } from '@threlte/theatre';
 
 	const { gltf, actions, mixer } = useGltfAnimations<'Take 001'>();
@@ -44,13 +45,33 @@
 	<Editable name="Mets" transform />
 </GLTF>
 
-<T.Mesh receiveShadow castShadow position.y={0.5}>
-	<Editable name="Box / Mesh" transform controls />
+<T.Mesh position={[-12, 4, -18]} scale={[200, 55, 0.1]} rotation.y={degToRad(50)}>
+	<Editable name="Sein vasak" transform controls />
 	<T.BoxGeometry args={[1, 1, 1]} />
 	<T.MeshStandardMaterial color="#18220a">
 		<Editable name="Box / Material" color roughness metalness />
 	</T.MeshStandardMaterial>
 </T.Mesh>
+
+<T.Mesh position={[-12, 4, -18]} scale={[200, 55, 0.1]} rotation.y={degToRad(0)}>
+	<Editable name="Sein parem" transform controls />
+	<T.BoxGeometry args={[1, 1, 1]} />
+	<T.MeshStandardMaterial color="#18220a">
+		<Editable name="Box / Material" color roughness metalness />
+	</T.MeshStandardMaterial>
+</T.Mesh>
+
+<GLTF
+	receiveShadow
+	castShadow
+	useDraco
+	url={table}
+	rotation.y={degToRad(0)}
+	position={[-0.04, -0.05, -4.27]}
+	scale={1}
+>
+	<Editable name="table" transform />
+</GLTF>
 <!-- {/if} -->
 
 <!-- {#if $gltf && $texture}

@@ -13,7 +13,6 @@
 	import { useGltf, useTexture, GLTF, interactivity, useInteractivity } from '@threlte/extras';
 	import { injectLookAtPlugin } from './plugins/lookAtPlugin';
 
-	interactivity();
 	injectLookAtPlugin();
 
 	const { pointer, raycaster, pointerOverTarget } = useInteractivity();

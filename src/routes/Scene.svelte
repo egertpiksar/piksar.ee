@@ -30,6 +30,7 @@
 	let dude: any;
 	let light1: any;
 	let light2: any;
+	let fireLight: any;
 	let helper1: any;
 	let helper2: any;
 	let mainCamera: any;
@@ -40,8 +41,7 @@
 
 	interactivity();
 
-	const { toneMapping } = useThrelte();
-	const { renderer, camera, scene } = useThrelte();
+	const { renderer, camera, scene, toneMapping, clock } = useThrelte();
 	console.log(renderer, $camera);
 
 	$: console.log('tonemapping', $toneMapping);
@@ -93,8 +93,12 @@
 		//loadGUI();
 	});
 
-	useFrame(() => {
+	useFrame((ctx, delta) => {
 		listenStats();
+
+		let time = clock.elapsedTime;
+		fireLight.intensity =
+			0.5 + Math.sin(time * Math.PI * 2) * Math.cos(time * Math.PI * 1.5) * 0.25;
 	});
 
 	function loadGUI() {
@@ -175,53 +179,72 @@
 	}
 
 	$: console.log('isLoaded', isPageLoaded);
+
+	let useFreeCamera = false;
 </script>
 
 <!-- <Effects /> -->
 
-<!-- 
+{#if !useFreeCamera}
 	<T.PerspectiveCamera
-	bind:ref={mainCamera}
-	makeDefault
-	position={[$cameraOffset.x, $cameraOffset.y, $cameraOffset.z]}
-	on:create={({ ref }) => {
-		ref.lookAt($cameraTarget);
-	}}
-	fov={40}
->
-	<OrbitControls
-		enableDamping={true}
-		enablePan={false}
-		enableRotate={false}
-		enableZoom={false}
-		maxDistance={20}
-		target={[$cameraTarget.x, $cameraTarget.y, $cameraTarget.z]}
-	/>
-</T.PerspectiveCamera>-->
-
-<T.PerspectiveCamera bind:ref={mainCamera} makeDefault position={[0, 1, 0]} fov={40}>
-	<OrbitControls
-		enableDamping={true}
-		enablePan={true}
-		enableRotate={true}
-		enableZoom={true}
-		maxDistance={20}
-	/>
-</T.PerspectiveCamera>
+		bind:ref={mainCamera}
+		makeDefault
+		position={[$cameraOffset.x, $cameraOffset.y, $cameraOffset.z]}
+		on:create={({ ref }) => {
+			ref.lookAt($cameraTarget);
+		}}
+		fov={40}
+	>
+		<OrbitControls
+			enableDamping={true}
+			enablePan={false}
+			enableRotate={false}
+			enableZoom={false}
+			maxDistance={20}
+			target={[$cameraTarget.x, $cameraTarget.y, $cameraTarget.z]}
+		/>
+	</T.PerspectiveCamera>
+{:else}
+	<T.PerspectiveCamera bind:ref={mainCamera} makeDefault position={[0, 1, 0]} fov={40}>
+		<OrbitControls
+			enableDamping={true}
+			enablePan={true}
+			enableRotate={true}
+			enableZoom={true}
+			maxDistance={20}
+		/>
+	</T.PerspectiveCamera>
+{/if}
 
 <T.DirectionalLight
 	bind:ref={light2}
-	castShadow
-	intensity={0.4}
-	position={[4, 7, 1]}
-	color={'#d0c7c7'}
+	intensity={0.5}
+	position={[0, 10, 10]}
+	color={'#759bba'}
 	shadow.mapSize.width={1024}
 	shadow.mapSize.height={1024}
 >
 	<Editable name="DirectionalLight" color transform intensity />
 
 	{#if light2}
-		<T.DirectionalLightHelper bind:ref={helper2} args={[light2, 0.5, 'red']} />
+		<T.DirectionalLightHelper bind:ref={helper1} args={[light2, 0.5, 'red']} />
+	{/if}
+</T.DirectionalLight>
+
+<T.DirectionalLight
+	bind:ref={fireLight}
+	castShadow
+	intensity={1}
+	position={[0.75, 1.6, -2.5]}
+	rotation={[degToRad(-56), degToRad(6), 0]}
+	color={'#533d30'}
+	shadow.mapSize.width={1024}
+	shadow.mapSize.height={1024}
+>
+	<Editable name="FireLight" color transform intensity />
+
+	{#if fireLight}
+		<T.DirectionalLightHelper bind:ref={helper2} args={[fireLight, 0.5, 'red']} />
 	{/if}
 </T.DirectionalLight>
 
@@ -241,7 +264,7 @@
 
 <T.Fog
 	bind:ref={fog}
-	color={'#000000'}
+	color={'#060a06'}
 	near={2}
 	far={18}
 	on:create={({ ref }) => {
