@@ -6,13 +6,14 @@
 		useInteractivity,
 		OrbitControls,
 		interactivity,
-		TransformControls
+		TransformControls,
+		AudioListener,
+		Audio
 	} from '@threlte/extras';
 	import { spring } from 'svelte/motion';
 	import { onMount } from 'svelte';
 	import Screen2 from './Screen2.svelte';
 	import GUI from 'lil-gui';
-	//import { Editable } from '@threlte/theatre'
 	import Effects from './Effects.svelte';
 	import Drone from './Drone.svelte';
 	import Trophy from './Trophy.svelte';
@@ -20,8 +21,8 @@
 	import Campsite from './Campsite.svelte';
 	import { degToRad } from 'three/src/math/MathUtils';
 	import { Editable } from '@threlte/theatre';
-	import { BoxGeometry, MeshStandardMaterial, Vector3 } from 'three';
 	import Laptop from './Laptop.svelte';
+	import mp3 from '$lib/audios/track.mp3';
 
 	export let isPageLoaded: boolean;
 
@@ -203,6 +204,7 @@
 			maxDistance={20}
 			target={[$cameraTarget.x, $cameraTarget.y, $cameraTarget.z]}
 		/>
+		<!-- <AudioListener /> -->
 	</T.PerspectiveCamera>
 {:else}
 	<T.PerspectiveCamera bind:ref={mainCamera} makeDefault position={[0, 1, 0]} fov={40}>
@@ -252,7 +254,7 @@
 
 <Campsite />
 
-<Drone />
+<!-- <Drone /> -->
 
 <!-- <Screen2 bind:cameraOffset={$cameraOffset} /> -->
 
@@ -273,3 +275,5 @@
 >
 	<Editable name="Fog" color near far />
 </T.Fog>
+
+<!-- <Audio src={mp3} autoplay /> -->
