@@ -37,6 +37,7 @@
 	let mainCamera: any;
 	let fog: any;
 	let squareLight: any;
+	let isHoveredLaptop: boolean;
 
 	let stats1 = new Stats();
 
@@ -53,7 +54,7 @@
 	const cameraOffset = spring(
 		{ x: 3.7, y: 1, z: 0 },
 		{
-			stiffness: 0.003,
+			stiffness: 0.005,
 			damping: 0.5
 		}
 	);
@@ -67,23 +68,32 @@
 	);
 
 	$: if (mainCamera && $pointer && ($pointer.x || $pointer.y) && $pointerOverTarget) {
-		cameraTarget.set({
-			x: $pointer.x * 1.1,
-			y: $pointer.y * 0.1 + 2,
-			z: -8
-		});
+		if (isHoveredLaptop) {			
+			cameraTarget.set({
+				x: 0,
+				y: 0.8,
+				z: -8
+			});
+		} else {
+			cameraOffset.set({
+				x: 5 - $pointer.x * 1.5,
+				y: 1,
+				z: 0
+			});
 
-		cameraOffset.set({
-			x: 5 - $pointer.x * 1.5,
-			y: 1,
-			z: 0
-		});
+			cameraTarget.set({
+				x: $pointer.x * 1.1,
+				y: $pointer.y * 0.1 + 2,
+				z: -8
+			});
+		}
 
 		//console.log('cameraTarget', $cameraTarget);
 		//console.log('cameraOffset', $cameraOffset);
 	}
 
-	//$: console.log('$pointeroverTarget', $pointerOverTarget);
+	$: console.log('cameraOffset', $cameraOffset);
+	$: console.log('cameraTarget', $cameraTarget);
 
 	let obj = { tonemap: 0 };
 
@@ -186,6 +196,8 @@
 
 <!-- <Effects /> -->
 
+<!-- $cameraOffset.x, $cameraOffset.y, $cameraOffset.z -->
+
 {#if !useFreeCamera}
 	<T.PerspectiveCamera
 		bind:ref={mainCamera}
@@ -196,6 +208,7 @@
 		}}
 		fov={40}
 	>
+		<Editable name="camera" position />
 		<OrbitControls
 			enableDamping={true}
 			enablePan={false}
@@ -203,7 +216,9 @@
 			enableZoom={false}
 			maxDistance={20}
 			target={[$cameraTarget.x, $cameraTarget.y, $cameraTarget.z]}
-		/>
+		>
+			<Editable name="orbit" target />
+		</OrbitControls>
 		<!-- <AudioListener /> -->
 	</T.PerspectiveCamera>
 {:else}
@@ -258,9 +273,9 @@
 
 <!-- <Screen2 bind:cameraOffset={$cameraOffset} /> -->
 
-<Character {isPageLoaded} camera={mainCamera} />
+<Character {isPageLoaded} />
 
-<Laptop />
+<Laptop bind:cameraOffset={$cameraOffset} bind:isHoveredLaptop />
 
 <Trophy />
 

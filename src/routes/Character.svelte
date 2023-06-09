@@ -6,7 +6,6 @@
 	import { Editable } from '@threlte/theatre';
 
 	export let isPageLoaded: boolean;
-	export let camera: any;
 
 	// TODO animatioone juurde
 	const { gltf, actions, mixer } = useGltfAnimations<'layer'>();

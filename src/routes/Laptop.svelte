@@ -6,15 +6,39 @@
 	import mouse from '$lib/models/Laptop/low_poly_computer_mouse_free.glb';
 	import { Editable } from '@threlte/theatre';
 
+	export let cameraOffset;
+	export let isHoveredLaptop = false;
+
 	const gltf = useGltf(laptop, {
 		useDraco: true
 	});
+
+	// TODO disableme zoomOuti nii kauaks kuni kohale sõidab
+	function zoomInLaptop() {
+		console.log('zoooom IN');
+		isHoveredLaptop = true;
+		cameraOffset = { x: 0, y: 0.8, z: -3.5 };
+		console.log('cameraOffset1', cameraOffset);
+	}
+
+	function zoomOutLaptop() {
+		if (!isHoveredLaptop) {
+			cameraOffset = { x: 3.7, y: 1, z: 0 };
+		}
+	}
 
 	$: console.log('laptop', $gltf);
 </script>
 
 {#if $gltf}
-	<T.Group rotation.y={degToRad(270)} position={[-0.04, 0.7, -4.05]} scale={0.02}>
+	<T.Group
+		rotation.y={degToRad(270)}
+		position={[-0.04, 0.7, -4.05]}
+		scale={0.02}
+		interactive
+		on:pointerenter={() => zoomInLaptop()}
+		on:pointerleave={() => zoomOutLaptop()}
+	>
 		<T.Group name="Sketchfab_model" rotation={[-Math.PI / 2, 0, 0]}>
 			<T.Group
 				name="da67fe2fab1e411099a40fbaf80cab7afbx"
