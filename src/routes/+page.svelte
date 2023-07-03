@@ -33,17 +33,12 @@
 	}
 </script>
 
-<svelte:head>
-	<title>Egert Piksar - Creative Developer</title>
-	<meta name="description" content="PIKSAR.EE" />
-</svelte:head>
 
 <div id="main">
 	{#if isWrapperVisible}
 		<div class="wrapper" out:fade={{ duration: 1000 }}>
 			<div style="font-size: 3rem; margin: 40px;" transition:fade={{ duration: 2000 }}>
-				<div>EGERT PIKSAR</div>
-				<div>PLAYGROUND © 2023</div>
+				
 			</div>
 
 			<div class="loadingWrapper">
@@ -66,13 +61,12 @@
 		<div class="layout">
 			<div class="name" in:fade={{ delay: 1500, duration: 1000 }}>
 				<div>
-					<div>EGERT PIKSAR</div>
-					<div>PLAYGROUND © 2023</div>
+					
 				</div>
 			</div>
 
 			<div class="contact" in:fade={{ delay: 2000, duration: 1000 }}>
-				<div>info@piksar.ee</div>
+				
 			</div>
 		</div>
 	{/if}
