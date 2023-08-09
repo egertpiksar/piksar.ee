@@ -20,7 +20,7 @@
 	import Portal from './Portal.svelte';
 	import Campsite from './Campsite.svelte';
 	import { degToRad } from 'three/src/math/MathUtils';
-	import { Editable } from '@threlte/theatre';
+	// import { Editable } from '@threlte/theatre';
 	import Laptop from './Laptop.svelte';
 	import mp3 from '$lib/audios/track.mp3';
 
@@ -92,8 +92,8 @@
 		//console.log('cameraOffset', $cameraOffset);
 	}
 
-	$: console.log('cameraOffset', $cameraOffset);
-	$: console.log('cameraTarget', $cameraTarget);
+	// $: console.log('cameraOffset', $cameraOffset);
+	// $: console.log('cameraTarget', $cameraTarget);
 
 	let obj = { tonemap: 0 };
 
@@ -208,7 +208,7 @@
 		}}
 		fov={40}
 	>
-		<Editable name="camera" position />
+		<!-- <Editable name="camera" position /> -->
 		<OrbitControls
 			enableDamping={true}
 			enablePan={false}
@@ -217,7 +217,7 @@
 			maxDistance={20}
 			target={[$cameraTarget.x, $cameraTarget.y, $cameraTarget.z]}
 		>
-			<Editable name="orbit" target />
+			<!-- <Editable name="orbit" target /> -->
 		</OrbitControls>
 		<!-- <AudioListener /> -->
 	</T.PerspectiveCamera>
@@ -242,7 +242,7 @@
 	shadow.mapSize.width={1024}
 	shadow.mapSize.height={1024}
 >
-	<Editable name="DirectionalLight" color transform intensity />
+	<!-- <Editable name="DirectionalLight" color transform intensity /> -->
 
 	{#if light2}
 		<T.DirectionalLightHelper bind:ref={helper1} args={[light2, 0.5, 'red']} />
@@ -259,7 +259,7 @@
 	shadow.mapSize.width={1024}
 	shadow.mapSize.height={1024}
 >
-	<Editable name="FireLight" color transform intensity />
+	<!-- <Editable name="FireLight" color transform intensity /> -->
 
 	{#if fireLight}
 		<T.DirectionalLightHelper bind:ref={helper2} args={[fireLight, 0.5, 'red']} />

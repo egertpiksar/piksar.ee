@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { useGltf, GLTF, Text, useTexture, useGltfAnimations } from '@threlte/extras';
-	import { T, Object3DInstance } from '@threlte/core';
+	import { T } from '@threlte/core';
 	import { DEG2RAD, degToRad } from 'three/src/math/MathUtils';
 	//import warehouse from '$lib/models/warehouse/warehouse_blend.glb';
 	//import warehousejpg from '$lib/models/warehouse/flooriga.jpg';
 	import warehousejpg from '$lib/models/warehouse/textures/lambert4_diffuse.jpeg';
 	import scene from '$lib/models/Campsite/camping_buscraft_ambience.glb';
 	import table from '$lib/models/Campsite/table.glb';
-	import { Editable } from '@threlte/theatre';
+	// import { Editable } from '@threlte/theatre';
 	import CampingBuscraftAmbience from './Camping_buscraft_ambience.svelte';
 
 	const { gltf, actions, mixer } = useGltfAnimations<'Take 001'>();
@@ -49,18 +49,18 @@
 <CampingBuscraftAmbience />
 
 <T.Mesh position={[-12, 4, -18]} scale={[200, 55, 0.1]} rotation.y={degToRad(50)}>
-	<Editable name="Sein vasak" transform controls />
+	<!-- <Editable name="Sein vasak" transform controls /> -->
 	<T.BoxGeometry args={[1, 1, 1]} />
 	<T.MeshStandardMaterial color="#18220a">
-		<Editable name="Box / Material" color roughness metalness />
+		<!-- <Editable name="Box / Material" color roughness metalness /> -->
 	</T.MeshStandardMaterial>
 </T.Mesh>
 
 <T.Mesh position={[-12, 4, -18]} scale={[200, 55, 0.1]} rotation.y={degToRad(0)}>
-	<Editable name="Sein parem" transform controls />
+	<!-- <Editable name="Sein parem" transform controls /> -->
 	<T.BoxGeometry args={[1, 1, 1]} />
 	<T.MeshStandardMaterial color="#18220a">
-		<Editable name="Box / Material" color roughness metalness />
+		<!-- <Editable name="Box / Material" color roughness metalness /> -->
 	</T.MeshStandardMaterial>
 </T.Mesh>
 
@@ -73,7 +73,7 @@
 	position={[-0.04, -0.05, -4.27]}
 	scale={1}
 >
-	<Editable name="table" transform />
+	<!-- <Editable name="table" transform /> -->
 </GLTF>
 <!-- {/if} -->
 

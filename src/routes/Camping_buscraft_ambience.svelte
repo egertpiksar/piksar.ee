@@ -20,7 +20,7 @@ Title: camping buscraft ambience
 		useDraco: true
 	});
 
-	export const { actions, mixer } = useGltfAnimations(gltf, ref);
+	export const { actions } = useGltfAnimations(gltf, ref);
 
 	$: if ($actions) {
 		$actions['Take 001']?.play();
