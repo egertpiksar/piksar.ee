@@ -68,7 +68,7 @@
 	);
 
 	$: if (mainCamera && $pointer && ($pointer.x || $pointer.y) && $pointerOverTarget) {
-		if (isHoveredLaptop) {			
+		if (isHoveredLaptop) {
 			cameraTarget.set({
 				x: 0,
 				y: 0.8,
@@ -191,7 +191,7 @@
 
 	$: console.log('isLoaded', isPageLoaded);
 
-	let useFreeCamera = false;
+	let useFreeCamera = true;
 </script>
 
 <!-- <Effects /> -->
@@ -229,6 +229,7 @@
 			enableRotate={true}
 			enableZoom={true}
 			maxDistance={20}
+			target={[1, 1.9, -8]}
 		/>
 	</T.PerspectiveCamera>
 {/if}
@@ -279,7 +280,7 @@
 
 <Trophy />
 
-<T.Fog
+<!-- <T.Fog
 	bind:ref={fog}
 	color={'#060a06'}
 	near={2}
@@ -289,6 +290,6 @@
 	}}
 >
 	<Editable name="Fog" color near far />
-</T.Fog>
+</T.Fog> -->
 
 <!-- <Audio src={mp3} autoplay /> -->

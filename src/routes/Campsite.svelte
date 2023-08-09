@@ -8,6 +8,7 @@
 	import scene from '$lib/models/Campsite/camping_buscraft_ambience.glb';
 	import table from '$lib/models/Campsite/table.glb';
 	import { Editable } from '@threlte/theatre';
+	import CampingBuscraftAmbience from './Camping_buscraft_ambience.svelte';
 
 	const { gltf, actions, mixer } = useGltfAnimations<'Take 001'>();
 	/* const gltf = useGltf(scene, {
@@ -31,7 +32,7 @@
 </script>
 
 <!-- {#if $gltf} -->
-<GLTF
+<!-- <GLTF
 	bind:gltf={$gltf}
 	receiveShadow
 	castShadow
@@ -43,7 +44,9 @@
 	scale={0.9}
 >
 	<Editable name="Mets" transform />
-</GLTF>
+</GLTF> -->
+
+<CampingBuscraftAmbience />
 
 <T.Mesh position={[-12, 4, -18]} scale={[200, 55, 0.1]} rotation.y={degToRad(50)}>
 	<Editable name="Sein vasak" transform controls />
