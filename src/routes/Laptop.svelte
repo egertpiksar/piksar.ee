@@ -4,7 +4,7 @@
 	import { degToRad } from 'three/src/math/MathUtils';
 	import laptop from '$lib/models/Laptop/low_poly_laptop.glb';
 	import mouse from '$lib/models/Laptop/low_poly_computer_mouse_free.glb';
-	import { Editable } from '@threlte/theatre';
+	// import { Editable } from '@threlte/theatre';
 
 	export let cameraOffset;
 	export let isHoveredLaptop = false;
@@ -129,5 +129,5 @@
 </GLTF> -->
 
 <GLTF receiveShadow useDraco url={mouse} position={[0.25, 0.7, -4.05]} scale={0.05}>
-	<Editable name="mouse" transform />
+	<!-- <Editable name="mouse" transform /> -->
 </GLTF>

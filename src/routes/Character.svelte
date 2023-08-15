@@ -1,9 +1,9 @@
 <script lang="ts">
-	import egert from '$lib/models/Character/char.glb';
+	// import egert from '$lib/models/Character/char.glb';
 	import egertAnimatsioonidega from '$lib/models/Character/egertviieanimatsiooniga.glb';
 	import { T } from '@threlte/core';
 	import { GLTF, useGltfAnimations, HTML, useCursor } from '@threlte/extras';
-	import { Editable } from '@threlte/theatre';
+	import { SheetObject } from '@threlte/theatre';
 
 	export let isPageLoaded: boolean;
 
@@ -62,5 +62,5 @@
 	on:pointerenter={moveCameraToCenter}
 	on:pointerleave={moveCameraBack}
 >
-	<Editable name="Char" transform />
+	<!-- <SheetObject name="Char" transform /> -->
 </GLTF>
