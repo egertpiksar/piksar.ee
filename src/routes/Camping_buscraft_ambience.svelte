@@ -12,7 +12,7 @@ Title: camping buscraft ambience
 	import { T } from '@threlte/core';
 	import { useGltf, useGltfAnimations } from '@threlte/extras';
 	import campsite from '$lib/models/Campsite/camping_buscraft_ambience.glb';
-	import { DEG2RAD, degToRad } from 'three/src/math/MathUtils';
+	import { degToRad } from 'three/src/math/MathUtils';
 
 	export const ref = new Group();
 
@@ -25,9 +25,10 @@ Title: camping buscraft ambience
 	$: if ($actions) {
 		$actions['Take 001']?.play();
 	}
+
 </script>
 
-<T is={ref} dispose={false} rotation.y={degToRad(325)} position={[0, 0, -8]} scale={0.9}>
+<T is={ref} rotation.y={degToRad(325)} position={[0, 0, -8]} scale={0.9}>
 	{#await gltf}
 		<slot name="fallback" />
 	{:then gltf}

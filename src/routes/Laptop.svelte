@@ -16,15 +16,15 @@
 	// TODO disableme zoomOuti nii kauaks kuni kohale sõidab
 	function zoomInLaptop() {
 		console.log('zoooom IN');
-		isHoveredLaptop = true;
+		/*isHoveredLaptop = true;
 		cameraOffset = { x: 0, y: 0.8, z: -3.5 };
-		console.log('cameraOffset1', cameraOffset);
+		console.log('cameraOffset1', cameraOffset);*/
 	}
 
 	function zoomOutLaptop() {
-		if (!isHoveredLaptop) {
+		/*if (!isHoveredLaptop) {
 			cameraOffset = { x: 3.7, y: 1, z: 0 };
-		}
+		}*/
 	}
 
 	$: console.log('laptop', $gltf);
@@ -98,8 +98,8 @@
 						material={$gltf.materials['Material.001']}
 					/>
 
-					<HTML>
-						<h1>Hello World</h1>
+					<HTML transform occlude>
+						<h1 style="color: white">Hello World</h1>
 					</HTML>
 
 					<!-- läpaka tagumine -->

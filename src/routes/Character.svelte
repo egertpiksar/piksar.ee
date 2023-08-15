@@ -2,8 +2,7 @@
 	// import egert from '$lib/models/Character/char.glb';
 	import egertAnimatsioonidega from '$lib/models/Character/egertviieanimatsiooniga.glb';
 	import { T } from '@threlte/core';
-	import { GLTF, useGltfAnimations, HTML, useCursor } from '@threlte/extras';
-	import { SheetObject } from '@threlte/theatre';
+	import { GLTF, useGltfAnimations } from '@threlte/extras';
 
 	export let isPageLoaded: boolean;
 
@@ -33,34 +32,18 @@
 	}
 </script>
 
-<!-- <HTML position.y={0.25} position.z={-5} transform>
-	<button
-		on:click={() => doCrouch()}
-		class="bg-brand rounded-full px-3 text-white hover:opacity-90 active:opacity-70"
-	>
-		crouch
-	</button>
-</HTML>
-
-<HTML position.y={0} position.z={-5} transform>
-	<button
-		on:click={() => standUp()}
-		class="bg-brand rounded-full px-3 text-white hover:opacity-90 active:opacity-70"
-	>
-		stand
-	</button>
-</HTML>
- -->
 <GLTF
 	url={egertAnimatsioonidega}
 	bind:gltf={$gltf}
 	useDraco
+	occlude
 	position={[0, -0.06, 1]}
 	scale={1}
+	transform
 	interactive
+	dispose={false}
 	rotation.y={-Math.PI}
 	on:pointerenter={moveCameraToCenter}
 	on:pointerleave={moveCameraBack}
->
-	<!-- <SheetObject name="Char" transform /> -->
-</GLTF>
+/>
+

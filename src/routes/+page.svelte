@@ -3,9 +3,9 @@
 	import Scene from './Scene.svelte';
 	import { useProgress } from '@threlte/extras';
 	import { tweened } from 'svelte/motion';
-	import { fade, fly } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 	import { Theatre } from '@threlte/theatre';
-	import { NoToneMapping, PCFShadowMap } from 'three';
+	import { NoToneMapping } from 'three';
 
 	let isWrapperVisible = true;
 	let isLoaded = false;
@@ -77,7 +77,6 @@
 		</div>
 	{/if}
 
-	<!-- flat = THREE.NoToneMapping-->
 	<Canvas toneMapping={NoToneMapping}>
 		<Theatre>
 			<Scene isPageLoaded={isLoaded} />
@@ -134,7 +133,7 @@
 		grid-template-areas:
 			'name . . .'
 			'. . . .'
-			'. . . contact';
+			'contact contact contact contact';
 		width: 100%;
 		height: 100%;
 		top: 0;
@@ -149,7 +148,7 @@
 		display: flex;
 		justify-content: flex-start;
 		align-items: flex-start;
-		margin: 40px 0 0 40px;
+		margin: 40px 40px 0 40px;
 	}
 
 	.contact {

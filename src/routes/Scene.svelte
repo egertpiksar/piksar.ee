@@ -12,23 +12,20 @@
 	} from '@threlte/extras';
 	import { spring } from 'svelte/motion';
 	import { onMount } from 'svelte';
-	import Screen2 from './Screen2.svelte';
 	import GUI from 'lil-gui';
-	import Effects from './Effects.svelte';
-	import Drone from './Drone.svelte';
+	//import Effects from './Effects.svelte';
+	//import Drone from './Drone.svelte';
 	import Trophy from './Trophy.svelte';
-	import Portal from './Portal.svelte';
 	import Campsite from './Campsite.svelte';
 	import { degToRad } from 'three/src/math/MathUtils';
 	// import { Editable } from '@threlte/theatre';
 	import Laptop from './Laptop.svelte';
-	import mp3 from '$lib/audios/track.mp3';
+	//import mp3 from '$lib/audios/track.mp3';
 
 	export let isPageLoaded: boolean;
 
 	const gui = new GUI();
 
-	let dude: any;
 	let light1: any;
 	let light2: any;
 	let fireLight: any;
@@ -36,7 +33,6 @@
 	let helper2: any;
 	let mainCamera: any;
 	let fog: any;
-	let squareLight: any;
 	let isHoveredLaptop: boolean;
 
 	let stats1 = new Stats();
@@ -45,8 +41,6 @@
 
 	const { renderer, camera, scene, toneMapping, clock } = useThrelte();
 	console.log(renderer, $camera);
-
-	$: console.log('tonemapping', $toneMapping);
 
 	// TODO pointerOverCanvas kui nt tabi vahetada, siis kõik animatsioonid pausile
 	const { pointer, pointerOverTarget } = useInteractivity();
@@ -101,7 +95,7 @@
 		//console.log('cameraOffset', $cameraOffset);
 		//console.log('cameraTarget', $cameraTarget);
 		loadStats();
-		//loadGUI();
+		loadGUI();
 	});
 
 	useFrame((ctx, delta) => {
@@ -204,11 +198,10 @@
 		makeDefault
 		position={[$cameraOffset.x, $cameraOffset.y, $cameraOffset.z]}
 		on:create={({ ref }) => {
-			ref.lookAt($cameraTarget);
+			ref.lookAt($cameraTarget.x, $cameraTarget.y, $cameraTarget.z);
 		}}
 		fov={40}
 	>
-		<!-- <Editable name="camera" position /> -->
 		<OrbitControls
 			enableDamping={true}
 			enablePan={false}
@@ -216,9 +209,7 @@
 			enableZoom={false}
 			maxDistance={20}
 			target={[$cameraTarget.x, $cameraTarget.y, $cameraTarget.z]}
-		>
-			<!-- <Editable name="orbit" target /> -->
-		</OrbitControls>
+		/>
 		<!-- <AudioListener /> -->
 	</T.PerspectiveCamera>
 {:else}
