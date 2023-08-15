@@ -1,5 +1,5 @@
 <script>
-	import { GLTF, useGltf } from '@threlte/extras';
+	import { GLTF, useGltf, HTML } from '@threlte/extras';
 	import { T } from '@threlte/core';
 	import { degToRad } from 'three/src/math/MathUtils';
 	import laptop from '$lib/models/Laptop/low_poly_laptop.glb';
@@ -65,6 +65,7 @@
 					rotation={[-Math.PI / 2, Math.PI / 2, 0]}
 					scale={[591.71, 951.18, 49.91]}
 				>
+					<!-- klaviatuur -->
 					<T.Mesh
 						name="Cube001_Material001_0"
 						castShadow
@@ -72,6 +73,8 @@
 						geometry={$gltf.nodes.Cube001_Material001_0.geometry}
 						material={$gltf.materials['Material.001']}
 					/>
+
+					<!-- läpaka alumine -->
 					<T.Mesh
 						name="Cube001_Material_0"
 						castShadow
@@ -86,6 +89,7 @@
 					rotation={[-Math.PI / 2, Math.PI / 2, 0]}
 					scale={[705.17, 951.18, 49.91]}
 				>
+					<!-- must ekraan -->
 					<T.Mesh
 						name="Cube002_Material001_0"
 						castShadow
@@ -93,6 +97,12 @@
 						geometry={$gltf.nodes.Cube002_Material001_0.geometry}
 						material={$gltf.materials['Material.001']}
 					/>
+
+					<HTML>
+						<h1>Hello World</h1>
+					</HTML>
+
+					<!-- läpaka tagumine -->
 					<T.Mesh
 						name="Cube002_Material_0"
 						castShadow
