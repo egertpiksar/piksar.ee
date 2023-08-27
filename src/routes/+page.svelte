@@ -9,6 +9,7 @@
 
 	let isWrapperVisible = true;
 	let isLoaded = false;
+	let halloAudio: any;
 
 	const { progress } = useProgress();
 
@@ -31,6 +32,11 @@
 		int = Math.round(int * 100);
 		return int;
 	}
+
+	export const toggleHalloo = async () => {
+		console.log('playHalloo');
+		halloAudio.play();
+	};
 </script>
 
 <svelte:head>
@@ -72,14 +78,14 @@
 			</div>
 
 			<div class="contact" in:fade={{ delay: 2000, duration: 1000 }}>
-				<div>info@piksar.ee</div>
+				<div on:pointerenter={toggleHalloo}>info@piksar.ee</div>
 			</div>
 		</div>
 	{/if}
 
 	<Canvas toneMapping={NoToneMapping}>
 		<Theatre>
-			<Scene isPageLoaded={isLoaded} />
+			<Scene isPageLoaded={isLoaded} bind:halloAudio />
 		</Theatre>
 	</Canvas>
 </div>
@@ -139,7 +145,6 @@
 		top: 0;
 		left: 0;
 		color: white;
-		pointer-events: none;
 	}
 
 	.name {

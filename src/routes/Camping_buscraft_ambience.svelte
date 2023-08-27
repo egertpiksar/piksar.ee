@@ -10,7 +10,7 @@ Title: camping buscraft ambience
 <script lang="ts">
 	import { Group } from 'three';
 	import { T } from '@threlte/core';
-	import { useGltf, useGltfAnimations } from '@threlte/extras';
+	import { useGltf, useGltfAnimations, GLTF } from '@threlte/extras';
 	import campsite from '$lib/models/Campsite/camping_buscraft_ambience.glb';
 	import { degToRad } from 'three/src/math/MathUtils';
 
@@ -25,8 +25,17 @@ Title: camping buscraft ambience
 	$: if ($actions) {
 		$actions['Take 001']?.play();
 	}
-
 </script>
+
+<!-- <GLTF
+	receiveShadow
+	castShadow
+	useDraco
+	url={campsite}
+	rotation.y={degToRad(0)}
+	position={[-0.04, -0.05, -4.27]}
+	scale={1}
+/> -->
 
 <T is={ref} rotation.y={degToRad(325)} position={[0, 0, -8]} scale={0.9}>
 	{#await gltf}

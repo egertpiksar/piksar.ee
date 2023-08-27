@@ -8,7 +8,9 @@
 		interactivity,
 		TransformControls,
 		AudioListener,
-		Audio
+		Audio,
+		PositionalAudio,
+		useAudioListener
 	} from '@threlte/extras';
 	import { spring } from 'svelte/motion';
 	import { onMount } from 'svelte';
@@ -20,26 +22,35 @@
 	import { degToRad } from 'three/src/math/MathUtils';
 	// import { Editable } from '@threlte/theatre';
 	import Laptop from './Laptop.svelte';
-	//import mp3 from '$lib/audios/track.mp3';
+	import mp3 from '$lib/audios/track.mp3';
+	import fireplace from '$lib/audios/fireplace.mp3';
+	import hallo from '$lib/audios/hallloo.mp3';
 
 	export let isPageLoaded: boolean;
+	export let halloAudio: any;
 
 	const gui = new GUI();
 
 	let light1: any;
 	let light2: any;
 	let fireLight: any;
+	let fireplaceAudio: any;
 	let helper1: any;
 	let helper2: any;
 	let mainCamera: any;
 	let fog: any;
 	let isHoveredLaptop: boolean;
+	let isFireplaceLoaded: boolean = false;
+	let pixelRatio = 1;
+	let hallooAudioCtx: any;
+	let fireplaceAudioCtx: any;
 
 	let stats1 = new Stats();
 
 	interactivity();
 
 	const { renderer, camera, scene, toneMapping, clock } = useThrelte();
+
 	console.log(renderer, $camera);
 
 	// TODO pointerOverCanvas kui nt tabi vahetada, siis kõik animatsioonid pausile
@@ -105,6 +116,19 @@
 		fireLight.intensity =
 			0.5 + Math.sin(time * Math.PI * 2) * Math.cos(time * Math.PI * 1.5) * 0.25;
 	});
+
+	const defaultPixelRatio = renderer?.getPixelRatio();
+
+	$: changePixelRatio(pixelRatio);
+
+	function changePixelRatio(num: number) {
+		console.log('pixelRatio', num);
+		if (num > 0) {
+			renderer?.setPixelRatio(num);
+		} else {
+			renderer?.setPixelRatio(defaultPixelRatio ? defaultPixelRatio : 1);
+		}
+	}
 
 	function loadGUI() {
 		gui.add(document, 'title');
@@ -185,7 +209,7 @@
 
 	$: console.log('isLoaded', isPageLoaded);
 
-	let useFreeCamera = true;
+	let useFreeCamera = false;
 </script>
 
 <!-- <Effects /> -->
@@ -210,7 +234,8 @@
 			maxDistance={20}
 			target={[$cameraTarget.x, $cameraTarget.y, $cameraTarget.z]}
 		/>
-		<!-- <AudioListener /> -->
+
+		<AudioListener bind:ref={hallooAudioCtx} id="halloo" position={[0, 0, 0]} rotation.y={0} />
 	</T.PerspectiveCamera>
 {:else}
 	<T.PerspectiveCamera bind:ref={mainCamera} makeDefault position={[0, 1, 0]} fov={40}>
@@ -282,5 +307,7 @@
 >
 	<Editable name="Fog" color near far />
 </T.Fog> -->
+<!-- {#if isPageLoaded} -->
 
-<!-- <Audio src={mp3} autoplay /> -->
+<!-- <Audio src={fireplace} bind:ref={fireplaceAudio} autoplay={true} loop volume={1} /> -->
+<Audio src={hallo} bind:ref={halloAudio} id="halloo" autoplay={false} loop={false} volume={0.8} />
