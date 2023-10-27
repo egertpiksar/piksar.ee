@@ -5,7 +5,7 @@
 	import { tweened } from 'svelte/motion';
 	import { fade } from 'svelte/transition';
 	import { Theatre } from '@threlte/theatre';
-	import { NoToneMapping } from 'three';
+	import { ACESFilmicToneMapping } from 'three';
 
 	let isWrapperVisible = true;
 	let isLoaded = false;
@@ -19,7 +19,6 @@
 
 	$: if ($progress) {
 		$tweenedProgress = parseFloat($progress.toFixed(2));
-
 		if ($progress === 1) {
 			isLoaded = true;
 			setTimeout(() => {
@@ -37,6 +36,16 @@
 		console.log('playHalloo');
 		halloAudio.play();
 	};
+
+	function startMusic() {
+		const bars = document.querySelectorAll('.bar');
+		setInterval(() => {
+			bars.forEach((bar) => {
+				let val = Math.floor(Math.random() * 90);
+				bar.style.height = `${val}%`;
+			});
+		}, 500);
+	}
 </script>
 
 <svelte:head>
@@ -77,13 +86,27 @@
 				</div>
 			</div>
 
+			<div class="description" in:fade={{ delay: 2000, duration: 1000 }}>
+				<div>creative developer</div>
+			</div>
+
+			<div class="icon" in:fade={{ delay: 2000, duration: 1000 }} use:startMusic>
+				<div id="bars">
+					<div class="bar" />
+					<div class="bar" />
+					<div class="bar" />
+					<div class="bar" />
+					<div class="bar" />
+				</div>
+			</div>
+
 			<div class="contact" in:fade={{ delay: 2000, duration: 1000 }}>
 				<div on:pointerenter={toggleHalloo}>info@piksar.ee</div>
 			</div>
 		</div>
 	{/if}
 
-	<Canvas toneMapping={NoToneMapping}>
+	<Canvas toneMapping={ACESFilmicToneMapping}>
 		<Theatre>
 			<Scene isPageLoaded={isLoaded} bind:halloAudio />
 		</Theatre>
@@ -137,14 +160,15 @@
 		grid-template-columns: auto;
 		grid-template-rows: 100px 1fr 100px;
 		grid-template-areas:
-			'name . . .'
-			'. . . .'
-			'contact contact contact contact';
+			'name . . . .'
+			'. . . . .'
+			'desc desc icon contact contact';
 		width: 100%;
 		height: 100%;
 		top: 0;
 		left: 0;
 		color: white;
+		pointer-events: none;
 	}
 
 	.name {
@@ -163,11 +187,48 @@
 		justify-content: flex-end;
 		align-items: flex-end;
 		margin: 0 40px 40px 0;
+		pointer-events: all;
+	}
+
+	.description {
+		grid-area: desc;
+		font-size: 1.5rem;
+		display: flex;
+		justify-content: flex-start;
+		align-items: flex-end;
+		margin: 0 0 40px 40px;
+	}
+
+	.icon {
+		grid-area: icon;
+		font-size: 1.5rem;
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+		margin: 0 0 40px 40px;
 	}
 
 	.loading {
 		font-size: 2rem;
 		margin-top: -10px;
 		padding-bottom: 10px;
+	}
+
+	#bars {
+		height: 50%;
+		width: fit-content;
+		flex-shrink: 0;
+		display: grid;
+		grid-template-rows: 1fr;
+		grid-template-columns: repeat(5, 4px);
+		gap: 2px;
+		place-items: end center;
+	}
+
+	.bar {
+		height: 10%;
+		width: 4px;
+		background-color: white;
+		transition: 500ms ease-in-out;
 	}
 </style>

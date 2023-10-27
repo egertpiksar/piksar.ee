@@ -29,9 +29,10 @@
 	export let isPageLoaded: boolean;
 	export let halloAudio: any;
 
+	interactivity();
+
 	const gui = new GUI();
 
-	let light1: any;
 	let light2: any;
 	let fireLight: any;
 	let fireplaceAudio: any;
@@ -46,8 +47,6 @@
 	let fireplaceAudioCtx: any;
 
 	let stats1 = new Stats();
-
-	interactivity();
 
 	const { renderer, camera, scene, toneMapping, clock } = useThrelte();
 
@@ -65,7 +64,8 @@
 	);
 
 	const cameraTarget = spring(
-		{ x: 1, y: 1.9, z: -8 },
+		// chari ja lõkke keskele
+		{ x: -1.3, y: 1.9, z: -8 },
 		{
 			stiffness: 0.005,
 			damping: 0.5
@@ -80,37 +80,36 @@
 				z: -8
 			});
 		} else {
+			// kaamera pos xyz
 			cameraOffset.set({
-				x: 5 - $pointer.x * 1.5,
-				y: 1,
+				x: 3.7 + $pointer.x / 2,
+				y: 1 + $pointer.y / 2,
 				z: 0
 			});
 
-			cameraTarget.set({
-				x: $pointer.x * 1.1,
-				y: $pointer.y * 0.1 + 2,
+			// kaamera lookAt
+			/* cameraTarget.set({
+				x: $pointer.x,
+				y: $pointer.y,
 				z: -8
-			});
+			}); */
 		}
 
 		//console.log('cameraTarget', $cameraTarget);
 		//console.log('cameraOffset', $cameraOffset);
 	}
 
-	// $: console.log('cameraOffset', $cameraOffset);
-	// $: console.log('cameraTarget', $cameraTarget);
-
 	let obj = { tonemap: 0 };
 
 	onMount(() => {
 		//console.log('cameraOffset', $cameraOffset);
 		//console.log('cameraTarget', $cameraTarget);
-		loadStats();
+		//loadStats();
 		loadGUI();
 	});
 
 	useFrame((ctx, delta) => {
-		listenStats();
+		//listenStats();
 
 		let time = clock.elapsedTime;
 		fireLight.intensity =
@@ -156,23 +155,18 @@
 			folder.add(mainCamera.position, 'z', -20, 20).step(1);
 		}
 
-		if (light1) {
-			const dirlight = gui.addFolder('dirlight1');
-			dirlight.add(light1.position, 'x', -20, 20).step(1);
-			dirlight.add(light1.position, 'y', -10, 10).step(1);
-			dirlight.add(light1.position, 'z', -20, 20).step(1);
+		if (fireLight) {
+			const dirlight = gui.addFolder('fireLight');
+			dirlight.add(fireLight.position, 'x', -20, 20).step(1);
+			dirlight.add(fireLight.position, 'y', -10, 10).step(1);
+			dirlight.add(fireLight.position, 'z', -20, 20).step(1);
 
-			dirlight.add(light1.rotation, 'x', -3.14, 3.14).step(0.1);
-			dirlight.add(light1.rotation, 'y', -3.14, 3.14).step(0.1);
-			dirlight.add(light1.rotation, 'z', -3.14, 3.14).step(0.1);
+			dirlight.add(fireLight.rotation, 'x', -3.14, 3.14).step(0.1);
+			dirlight.add(fireLight.rotation, 'y', -3.14, 3.14).step(0.1);
+			dirlight.add(fireLight.rotation, 'z', -3.14, 3.14).step(0.1);
 
-			dirlight.add(light1, 'distance');
-			dirlight.add(light1, 'angle');
-			dirlight.add(light1, 'penumbra');
-			dirlight.add(light1, 'decay');
-			dirlight.add(light1, 'focus');
-			dirlight.add(light1, 'intensity');
-			dirlight.addColor(light1, 'color');
+			dirlight.add(fireLight, 'intensity');
+			dirlight.addColor(fireLight, 'color');
 		}
 
 		if (light2) {
@@ -214,9 +208,8 @@
 
 <!-- <Effects /> -->
 
-<!-- $cameraOffset.x, $cameraOffset.y, $cameraOffset.z -->
-
-{#if !useFreeCamera}
+{#if useFreeCamera === false}
+	<!-- TODO telos fov 80 -->
 	<T.PerspectiveCamera
 		bind:ref={mainCamera}
 		makeDefault
@@ -224,6 +217,7 @@
 		on:create={({ ref }) => {
 			ref.lookAt($cameraTarget.x, $cameraTarget.y, $cameraTarget.z);
 		}}
+		zoom={1}
 		fov={40}
 	>
 		<OrbitControls
@@ -247,31 +241,34 @@
 			maxDistance={20}
 			target={[1, 1.9, -8]}
 		/>
+
+		<AudioListener bind:ref={hallooAudioCtx} id="halloo" position={[0, 0, 0]} rotation.y={0} />
 	</T.PerspectiveCamera>
 {/if}
 
 <T.DirectionalLight
 	bind:ref={light2}
-	intensity={0.5}
-	position={[0, 10, 10]}
-	color={'#759bba'}
+	intensity={2}
+	position={[4, 10, 0]}
+	color={'#a6a6a6'}
 	shadow.mapSize.width={1024}
 	shadow.mapSize.height={1024}
 >
 	<!-- <Editable name="DirectionalLight" color transform intensity /> -->
 
 	{#if light2}
-		<T.DirectionalLightHelper bind:ref={helper1} args={[light2, 0.5, 'red']} />
+		<T.DirectionalLightHelper bind:ref={helper1} args={[light2, 0.5, 'blue']} />
 	{/if}
 </T.DirectionalLight>
 
+<!-- lõke -->
 <T.DirectionalLight
 	bind:ref={fireLight}
 	castShadow
 	intensity={1}
 	position={[0.75, 1.6, -2.5]}
 	rotation={[degToRad(-56), degToRad(6), 0]}
-	color={'#533d30'}
+	color={'#f0ab5c'}
 	shadow.mapSize.width={1024}
 	shadow.mapSize.height={1024}
 >
@@ -296,18 +293,19 @@
 
 <Trophy />
 
-<!-- <T.Fog
+<T.Fog
 	bind:ref={fog}
 	color={'#060a06'}
-	near={2}
+	near={6}
 	far={18}
 	on:create={({ ref }) => {
 		scene.fog = ref;
 	}}
 >
-	<Editable name="Fog" color near far />
-</T.Fog> -->
+	<!-- <Editable name="Fog" color near far /> -->
+</T.Fog>
 <!-- {#if isPageLoaded} -->
 
+<!-- kui ei mängi, vaata cssist pointer eventse -->
 <!-- <Audio src={fireplace} bind:ref={fireplaceAudio} autoplay={true} loop volume={1} /> -->
 <Audio src={hallo} bind:ref={halloAudio} id="halloo" autoplay={false} loop={false} volume={0.8} />
