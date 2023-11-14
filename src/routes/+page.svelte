@@ -10,6 +10,9 @@
 	let isWrapperVisible = true;
 	let isLoaded = false;
 	let halloAudio: any;
+	let fireplaceAudio: any;
+	let musicInterval: any;
+	let isMusicPlaying = false;
 
 	const { progress } = useProgress();
 
@@ -37,14 +40,37 @@
 		halloAudio.play();
 	};
 
-	function startMusic() {
+	function startMusic(e: any) {
+		isMusicPlaying = true;
+		fireplaceAudio.play();
 		const bars = document.querySelectorAll('.bar');
-		setInterval(() => {
+		musicInterval = setInterval(() => {
 			bars.forEach((bar) => {
 				let val = Math.floor(Math.random() * 90);
 				bar.style.height = `${val}%`;
 			});
 		}, 500);
+	}
+
+	function stopMusic(e: any) {
+		if (isMusicPlaying) {
+			fireplaceAudio.stop();
+			clearInterval(musicInterval);
+			const bars = document.querySelectorAll('.bar');
+			bars.forEach((bar) => {
+				let val = 15;
+				bar.style.height = `${val}%`;
+			});
+			isMusicPlaying = false;
+		}
+	}
+
+	function toggleMusic(e: any) {
+		if (isMusicPlaying) {
+			stopMusic(e);
+		} else {
+			startMusic(e);
+		}
 	}
 </script>
 
@@ -90,7 +116,12 @@
 				<div>creative developer</div>
 			</div>
 
-			<div class="icon" in:fade={{ delay: 2000, duration: 1000 }} use:startMusic>
+			<div
+				class="icon"
+				in:fade={{ delay: 2000, duration: 1000 }}
+				use:startMusic
+				on:click={(e) => toggleMusic(e)}
+			>
 				<div id="bars">
 					<div class="bar" />
 					<div class="bar" />
@@ -108,7 +139,7 @@
 
 	<Canvas toneMapping={ACESFilmicToneMapping}>
 		<Theatre>
-			<Scene isPageLoaded={isLoaded} bind:halloAudio />
+			<Scene isPageLoaded={isLoaded} bind:halloAudio bind:fireplaceAudio />
 		</Theatre>
 	</Canvas>
 </div>
@@ -178,6 +209,7 @@
 		justify-content: flex-start;
 		align-items: flex-start;
 		margin: 40px 40px 0 40px;
+		pointer-events: all;
 	}
 
 	.contact {
@@ -197,6 +229,7 @@
 		justify-content: flex-start;
 		align-items: flex-end;
 		margin: 0 0 40px 40px;
+		pointer-events: all;
 	}
 
 	.icon {
@@ -206,6 +239,8 @@
 		justify-content: center;
 		align-items: flex-end;
 		margin: 0 0 40px 40px;
+		pointer-events: all;
+		cursor: pointer;
 	}
 
 	.loading {

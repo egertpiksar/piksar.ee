@@ -28,6 +28,7 @@
 
 	export let isPageLoaded: boolean;
 	export let halloAudio: any;
+	export let fireplaceAudio: any;
 
 	interactivity();
 
@@ -35,7 +36,6 @@
 
 	let light2: any;
 	let fireLight: any;
-	let fireplaceAudio: any;
 	let helper1: any;
 	let helper2: any;
 	let mainCamera: any;
@@ -229,6 +229,12 @@
 			target={[$cameraTarget.x, $cameraTarget.y, $cameraTarget.z]}
 		/>
 
+		<AudioListener
+			bind:ref={fireplaceAudioCtx}
+			id="fireplace"
+			position={[0, 0, 0]}
+			rotation.y={0}
+		/>
 		<AudioListener bind:ref={hallooAudioCtx} id="halloo" position={[0, 0, 0]} rotation.y={0} />
 	</T.PerspectiveCamera>
 {:else}
@@ -307,5 +313,5 @@
 <!-- {#if isPageLoaded} -->
 
 <!-- kui ei mängi, vaata cssist pointer eventse -->
-<!-- <Audio src={fireplace} bind:ref={fireplaceAudio} autoplay={true} loop volume={1} /> -->
+<Audio src={fireplace} bind:ref={fireplaceAudio} id="fireplace" autoplay={true} loop volume={1} />
 <Audio src={hallo} bind:ref={halloAudio} id="halloo" autoplay={false} loop={false} volume={0.8} />
