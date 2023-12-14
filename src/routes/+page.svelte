@@ -185,26 +185,9 @@
 		color: white;
 	}
 
-	.layout {
-		position: absolute;
-		display: grid;
-		grid-template-columns: auto;
-		grid-template-rows: 100px 1fr 100px;
-		grid-template-areas:
-			'name . . . .'
-			'. . . . .'
-			'desc desc icon contact contact';
-		width: 100%;
-		height: 100%;
-		top: 0;
-		left: 0;
-		color: white;
-		pointer-events: none;
-	}
-
 	.name {
 		grid-area: name;
-		font-size: 2rem;
+		font-size: 2.25rem;
 		display: flex;
 		justify-content: flex-start;
 		align-items: flex-start;
@@ -244,7 +227,7 @@
 	}
 
 	.loading {
-		font-size: 2rem;
+		font-size: 2.25rem;
 		margin-top: -10px;
 		padding-bottom: 10px;
 	}
@@ -265,5 +248,87 @@
 		width: 4px;
 		background-color: white;
 		transition: 500ms ease-in-out;
+	}
+
+	.layout {
+		position: absolute;
+		display: grid;
+		grid-template-columns: auto;
+		grid-template-rows: 100px 1fr 30px 60px;
+		grid-template-areas:
+			'name name name name .'
+			'. . . . .'
+			'desc desc . icon .'
+			'contact contact . icon .';
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		color: white;
+		pointer-events: none;
+	}
+
+	/* 'sm': '640px' */
+	@media (max-width: 640px) {
+		.layout {
+			grid-template-rows: 100px 1fr 30px 60px;
+			grid-template-areas:
+				'name name name name .'
+				'. . . . .'
+				'desc desc . icon .'
+				'contact contact . icon .';
+		}
+
+		.name {
+			font-size: 1.5rem;
+		}
+
+		.contact {
+			font-size: 1.25rem;
+			margin: 0 0 40px 40px;
+			justify-content: flex-start;
+		}
+
+		.description {
+			font-size: 1.25rem;
+			margin-bottom: 0;
+		}
+
+		.icon {
+			font-size: 1.25rem;
+			margin: 0 40px 40px 0;
+		}
+	}
+
+	/* 'md': '768px' */
+	@media (min-width: 768px) {
+	}
+
+	/*  'lg': '1024px' */
+	@media (min-width: 1024px) {
+	}
+
+	/*  'xl': '1280px' */
+	@media (min-width: 1280px) {
+		.layout {
+			position: absolute;
+			display: grid;
+			grid-template-columns: auto;
+			grid-template-rows: 100px 1fr 100px;
+			grid-template-areas:
+				'name . . . .'
+				'. . . . .'
+				'desc desc icon contact contact';
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			color: white;
+			pointer-events: none;
+		}
+	}
+
+	/*  '2xl': '1536px' */
+	@media (min-width: 1536px) {
 	}
 </style>
