@@ -15,6 +15,8 @@
 	let isMusicPlaying = false;
 	let date = new Date();
 
+	$: outerWidth = 0;
+
 	const { progress } = useProgress();
 
 	const tweenedProgress = tweened($progress, {
@@ -80,6 +82,8 @@
 	<meta name="description" content="PIKSAR.EE" />
 </svelte:head>
 
+<svelte:window bind:outerWidth />
+
 <div id="main">
 	{#if isWrapperVisible}
 		<div class="wrapper" out:fade={{ duration: 1000 }}>
@@ -137,7 +141,7 @@
 
 	<Canvas toneMapping={ACESFilmicToneMapping}>
 		<Theatre>
-			<Scene isPageLoaded={isLoaded} bind:halloAudio bind:fireplaceAudio />
+			<Scene isPageLoaded={isLoaded} bind:halloAudio bind:fireplaceAudio bind:outerWidth />
 		</Theatre>
 	</Canvas>
 </div>
@@ -209,9 +213,9 @@
 		grid-area: contact;
 		font-size: 1.5rem;
 		display: flex;
-		justify-content: flex-end;
+		justify-content: flex-start;
 		align-items: flex-end;
-		margin: 0 40px 40px 0;
+		margin: 0 0 40px 40px;
 		pointer-events: all;
 	}
 
@@ -221,7 +225,7 @@
 		display: flex;
 		justify-content: flex-start;
 		align-items: flex-end;
-		margin: 0 0 40px 40px;
+		margin: 0 0 10px 40px;
 		pointer-events: all;
 	}
 

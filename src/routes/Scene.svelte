@@ -29,6 +29,7 @@
 	export let isPageLoaded: boolean;
 	export let halloAudio: any;
 	export let fireplaceAudio: any;
+	export let outerWidth: number;
 
 	interactivity();
 
@@ -202,6 +203,7 @@
 	}
 
 	$: console.log('isLoaded', isPageLoaded);
+	$: console.log('screen width: ', outerWidth);
 
 	let useFreeCamera = false;
 </script>
@@ -217,7 +219,7 @@
 		on:create={({ ref }) => {
 			ref.lookAt($cameraTarget.x, $cameraTarget.y, $cameraTarget.z);
 		}}
-		zoom={1}
+		zoom={outerWidth >= 640 ? 1 : 0.6}
 		fov={40}
 	>
 		<OrbitControls
