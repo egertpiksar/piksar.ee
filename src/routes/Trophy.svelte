@@ -13,7 +13,8 @@
 </script>
 
 {#if $gltf}
-	<T.Group position={[-0.4, 0.68, -4.45]} rotation.y={degToRad(50)} scale={0.4}>
+	<!-- position={[-0.4, 0.68, -4.45]} -->
+	<T.Group position={[0.2, 0.68, -4.5]} rotation.y={degToRad(50)} scale={0.4}>
 		<!-- <Object3DInstance object={$gltf.scene} castShadow receiveShadow scale={0.2} /> -->
 		<GLTF url={trophy} useDraco scale={0.2} />
 

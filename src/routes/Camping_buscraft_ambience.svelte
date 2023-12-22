@@ -3078,13 +3078,15 @@ Title: camping buscraft ambience
 									material={gltf.materials.lambert7}
 								/>
 							</T.Group>
-							<T.Group name="pCube6" position={[-0.24, 0.31, 0.57]}>
+							<!-- seljakott ja kaks kivi? -->
+							<T.Group name="pCube6" position={[2.57, 0.2, 2]} scale={0.5}>
 								<T.Mesh
 									name="pCube6_lambert7_0"
 									geometry={gltf.nodes.pCube6_lambert7_0.geometry}
 									material={gltf.materials.lambert7}
 								/>
 							</T.Group>
+
 							<T.Group name="fire3polySurface161">
 								<T.Group name="fire3polySurface162">
 									<T.Mesh

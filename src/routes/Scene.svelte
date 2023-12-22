@@ -282,9 +282,9 @@
 >
 	<!-- <Editable name="FireLight" color transform intensity /> -->
 
-	{#if fireLight}
+	<!-- {#if fireLight}
 		<T.DirectionalLightHelper bind:ref={helper2} args={[fireLight, 0.5, 'red']} />
-	{/if}
+	{/if} -->
 </T.DirectionalLight>
 
 <!-- <Portal /> -->
