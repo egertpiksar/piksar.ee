@@ -13,6 +13,7 @@
 	let fireplaceAudio: any;
 	let musicInterval: any;
 	let isMusicPlaying = false;
+	let date = new Date();
 
 	const { progress } = useProgress();
 
@@ -82,7 +83,7 @@
 <div id="main">
 	{#if isWrapperVisible}
 		<div class="wrapper" out:fade={{ duration: 1000 }}>
-			<div style="font-size: 3rem; margin: 40px;" transition:fade={{ duration: 2000 }}>
+			<div class="wrapperName" transition:fade={{ duration: 2000 }}>
 				<div>EGERT PIKSAR</div>
 				<div>PLAYGROUND © 2023</div>
 			</div>
@@ -96,10 +97,7 @@
 				<div class="loadingBar" style="transform: scaleX({$tweenedProgress})" />
 			</div>
 
-			<p
-				style="position: absolute; bottom: 40px; right: 40px; font-size: 20rem"
-				transition:fade={{ duration: 200 }}
-			>
+			<p class="loadingPrecent" transition:fade={{ duration: 200 }}>
 				{toFixedFloat($tweenedProgress)}%
 			</p>
 		</div>
@@ -108,7 +106,7 @@
 			<div class="name" in:fade={{ delay: 1500, duration: 1000 }}>
 				<div>
 					<div>EGERT PIKSAR</div>
-					<div>PLAYGROUND © 2023</div>
+					<div>PLAYGROUND © {date.getFullYear()}</div>
 				</div>
 			</div>
 
@@ -175,6 +173,13 @@
 		justify-content: center;
 	}
 
+	.loadingPrecent {
+		position: absolute;
+		bottom: 40px;
+		right: 40px;
+		font-size: 20rem;
+	}
+
 	.wrapper {
 		position: absolute;
 		width: 100%;
@@ -183,6 +188,11 @@
 		left: 0;
 		background-color: black;
 		color: white;
+	}
+
+	.wrapperName {
+		font-size: 3rem;
+		margin: 40px;
 	}
 
 	.name {
@@ -270,6 +280,18 @@
 
 	/* 'sm': '640px' */
 	@media (max-width: 640px) {
+		.wrapperName {
+			font-size: 1.5rem;
+		}
+
+		.loadingPrecent {
+			font-size: 5rem;
+		}
+
+		.loading {
+			font-size: 1.5rem;
+		}
+
 		.layout {
 			grid-template-rows: 100px 1fr 30px 60px;
 			grid-template-areas:
@@ -302,6 +324,14 @@
 
 	/* 'md': '768px' */
 	@media (min-width: 768px) {
+		.contact {
+			margin: 0 0 40px 40px;
+			justify-content: flex-start;
+		}
+
+		.description {
+			margin-bottom: 0.5rem;
+		}
 	}
 
 	/*  'lg': '1024px' */
@@ -325,6 +355,16 @@
 			left: 0;
 			color: white;
 			pointer-events: none;
+		}
+
+		.contact {
+			margin: 0 40px 40px;
+			justify-content: flex-end;
+		}
+
+		.description {
+			margin-bottom: 0.5rem;
+			margin: 0 0 40px 40px;
 		}
 	}
 

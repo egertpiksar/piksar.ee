@@ -105,7 +105,7 @@
 		//console.log('cameraOffset', $cameraOffset);
 		//console.log('cameraTarget', $cameraTarget);
 		//loadStats();
-		loadGUI();
+		//loadGUI();
 	});
 
 	useFrame((ctx, delta) => {
