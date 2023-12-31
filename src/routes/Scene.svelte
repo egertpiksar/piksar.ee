@@ -115,6 +115,7 @@
 	$: changePixelRatio(pixelRatio);
 
 	function changePixelRatio(num: number) {
+		console.log('pixelRatio: ', num);
 		if (num > 0) {
 			renderer?.setPixelRatio(num);
 		} else {
