@@ -3078,7 +3078,7 @@ Title: camping buscraft ambience
 									material={gltf.materials.lambert7}
 								/>
 							</T.Group>
-							<!-- seljakott ja kaks kivi? -->
+							<!-- seljakott ja kaks kivi -->
 							<T.Group name="pCube6" position={[2.57, 0.2, 2]} scale={0.5}>
 								<T.Mesh
 									name="pCube6_lambert7_0"

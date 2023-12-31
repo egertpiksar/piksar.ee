@@ -1,32 +1,32 @@
 <script lang="ts">
-    /* import { T, useLoader, extend  } from '@threlte/core';
-    import { useTexture } from "@threlte/extras";
-    import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass.js'
-    import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
-    import { Vector2 } from 'three';
+	import { T, useLoader, extend } from '@threlte/core';
+	import { useTexture } from '@threlte/extras';
+	import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass.js';
+	import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+	import { Vector2 } from 'three';
 	import { radToDeg } from 'three/src/math/MathUtils';
-    import { useControls } from 'leva'
-    import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
-    import { LUTCubeLoader } from 'three/examples/jsm/loaders/LUTCubeLoader.js'
-    import { LUTPass } from 'three/examples/jsm/postprocessing/LUTPass.js' */
-   // import * as cube from "$lib/F-6800-STD.cube";
-	/* import { onMount } from 'svelte'; */
+	import { useControls } from 'leva';
+	import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
+	import { LUTCubeLoader } from 'three/examples/jsm/loaders/LUTCubeLoader.js';
+	import { LUTPass } from 'three/examples/jsm/postprocessing/LUTPass.js';
+	import * as cube from '$lib/F-6800-STD.cube';
+	import { onMount } from 'svelte';
 
-   /*  extend({
-        Pass
-    }) */
+	extend({
+		Pass
+	});
 
-    // LUT
-    /* const lutloader = useLoader(LUTCubeLoader, () => new LUTCubeLoader())
-    let lutTexture: any;
-    lutloader.load("/src/lib/F-6800-STD.cube", (obj)  => {
-        console.log("LUT CUBE", obj)
-        lutTexture = obj;
-    }) */
+	// LUT
+	const lutloader = useLoader(LUTCubeLoader, () => new LUTCubeLoader());
+	let lutTexture: any;
+	lutloader.load('/src/lib/F-6800-STD.cube', (obj) => {
+		console.log('LUT CUBE', obj);
+		lutTexture = obj;
+	});
 
-    // BLOOM?
-   
-    /*const { enabled, ...props } = useControls({
+	// BLOOM?
+
+	/*const { enabled, ...props } = useControls({
         enabled: true,
         temporalResolve: true,
         STRETCH_MISSED_RAYS: true,
@@ -58,7 +58,6 @@
         thickness: { value: 3, min: 0, max: 10 },
         ior: { value: 1.45, min: 0, max: 2 }
     })*/
-
 </script>
 
 <!-- {#if lutTexture}
@@ -66,13 +65,6 @@
         lut: lutTexture.texture,
         intensity: 1
     })} />
-{/if}
+{/if} -->
 
-
-<Pass pass={new UnrealBloomPass(
-    new Vector2(1024, 1024),
-    0.1,
-    0.125,
-    0.1
-)} /> -->
-
+<Pass pass={new UnrealBloomPass(new Vector2(1024, 1024), 0.1, 0.125, 0.1)} />

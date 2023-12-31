@@ -98,9 +98,22 @@
 						material={$gltf.materials['Material.001']}
 					/>
 
-					<HTML transform occlude>
+					<!-- <HTML
+						transform
+						zIndexRange={[0, 0]}
+						distanceFactor={1}
+						position={[-1, 1, -1]}
+						rotation.x={-0.256}
+						rotation.z={Math.PI / 2}
+					>
+						<div class="website">
+							<iframe src="https://piksar.ee" title="piksar.ee" />
+						</div>
+					</HTML> -->
+
+					<!-- <HTML transform occlude>
 						<h1 style="color: white">Hello World</h1>
-					</HTML>
+					</HTML> -->
 
 					<!-- läpaka tagumine -->
 					<T.Mesh
@@ -131,3 +144,12 @@
 <GLTF receiveShadow useDraco url={mouse} position={[0.25, 0.7, -4.05]} scale={0.05}>
 	<!-- <Editable name="mouse" transform /> -->
 </GLTF>
+
+<!-- <style>
+	.website iframe {
+		width: 1024px;
+		height: 670px;
+		border: none;
+		background: #000000;
+	}
+</style> -->

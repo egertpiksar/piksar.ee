@@ -13,6 +13,7 @@
 	let fireplaceAudio: any;
 	let musicInterval: any;
 	let isMusicPlaying = false;
+	let isHalloPlaying = false;
 	let date = new Date();
 
 	$: outerWidth = 0;
@@ -38,10 +39,10 @@
 		return int;
 	}
 
-	export const toggleHalloo = async () => {
-		console.log('playHalloo');
+	function toggleHalloo(e: any) {
+		isHalloPlaying = !isHalloPlaying;
 		halloAudio.play();
-	};
+	}
 
 	function startMusic(e: any) {
 		isMusicPlaying = true;
@@ -56,8 +57,9 @@
 	}
 
 	function stopMusic(e: any) {
-		if (isMusicPlaying) {
+		if (isMusicPlaying || isHalloPlaying) {
 			fireplaceAudio.stop();
+			halloAudio.stop();
 			clearInterval(musicInterval);
 			const bars = document.querySelectorAll('.bar');
 			bars.forEach((bar) => {
@@ -76,11 +78,6 @@
 		}
 	}
 </script>
-
-<svelte:head>
-	<title>Egert Piksar - Creative Developer</title>
-	<meta name="description" content="PIKSAR.EE" />
-</svelte:head>
 
 <svelte:window bind:outerWidth />
 
@@ -118,10 +115,11 @@
 				<div>creative developer</div>
 			</div>
 
+			<!-- autoplay chromes disabled -->
 			<div
 				class="icon"
 				in:fade={{ delay: 2000, duration: 1000 }}
-				use:startMusic
+				use:toggleMusic
 				on:click={(e) => toggleMusic(e)}
 			>
 				<div id="bars">
@@ -140,9 +138,9 @@
 	{/if}
 
 	<Canvas toneMapping={ACESFilmicToneMapping}>
-		<Theatre>
-			<Scene isPageLoaded={isLoaded} bind:halloAudio bind:fireplaceAudio bind:outerWidth />
-		</Theatre>
+		<!-- <Theatre> -->
+		<Scene isPageLoaded={isLoaded} bind:halloAudio bind:fireplaceAudio bind:outerWidth />
+		<!-- </Theatre> -->
 	</Canvas>
 </div>
 

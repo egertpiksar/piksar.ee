@@ -6,23 +6,19 @@
 		useInteractivity,
 		OrbitControls,
 		interactivity,
-		TransformControls,
 		AudioListener,
-		Audio,
-		PositionalAudio,
-		useAudioListener
+		Audio
 	} from '@threlte/extras';
 	import { spring } from 'svelte/motion';
 	import { onMount } from 'svelte';
 	import GUI from 'lil-gui';
-	//import Effects from './Effects.svelte';
+	import Effects from './Effects.svelte';
 	//import Drone from './Drone.svelte';
 	import Trophy from './Trophy.svelte';
 	import Campsite from './Campsite.svelte';
 	import { degToRad } from 'three/src/math/MathUtils';
 	// import { Editable } from '@threlte/theatre';
 	import Laptop from './Laptop.svelte';
-	import mp3 from '$lib/audios/track.mp3';
 	import fireplace from '$lib/audios/fireplace.mp3';
 	import hallo from '$lib/audios/hallloo.mp3';
 
@@ -33,7 +29,7 @@
 
 	interactivity();
 
-	const gui = new GUI();
+	//const gui = new GUI();
 
 	let light2: any;
 	let fireLight: any;
@@ -42,7 +38,6 @@
 	let mainCamera: any;
 	let fog: any;
 	let isHoveredLaptop: boolean;
-	let isFireplaceLoaded: boolean = false;
 	let pixelRatio = 1;
 	let hallooAudioCtx: any;
 	let fireplaceAudioCtx: any;
@@ -103,8 +98,6 @@
 	let obj = { tonemap: 0 };
 
 	onMount(() => {
-		//console.log('cameraOffset', $cameraOffset);
-		//console.log('cameraTarget', $cameraTarget);
 		//loadStats();
 		//loadGUI();
 	});
@@ -122,7 +115,6 @@
 	$: changePixelRatio(pixelRatio);
 
 	function changePixelRatio(num: number) {
-		console.log('pixelRatio', num);
 		if (num > 0) {
 			renderer?.setPixelRatio(num);
 		} else {
@@ -211,7 +203,6 @@
 <!-- <Effects /> -->
 
 {#if useFreeCamera === false}
-	<!-- TODO telos fov 80 -->
 	<T.PerspectiveCamera
 		bind:ref={mainCamera}
 		makeDefault
@@ -262,8 +253,6 @@
 	shadow.mapSize.width={1024}
 	shadow.mapSize.height={1024}
 >
-	<!-- <Editable name="DirectionalLight" color transform intensity /> -->
-
 	{#if light2}
 		<T.DirectionalLightHelper bind:ref={helper1} args={[light2, 0.5, 'blue']} />
 	{/if}
@@ -279,13 +268,7 @@
 	color={'#f0ab5c'}
 	shadow.mapSize.width={1024}
 	shadow.mapSize.height={1024}
->
-	<!-- <Editable name="FireLight" color transform intensity /> -->
-
-	<!-- {#if fireLight}
-		<T.DirectionalLightHelper bind:ref={helper2} args={[fireLight, 0.5, 'red']} />
-	{/if} -->
-</T.DirectionalLight>
+/>
 
 <!-- <Portal /> -->
 
@@ -309,10 +292,7 @@
 	on:create={({ ref }) => {
 		scene.fog = ref;
 	}}
->
-	<!-- <Editable name="Fog" color near far /> -->
-</T.Fog>
-<!-- {#if isPageLoaded} -->
+/>
 
 <!-- kui ei mängi, vaata cssist pointer eventse -->
 <Audio src={fireplace} bind:ref={fireplaceAudio} id="fireplace" autoplay={true} loop volume={1} />

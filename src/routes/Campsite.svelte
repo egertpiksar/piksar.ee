@@ -11,7 +11,7 @@
 		$actions['Take 001']?.play();
 	}
 
-	$: console.log('warehouse', $gltf);
+	// $: console.log('warehouse', $gltf);
 </script>
 
 <CampingBuscraftAmbience />
