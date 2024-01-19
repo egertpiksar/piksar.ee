@@ -86,7 +86,7 @@
 		<div class="wrapper" out:fade={{ duration: 1000 }}>
 			<div class="wrapperName" transition:fade={{ duration: 2000 }}>
 				<div>EGERT PIKSAR</div>
-				<div>PLAYGROUND © 2023</div>
+				<div>PLAYGROUND © {date.getFullYear()}</div>
 			</div>
 
 			<div class="loadingWrapper">
