@@ -51,8 +51,9 @@
 	// TODO pointerOverCanvas kui nt tabi vahetada, siis kõik animatsioonid pausile
 	const { pointer, pointerOverTarget } = useInteractivity();
 
+	// x: 3.7, y: 1, z: 0
 	const cameraOffset = spring(
-		{ x: 3.7, y: 1, z: 0 },
+		{ x: 10, y: 4, z: 0 },
 		{
 			stiffness: 0.005,
 			damping: 0.5
@@ -78,11 +79,10 @@
 		} else {
 			// kaamera pos xyz
 			cameraOffset.set({
-				x: 3.7 + $pointer.x / 2,
-				y: 1 + $pointer.y / 2,
+				x: 3.7 + $pointer.x / 1.5,
+				y: 1 + $pointer.y / 1.5,
 				z: 0
 			});
-
 			// kaamera lookAt
 			/* cameraTarget.set({
 				x: $pointer.x,
@@ -114,6 +114,12 @@
 
 	$: changePixelRatio(pixelRatio);
 
+	$: if (isPageLoaded) {
+		setTimeout(() => {
+			moveCameraToCenter();
+		}, 2100);
+	}
+
 	function changePixelRatio(num: number) {
 		console.log('pixelRatio: ', num);
 		if (num > 0) {
@@ -121,6 +127,14 @@
 		} else {
 			renderer?.setPixelRatio(defaultPixelRatio ? defaultPixelRatio : 1);
 		}
+	}
+
+	function moveCameraToCenter() {
+		cameraOffset.set({
+			x: 3.7,
+			y: 1,
+			z: 0
+		});
 	}
 
 	function loadGUI() {
