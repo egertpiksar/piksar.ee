@@ -10,11 +10,27 @@
 	});
 
 	$: console.log('trohpy', $gltf);
+
+	function onpointerenter() {
+		console.log('enter');
+		// pos y ülesse ja valgust juurde, floatima
+	}
+
+	function onpointerleave() {
+		console.log('leave');
+	}
 </script>
 
 {#if $gltf}
-	<!-- position={[-0.4, 0.68, -4.45]} -->
-	<T.Group position={[0.2, 0.68, -4.5]} rotation.y={degToRad(50)} scale={0.4}>
+	<!-- laua peal: position={[0.2, 0.68, -4.5]} -->
+	<!-- koti juures: position={[2.45, 0, -4]} -->
+	<T.Group
+		position={[2.45, 0, -4]}
+		rotation.y={degToRad(0)}
+		scale={0.5}
+		on:pointerenter={onpointerenter}
+		on:pointerleave={onpointerleave}
+	>
 		<!-- <Object3DInstance object={$gltf.scene} castShadow receiveShadow scale={0.2} /> -->
 		<GLTF url={trophy} useDraco scale={0.2} />
 
