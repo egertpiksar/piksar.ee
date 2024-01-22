@@ -9,6 +9,7 @@
 
 	let isWrapperVisible = true;
 	let isLoaded = false;
+	let isReady = false;
 	let halloAudio: any;
 	let fireplaceAudio: any;
 	let musicInterval: any;
@@ -27,11 +28,13 @@
 	$: if ($progress) {
 		$tweenedProgress = parseFloat($progress.toFixed(2));
 		if ($progress === 1) {
-			isLoaded = true;
-			setTimeout(() => {
-				isWrapperVisible = false;
-			}, 2000);
+			isReady = true;
 		}
+	}
+
+	function closeWrapper() {
+		isLoaded = true;
+		isWrapperVisible = false;
 	}
 
 	function toFixedFloat(int: any) {
@@ -90,12 +93,22 @@
 			</div>
 
 			<div class="loadingWrapper">
-				{#if isLoaded}
+				{#if isReady}
 					<p class="loading">Let´s go!</p>
 				{:else}
 					<p class="loading">Loading ...</p>
 				{/if}
+
 				<div class="loadingBar" style="transform: scaleX({$tweenedProgress})" />
+
+				{#if isReady}
+					<button class="button" on:click={() => closeWrapper()}>
+						<div class="button__filler" />
+						<span class="button__text">
+							<span class="button__text-inner">Click to continue</span>
+						</span>
+					</button>
+				{/if}
 			</div>
 
 			<p class="loadingPrecent" transition:fade={{ duration: 200 }}>
@@ -145,6 +158,40 @@
 </div>
 
 <style>
+	.button {
+		cursor: pointer;
+		border-width: 2px;
+		border-color: #fff;
+		border-style: solid;
+		color: #fff;
+		background: transparent;
+		border-radius: 40px;
+		min-width: 19rem;
+		height: 6rem;
+		padding: 0;
+		margin: 1rem;
+		font-family: inherit;
+		font-size: 1.5rem;
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.button:hover {
+		background: #fff;
+		color: #000;
+	}
+
+	.button__text,
+	.button__text-inner {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+	}
+
 	#main {
 		position: fixed;
 		top: 0;
@@ -292,6 +339,11 @@
 
 		.loading {
 			font-size: 1.5rem;
+		}
+
+		.button {
+			font-size: 1rem;
+			min-width: 16rem;
 		}
 
 		.layout {

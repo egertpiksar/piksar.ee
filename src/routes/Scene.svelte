@@ -226,7 +226,7 @@
 			ref.lookAt($cameraTarget.x, $cameraTarget.y, $cameraTarget.z);
 		}}
 		zoom={outerWidth >= 640 ? 1 : 0.6}
-		fov={40}
+		fov={outerWidth >= 640 ? 40 : 50}
 	>
 		<OrbitControls
 			enableDamping={true}
