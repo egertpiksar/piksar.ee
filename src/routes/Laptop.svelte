@@ -5,7 +5,7 @@
 	import laptop from '$lib/models/Laptop/low_poly_laptop.glb';
 	import mouse from '$lib/models/Laptop/low_poly_computer_mouse_free.glb';
 	// import { Editable } from '@threlte/theatre';
-	import { NearestFilter, RepeatWrapping } from 'three';
+	import { NearestFilter, RepeatWrapping, UVMapping } from 'three';
 	import png from '$lib/textures/screenshot.png';
 
 	export let cameraOffset;
@@ -18,15 +18,14 @@
 	const screenshot = useTexture(png);
 
 	$: if ($screenshot) {
-		$screenshot.center.set(0, 0);
-		//$screenshot.offset.set(0, 0);
-		$screenshot.rotation = 82;
-		//$screenshot.flipY = true;
+		$screenshot.center.set(0.98, 0.06);
+		//$screenshot.colorSpace = SRGBColorSpace;
+		$screenshot.rotation = 1.59;
 		$screenshot.wrapS = RepeatWrapping;
 		$screenshot.wrapT = RepeatWrapping;
 		$screenshot.minFilter = NearestFilter;
 		$screenshot.magFilter = NearestFilter;
-		//$screenshot.repeat.set(1, 0.5);
+		$screenshot.mapping = UVMapping;
 	}
 
 	// TODO disableme zoomOuti nii kauaks kuni kohale sõidab
@@ -112,11 +111,11 @@
 						name="Cube002_Material001_0"
 						castShadow
 						receiveShadow
-						geometry={$gltf.nodes.Cube002_Material001_0.geometry}
-						scale={2}
+						scale={1.9}
+						position={[-1, 1, 0]}
 					>
-						<!--<T.PlaneGeometry height="9" weight="16" scale={10} />-->
-						<T.MeshBasicMaterial map={$screenshot} />
+						<T.PlaneGeometry weight="16" height="9" />
+						<T.MeshBasicMaterial map={$screenshot} color{0xffffff} />
 					</T.Mesh>
 
 					<!-- <HTML
