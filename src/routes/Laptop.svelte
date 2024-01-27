@@ -6,7 +6,7 @@
 	import mouse from '$lib/models/Laptop/low_poly_computer_mouse_free.glb';
 	// import { Editable } from '@threlte/theatre';
 	import { NearestFilter, RepeatWrapping, UVMapping } from 'three';
-	import png from '$lib/textures/screenshot.png';
+	import png from '$lib/textures/asd.png';
 
 	export let cameraOffset;
 	export let isHoveredLaptop = false;
