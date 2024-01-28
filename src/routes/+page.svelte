@@ -84,6 +84,7 @@
 
 	onMount(() => {
 		const ratio = Math.ceil(window.devicePixelRatio);
+		console.log('ratio', ratio);
 		const canvas = document.createElement('canvas');
 		canvas.width = window.innerWidth * ratio;
 		canvas.height = window.innerHeight * ratio;

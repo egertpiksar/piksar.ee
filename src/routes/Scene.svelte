@@ -98,21 +98,21 @@
 	let obj = { tonemap: 0 };
 
 	onMount(() => {
-		//loadStats();
-		//loadGUI();
+		loadStats();
+		loadGUI();
 	});
 
 	useFrame((ctx, delta) => {
-		//listenStats();
+		listenStats();
 
 		let time = clock.elapsedTime;
 		fireLight.intensity =
 			0.5 + Math.sin(time * Math.PI * 2) * Math.cos(time * Math.PI * 1.5) * 0.25;
 	});
 
-	const defaultPixelRatio = renderer?.getPixelRatio();
+	/*const defaultPixelRatio = renderer?.getPixelRatio();
 
-	$: changePixelRatio(pixelRatio);
+	$: changePixelRatio(pixelRatio);*/
 
 	$: if (isPageLoaded) {
 		setTimeout(() => {
@@ -120,14 +120,14 @@
 		}, 2100);
 	}
 
-	function changePixelRatio(num: number) {
+	/*function changePixelRatio(num: number) {
 		console.log('pixelRatio: ', num);
 		if (num > 0) {
 			renderer?.setPixelRatio(num);
 		} else {
 			renderer?.setPixelRatio(defaultPixelRatio ? defaultPixelRatio : 1);
 		}
-	}
+	}*/
 
 	function moveCameraToCenter() {
 		cameraOffset.set({
