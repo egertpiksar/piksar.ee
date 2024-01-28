@@ -38,7 +38,6 @@
 	let mainCamera: any;
 	let fog: any;
 	let isHoveredLaptop: boolean;
-	let pixelRatio = 1;
 	let hallooAudioCtx: any;
 	let fireplaceAudioCtx: any;
 
@@ -110,24 +109,11 @@
 			0.5 + Math.sin(time * Math.PI * 2) * Math.cos(time * Math.PI * 1.5) * 0.25;
 	});
 
-	/*const defaultPixelRatio = renderer?.getPixelRatio();
-
-	$: changePixelRatio(pixelRatio);*/
-
 	$: if (isPageLoaded) {
 		setTimeout(() => {
 			moveCameraToCenter();
 		}, 2100);
 	}
-
-	/*function changePixelRatio(num: number) {
-		console.log('pixelRatio: ', num);
-		if (num > 0) {
-			renderer?.setPixelRatio(num);
-		} else {
-			renderer?.setPixelRatio(defaultPixelRatio ? defaultPixelRatio : 1);
-		}
-	}*/
 
 	function moveCameraToCenter() {
 		cameraOffset.set({

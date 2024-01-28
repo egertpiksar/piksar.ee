@@ -83,14 +83,27 @@
 	}
 
 	onMount(() => {
-		const ratio = Math.ceil(window.devicePixelRatio);
+		/*const ratio = Math.ceil(window.devicePixelRatio);
 		console.log('ratio', ratio);
 		const canvas = document.createElement('canvas');
 		canvas.width = window.innerWidth * ratio;
 		canvas.height = window.innerHeight * ratio;
 		canvas.style.width = `${window.innerWidth}px`;
-		canvas.style.height = `${window.innerHeight}px`;
+		canvas.style.height = `${window.innerHeight}px`;*/
 	});
+
+	//const defaultPixelRatio = renderer?.getPixelRatio();
+	//$: console.log('defaultPXratio', defaultPixelRatio);
+	//$: changePixelRatio(pixelRatio);
+
+	/*function changePixelRatio(num: number) {
+		console.log('pixelRatio: ', num);
+		if (num > 0) {
+			renderer?.setPixelRatio(num);
+		} else {
+			renderer?.setPixelRatio(defaultPixelRatio ? defaultPixelRatio : 1);
+		}
+	}*/
 </script>
 
 <svelte:window bind:outerWidth />
