@@ -225,7 +225,7 @@
 		on:create={({ ref }) => {
 			ref.lookAt($cameraTarget.x, $cameraTarget.y, $cameraTarget.z);
 		}}
-		zoom={outerWidth >= 640 ? 1 : 0.6}
+		zoom={1}
 		fov={outerWidth >= 640 ? 40 : 50}
 	>
 		<OrbitControls
