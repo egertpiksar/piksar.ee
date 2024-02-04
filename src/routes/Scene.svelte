@@ -97,12 +97,12 @@
 	let obj = { tonemap: 0 };
 
 	onMount(() => {
-		loadStats();
-		loadGUI();
+		//loadStats();
+		//loadGUI();
 	});
 
 	useFrame((ctx, delta) => {
-		listenStats();
+		//listenStats();
 
 		let time = clock.elapsedTime;
 		fireLight.intensity =

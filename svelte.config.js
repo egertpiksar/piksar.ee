@@ -6,6 +6,11 @@ export default {
 	// for more information about preprocessors
 	preprocess: [vitePreprocess()],
 	kit: {
-		adapter: adapter()
+		adapter: adapter({
+			// default options are shown
+			out: 'build',
+			precompress: false,
+			envPrefix: ''
+		})
 	}
 };

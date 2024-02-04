@@ -1,11 +1,11 @@
-<script>
+<script lang="ts">
 	import { GLTF, useGltf, HTML, useTexture } from '@threlte/extras';
-	import { T } from '@threlte/core';
+	import { T, useLoader } from '@threlte/core';
 	import { degToRad } from 'three/src/math/MathUtils';
 	import laptop from '$lib/models/Laptop/low_poly_laptop.glb';
 	import mouse from '$lib/models/Laptop/low_poly_computer_mouse_free.glb';
 	// import { Editable } from '@threlte/theatre';
-	import { NearestFilter, RepeatWrapping, UVMapping } from 'three';
+	import { NearestFilter, RepeatWrapping, UVMapping, TextureLoader } from 'three';
 	import png from '$lib/textures/asd.png';
 
 	export let cameraOffset;
@@ -15,7 +15,7 @@
 		useDraco: true
 	});
 
-	const screenshot = useTexture(png);
+	const screenshot = useLoader(TextureLoader).load(png);
 
 	$: if ($screenshot) {
 		$screenshot.center.set(0.98, 0.06);
@@ -107,16 +107,18 @@
 					<!-- must ekraan 
 						geometry={$gltf.nodes.Cube002_Material001_0.geometry}
 						material={$gltf.materials['Material.001']} -->
-					<T.Mesh
-						name="Cube002_Material001_0"
-						castShadow
-						receiveShadow
-						scale={1.9}
-						position={[-1, 1, 0]}
-					>
-						<T.PlaneGeometry weight="16" height="9" />
-						<T.MeshBasicMaterial map={$screenshot} color{0xffffff} />
-					</T.Mesh>
+					{#if $screenshot}
+						<T.Mesh
+							name="Cube002_Material001_0"
+							castShadow
+							receiveShadow
+							scale={1.9}
+							position={[-1, 1, 0]}
+						>
+							<T.PlaneGeometry weight="16" height="9" />
+							<T.MeshBasicMaterial map={$screenshot} color{0xffffff} />
+						</T.Mesh>
+					{/if}
 
 					<!-- <HTML
 						transform
