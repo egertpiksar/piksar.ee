@@ -225,7 +225,8 @@
 		position: absolute;
 		bottom: 40px;
 		right: 40px;
-		font-size: 20rem;
+		font-size: 5rem;
+		pointer-events: none;
 	}
 
 	.wrapper {
@@ -333,7 +334,7 @@
 		}
 
 		.loadingPrecent {
-			font-size: 5rem;
+			font-size: 6rem;
 		}
 
 		.loading {
@@ -385,10 +386,17 @@
 		.description {
 			margin-bottom: 0.5rem;
 		}
+
+		.loadingPrecent {
+			font-size: 10rem;
+		}
 	}
 
 	/*  'lg': '1024px' */
 	@media (min-width: 1024px) {
+		.loadingPrecent {
+			font-size: 12rem;
+		}
 	}
 
 	/*  'xl': '1280px' */
@@ -418,6 +426,10 @@
 		.description {
 			margin-bottom: 0.5rem;
 			margin: 0 0 40px 40px;
+		}
+
+		.loadingPrecent {
+			font-size: 16rem;
 		}
 	}
 
