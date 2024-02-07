@@ -1,17 +1,18 @@
 <script lang="ts">
 	import Character from './Character.svelte';
-	import Stats from 'stats.js';
-	import { T, useFrame, useThrelte } from '@threlte/core';
+	import { T, useTask, useThrelte } from '@threlte/core';
 	import {
 		useInteractivity,
 		OrbitControls,
 		interactivity,
 		AudioListener,
-		Audio
+		Audio,
+		Grid
 	} from '@threlte/extras';
 	import { spring } from 'svelte/motion';
 	import { onMount } from 'svelte';
-	import GUI from 'lil-gui';
+	import { Folder, FpsGraph, Pane, Slider, Button } from 'svelte-tweakpane-ui';
+	import RenderIndicator from './RenderIndicator.svelte';
 	import Effects from './Effects.svelte';
 	//import Drone from './Drone.svelte';
 	import Trophy from './Trophy.svelte';
@@ -29,24 +30,20 @@
 
 	interactivity();
 
-	//const gui = new GUI();
-
 	let light2: any;
 	let fireLight: any;
 	let helper1: any;
-	let helper2: any;
 	let mainCamera: any;
 	let fog: any;
 	let isHoveredLaptop: boolean;
 	let hallooAudioCtx: any;
 	let fireplaceAudioCtx: any;
 
-	let stats1 = new Stats();
+	let showGrid = true;
+	let useFreeCamera = false;
+	let elapsedTime = 0;
 
-	const { renderer, camera, scene, toneMapping, clock } = useThrelte();
-
-	console.log(renderer, $camera);
-
+	const { scene } = useThrelte();
 	// TODO pointerOverCanvas kui nt tabi vahetada, siis kõik animatsioonid pausile
 	const { pointer, pointerOverTarget } = useInteractivity();
 
@@ -67,6 +64,14 @@
 			damping: 0.5
 		}
 	);
+
+	onMount(() => {});
+
+	useTask((delta) => {
+		elapsedTime += delta;
+		fireLight.intensity =
+			0.5 + Math.sin(elapsedTime * Math.PI * 2) * Math.cos(elapsedTime * Math.PI * 1.5) * 0.25;
+	});
 
 	$: if (mainCamera && $pointer && ($pointer.x || $pointer.y) && $pointerOverTarget) {
 		if (isHoveredLaptop) {
@@ -94,26 +99,14 @@
 		//console.log('cameraOffset', $cameraOffset);
 	}
 
-	let obj = { tonemap: 0 };
-
-	onMount(() => {
-		//loadStats();
-		//loadGUI();
-	});
-
-	useFrame((ctx, delta) => {
-		//listenStats();
-
-		let time = clock.elapsedTime;
-		fireLight.intensity =
-			0.5 + Math.sin(time * Math.PI * 2) * Math.cos(time * Math.PI * 1.5) * 0.25;
-	});
-
 	$: if (isPageLoaded) {
 		setTimeout(() => {
 			moveCameraToCenter();
 		}, 2100);
 	}
+
+	$: console.log('isLoaded', isPageLoaded);
+	$: console.log('screen width: ', outerWidth);
 
 	function moveCameraToCenter() {
 		cameraOffset.set({
@@ -122,83 +115,6 @@
 			z: 0
 		});
 	}
-
-	function loadGUI() {
-		gui.add(document, 'title');
-
-		const folder = gui.addFolder('camera');
-
-		const toneMap = gui.addFolder('toneMapping');
-		toneMap
-			.add(obj, 'tonemap', {
-				noToneMapping: 0,
-				linear: 1,
-				reinhard: 2,
-				cineon: 3,
-				filmic: 4,
-				custom: 5
-			})
-			.onChange((selectedValue: any) => {
-				$toneMapping = selectedValue;
-			});
-
-		if (mainCamera) {
-			console.log('mainCamera', mainCamera);
-			folder.add(mainCamera.position, 'x', -20, 20).step(1);
-			folder.add(mainCamera.position, 'y', -20, 20).step(1);
-			folder.add(mainCamera.position, 'z', -20, 20).step(1);
-		}
-
-		if (fireLight) {
-			const dirlight = gui.addFolder('fireLight');
-			dirlight.add(fireLight.position, 'x', -20, 20).step(1);
-			dirlight.add(fireLight.position, 'y', -10, 10).step(1);
-			dirlight.add(fireLight.position, 'z', -20, 20).step(1);
-
-			dirlight.add(fireLight.rotation, 'x', -3.14, 3.14).step(0.1);
-			dirlight.add(fireLight.rotation, 'y', -3.14, 3.14).step(0.1);
-			dirlight.add(fireLight.rotation, 'z', -3.14, 3.14).step(0.1);
-
-			dirlight.add(fireLight, 'intensity');
-			dirlight.addColor(fireLight, 'color');
-		}
-
-		if (light2) {
-			const dirlight = gui.addFolder('dirlight2');
-			dirlight.add(light2.position, 'x', -20, 20).step(1);
-			dirlight.add(light2.position, 'y', -10, 10).step(1);
-			dirlight.add(light2.position, 'z', -20, 20).step(1);
-
-			dirlight.add(light2.rotation, 'x', -3.14, 3.14).step(0.1);
-			dirlight.add(light2.rotation, 'y', -3.14, 3.14).step(0.1);
-			dirlight.add(light2.rotation, 'z', -3.14, 3.14).step(0.1);
-			dirlight.add(light2, 'intensity');
-			dirlight.addColor(light2, 'color');
-		}
-
-		if (fog) {
-			const fogF = gui.addFolder('fog');
-			fogF.add(fog, 'near', -50, 50).step(1);
-			fogF.add(fog, 'far', -50, 50).step(1);
-			fogF.addColor(fog, 'color');
-		}
-	}
-
-	function loadStats() {
-		stats1.showPanel(0); // Panel 0 = fps
-		stats1.domElement.style.cssText = 'position:absolute;top:0px;left:0px;';
-		document.body.appendChild(stats1.domElement);
-	}
-
-	function listenStats() {
-		stats1.begin();
-		stats1.end();
-	}
-
-	$: console.log('isLoaded', isPageLoaded);
-	$: console.log('screen width: ', outerWidth);
-
-	let useFreeCamera = false;
 </script>
 
 <!-- <Effects /> -->
@@ -298,3 +214,37 @@
 <!-- kui ei mängi, vaata cssist pointer eventse -->
 <Audio src={fireplace} bind:ref={fireplaceAudio} id="fireplace" autoplay={true} loop volume={1} />
 <Audio src={hallo} bind:ref={halloAudio} id="halloo" autoplay={false} loop={false} volume={0.8} />
+
+<!-- TWEAKPANE -->
+<Pane position="fixed" title="debug" expanded={true}>
+	<Folder userExpandable={true} expanded title="kaamera">
+		<Slider bind:value={$cameraOffset.x} label="pos x" min={-10} max={20} step={0.1} />
+		<Slider bind:value={$cameraOffset.y} label="pos y" min={-10} max={20} step={0.1} />
+		<Slider bind:value={$cameraOffset.z} label="pos z" min={-10} max={20} step={0.1} />
+		<Slider bind:value={$cameraTarget.x} label="lookat x" min={-10} max={20} step={0.1} />
+		<Slider bind:value={$cameraTarget.y} label="lookat y" min={-10} max={20} step={0.1} />
+		<Slider bind:value={$cameraTarget.z} label="lookat z" min={-10} max={20} step={0.1} />
+	</Folder>
+
+	<Folder title="rendering">
+		<Button
+			on:click={() => (showGrid = !showGrid)}
+			label="show grid"
+			title={showGrid ? 'true' : 'false'}
+		/>
+		<RenderIndicator />
+		<FpsGraph />
+	</Folder>
+</Pane>
+
+{#if showGrid}
+	<Grid
+		position.y={0}
+		sectionThickness={1}
+		infiniteGrid
+		cellColor="#dddddd"
+		sectionColor="#ffffff"
+		sectionSize={1}
+		cellSize={1}
+	/>
+{/if}
