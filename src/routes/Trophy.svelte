@@ -1,47 +1,64 @@
 <script lang="ts">
-	import trophy from '$lib/models/Trophy/trophy.glb';
+	import threejsjourney from '$lib/models/Trophy/threejsjourney.glb';
+	import ams20 from '$lib/models/Trophy/ams20.glb';
+	import ams22 from '$lib/models/Trophy/ams22.glb';
+	import tor23 from '$lib/models/Trophy/tor23.glb';
+	import cph23 from '$lib/models/Trophy/cph23.glb';
 	import { useGltf, Text, GLTF } from '@threlte/extras';
 	import { T } from '@threlte/core';
 	import { degToRad } from 'three/src/math/MathUtils';
 	// import { Editable } from '@threlte/theatre';
 
-	const gltf = useGltf(trophy, {
+	const threejsjourneygltf = useGltf(threejsjourney, {
 		useDraco: true
 	});
 
-	$: console.log('trohpy', $gltf);
+	const ams20gltf = useGltf(ams20, {
+		useDraco: true
+	});
 
-	function onpointerenter() {
-		console.log('enter');
-		// pos y ülesse ja valgust juurde, floatima
-	}
+	const ams22gltf = useGltf(ams22, {
+		useDraco: true
+	});
 
-	function onpointerleave() {
-		console.log('leave');
-	}
+	const tor23gltf = useGltf(tor23, {
+		useDraco: true
+	});
+
+	const cph23gltf = useGltf(cph23, {
+		useDraco: true
+	});
 </script>
 
-{#if $gltf}
-	<!-- laua peal: position={[0.2, 0.68, -4.5]} -->
-	<!-- koti juures: position={[2.45, 0, -4]} -->
-	<T.Group
-		position={[2.45, 0, -4]}
-		rotation.y={degToRad(0)}
-		scale={0.5}
-		on:pointerenter={onpointerenter}
-		on:pointerleave={onpointerleave}
-	>
-		<!-- <Object3DInstance object={$gltf.scene} castShadow receiveShadow scale={0.2} /> -->
-		<GLTF url={trophy} useDraco scale={0.2} />
+<!-- laua peal: position={[0.2, 0.68, -4.5]} -->
+{#if $threejsjourneygltf}
+	<GLTF
+		url={threejsjourney}
+		useDraco
+		scale={0.15}
+		rotation.y={degToRad(50)}
+		position={[0.35, 0.03, -3.7]}
+	/>
+{/if}
 
-		<Text
-			text="EGERT P"
-			color={'#fff'}
-			font={'https://use.typekit.net/af/612d42/00000000000000007735c696/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3'}
-			fontSize={0.05}
-			textAlign="center"
-			position={[-0.1, 0.13, 0.155]}
-		/>
-		<!-- <Editable name="Trophy" transform /> -->
-	</T.Group>
+{#if $ams20gltf}
+	<GLTF url={ams20} useDraco scale={0.15} rotation.y={degToRad(32)} position={[0.5, 0.03, -4.7]} />
+{/if}
+
+{#if $ams22gltf}
+	<GLTF url={ams22} useDraco scale={0.15} rotation.y={degToRad(37)} position={[0.73, 0.03, -4.5]} />
+{/if}
+
+{#if $tor23gltf}
+	<GLTF url={tor23} useDraco scale={0.12} rotation.y={degToRad(37)} position={[0.73, 0.75, -4.6]} />
+{/if}
+
+{#if $cph23gltf}
+	<GLTF
+		url={cph23}
+		useDraco
+		scale={0.12}
+		rotation.y={degToRad(35)}
+		position={[0.73, 0.75, -4.65]}
+	/>
 {/if}

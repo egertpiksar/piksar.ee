@@ -39,7 +39,7 @@
 	let hallooAudioCtx: any;
 	let fireplaceAudioCtx: any;
 
-	let showGrid = true;
+	let showGrid = false;
 	let useFreeCamera = false;
 	let elapsedTime = 0;
 
