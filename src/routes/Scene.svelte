@@ -36,6 +36,7 @@
 	let mainCamera: any;
 	let fog: any;
 	let isHoveredLaptop: boolean;
+	let showCharacter: boolean;
 	let hallooAudioCtx: any;
 	let fireplaceAudioCtx: any;
 
@@ -77,7 +78,7 @@
 		if (isHoveredLaptop) {
 			cameraTarget.set({
 				x: 0,
-				y: 0.8,
+				y: 0,
 				z: -8
 			});
 		} else {
@@ -195,9 +196,9 @@
 
 <!-- <Screen2 bind:cameraOffset={$cameraOffset} /> -->
 
-<Character {isPageLoaded} />
+<Character {isPageLoaded} {showCharacter} />
 
-<Laptop bind:cameraOffset={$cameraOffset} bind:isHoveredLaptop />
+<Laptop bind:cameraOffset={$cameraOffset} bind:isHoveredLaptop bind:showCharacter />
 
 <Trophy />
 

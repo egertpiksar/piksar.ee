@@ -10,6 +10,7 @@
 
 	export let cameraOffset;
 	export let isHoveredLaptop = false;
+	export let showCharacter;
 
 	const gltf = useGltf(laptop, {
 		useDraco: true
@@ -31,9 +32,10 @@
 	// TODO disableme zoomOuti nii kauaks kuni kohale sõidab
 	function zoomInLaptop() {
 		console.log('zoooom IN');
-		/*isHoveredLaptop = true;
-		cameraOffset = { x: 0, y: 0.8, z: -3.5 };
-		console.log('cameraOffset1', cameraOffset);*/
+		isHoveredLaptop = true;
+		cameraOffset = { x: 0, y: 1, z: -3.3 };
+		showCharacter = false;
+		console.log('cameraOffset1', cameraOffset);
 	}
 
 	function zoomOutLaptop() {

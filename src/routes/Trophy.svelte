@@ -35,30 +35,24 @@
 	<GLTF
 		url={threejsjourney}
 		useDraco
-		scale={0.15}
+		scale={0.1}
 		rotation.y={degToRad(50)}
 		position={[0.35, 0.03, -3.7]}
 	/>
 {/if}
 
 {#if $ams20gltf}
-	<GLTF url={ams20} useDraco scale={0.15} rotation.y={degToRad(32)} position={[0.5, 0.03, -4.7]} />
+	<GLTF url={ams20} useDraco scale={0.1} rotation.y={degToRad(32)} position={[0.5, 0.03, -4.7]} />
 {/if}
 
 {#if $ams22gltf}
-	<GLTF url={ams22} useDraco scale={0.15} rotation.y={degToRad(37)} position={[0.73, 0.03, -4.5]} />
+	<GLTF url={ams22} useDraco scale={0.1} rotation.y={degToRad(37)} position={[0.73, 0.03, -4.5]} />
 {/if}
 
 {#if $tor23gltf}
-	<GLTF url={tor23} useDraco scale={0.12} rotation.y={degToRad(37)} position={[0.73, 0.75, -4.6]} />
+	<GLTF url={tor23} useDraco scale={0.1} rotation.y={degToRad(37)} position={[0.73, 0.75, -4.6]} />
 {/if}
 
 {#if $cph23gltf}
-	<GLTF
-		url={cph23}
-		useDraco
-		scale={0.12}
-		rotation.y={degToRad(35)}
-		position={[0.73, 0.75, -4.65]}
-	/>
+	<GLTF url={cph23} useDraco scale={0.1} rotation.y={degToRad(35)} position={[0.73, 0.75, -4.65]} />
 {/if}
